@@ -15,7 +15,7 @@ jobs:
       uses: addnab/docker-run-action@v3
       with:
           image: openvidu/openvidu-dev:2.23.0
-          options: -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET
+          options: "-p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET"
           run: |
             git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.23.0
             cd openvidu-tutorials/openvidu-basic-node
