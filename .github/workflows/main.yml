@@ -1,0 +1,20 @@
+name: Test en playwright
+
+on: 
+  workflow_dispatch:
+
+jobs:
+ 
+ tutorial:
+  
+  runs-on: ubunt-latest
+  steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+    - name: Run openvidu-dev
+      run: docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.23.0
+      
+    
+		   
