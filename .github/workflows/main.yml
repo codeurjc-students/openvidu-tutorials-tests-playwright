@@ -21,6 +21,7 @@ jobs:
   steps:
     - name: creación
       run: |
+        ifconfig
         git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.23.0
         cd openvidu-tutorials/openvidu-basic-node
         npm install
@@ -32,6 +33,7 @@ jobs:
     steps:
       - name: iniciación
         run: |
+          ifconfig
           npm install --location=global http-server
           http-server openvidu-tutorials/openvidu-js/web
       
