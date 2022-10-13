@@ -4,9 +4,8 @@ on:
   workflow_dispatch:
 
 jobs:
- 
- tutorial:
-  name: Compile site assets
+ OpenVidu_deploymen:
+  name:  Run OpenVidu deployment
   runs-on: ubuntu-latest
   steps:
     - name: Check out the repo
@@ -16,11 +15,24 @@ jobs:
       with:
           image: openvidu/openvidu-dev:2.23.0
           options: "-p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET"
-    - name: git clone
+ OpenVidu_back:
+  name: Run your preferred server application sample
+  runs-on: ubuntu-latest
+  steps:
+    - name: creación
       run: |
         git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.23.0
         cd openvidu-tutorials/openvidu-basic-node
         npm install
         node index.js
+        npm install --location=global http-server
+ OpenVidu_client_aplication:
+    name: Run the client application tutorial
+    runs-on: ubuntu-latest
+    steps:
+      - name: iniciación
+        run: |
+          npm install --location=global http-server
+          http-server openvidu-tutorials/openvidu-js/web
       
             
