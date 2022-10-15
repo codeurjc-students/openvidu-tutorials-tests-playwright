@@ -23,9 +23,9 @@ jobs:
     - name: descarga
       run: git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.23.0
     - name: acceso a openvidu-basic-node
-      run: cd openvidu-tutorials/openvidu-basic-node
-    - name: npm install
-      run: npm install
+      run: |
+          cd openvidu-tutorials/openvidu-basic-node
+          npm install
     - name: node
       run: node index.js
     - name: aserver
