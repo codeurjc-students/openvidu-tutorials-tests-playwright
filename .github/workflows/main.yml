@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
- OpenVidu_deploymen:
+ OpenVidu_deployment:
   name:  Run OpenVidu deployment
   runs-on: ubuntu-latest
   steps:
@@ -27,14 +27,4 @@ jobs:
         npm install
         node index.js
         npm install --location=global http-server
- OpenVidu_client_aplication:
-    name: Run the client application tutorial
-    runs-on: ubuntu-latest
-    steps:
-      - name: iniciación
-        run: |
-          ifconfig
-          npm install --location=global http-server
-          http-server openvidu-tutorials/openvidu-js/web
-      
-            
+        http-server openvidu-tutorials/openvidu-js/web
