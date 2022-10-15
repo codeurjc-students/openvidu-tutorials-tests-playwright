@@ -15,16 +15,19 @@ jobs:
       with:
           image: openvidu/openvidu-dev:2.23.0
           options: "-p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET"
+          
  OpenVidu_back:
   name: Run your preferred server application sample
   runs-on: ubuntu-latest
   steps:
-    - name: creación
-      run: |
-        ifconfig
-        git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.23.0
-        cd openvidu-tutorials/openvidu-basic-node
-        npm install
-        node index.js
-        npm install --location=global http-server
-        http-server openvidu-tutorials/openvidu-js/web
+    - name: descarga
+      run: git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.23.0
+    - name: acceso a openvidu-basic-node
+      run: cd openvidu-tutorials/openvidu-basic-node
+    - name: npm install
+      run: npm install
+    - name: node
+      run: node index.js
+    - name: aserver
+      run: http-server openvidu-tutorials/openvidu-js/web
+        
