@@ -26,12 +26,13 @@ jobs:
       run: |
           cd openvidu-tutorials/openvidu-basic-node
           npm install
-          bg node index.js
+          node index.js &
     - name: aserver
-      run: bg http-server openvidu-tutorials/openvidu-js/web
+      run: http-server openvidu-tutorials/openvidu-js/web &
     - name: instalar playwright
       run: |
-        npx playwright install --with-deps
-        npx playwright test
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo apt install ./google-chrome-stable_current_amd64.deb
+          google-chrome www.localhost:8080
       
         
