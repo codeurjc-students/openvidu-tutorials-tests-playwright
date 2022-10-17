@@ -26,7 +26,12 @@ jobs:
       run: |
           cd openvidu-tutorials/openvidu-basic-node
           npm install
-          node index.js
+          bg node index.js
     - name: aserver
-      run: http-server openvidu-tutorials/openvidu-js/web
+      run: bg http-server openvidu-tutorials/openvidu-js/web
+    - name: instalar playwright
+      run: |
+        npx playwright install --with-deps
+        npx playwright test
+      
         
