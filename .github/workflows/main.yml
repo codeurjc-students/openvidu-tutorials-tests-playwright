@@ -11,32 +11,17 @@ jobs:
     - name: Check out the repo
       uses: actions/checkout@v2
     - name: Run the build process with Docker
-      uses: addnab/docker-run-action@v3
-      with:
-          image: openvidu/openvidu-dev:2.23.0
-          options: "-p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET"
-          
- OpenVidu_back:
-  name: Run your preferred server application sample
-  runs-on: ubuntu-latest
-  steps:
-    - name: descarga
-      run: git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.23.0
-    - name: acceso a openvidu-basic-node
       run: |
+          docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.23.0 &
+          git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.23.0
           cd openvidu-tutorials/openvidu-basic-node
           npm install
           node index.js &
-    - name: aserver
-      run: http-server openvidu-tutorials/openvidu-js/web &
-    - uses: browser-actions/setup-chrome@latest
-    - run: chrome --version
-    - run: |
-          sudo apt-get install -y xvfb
-          sudo apt-get -y install xorg xvfb gtk2-engines-pixbuf
-          sudo apt-get -y install dbus-x11 xfonts-base xfonts-100dpi xfonts-75dpi xfonts-cyrillic xfonts-scalable
-          Xvfb -ac :99 -screen 0 1280x1024x16 &
-          export DISPLAY=:99
-    - run: chrome www.localhost:8080
+          cd ..
+          http-server openvidu-tutorials/openvidu-js/web &
+    - name: Install playwright
+      run: npm init playwright@latest
+    - name: Testing 
+      run: npx playwright test
+    
       
-        
