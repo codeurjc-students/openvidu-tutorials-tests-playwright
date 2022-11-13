@@ -23,7 +23,7 @@ jobs:
       run: npm init playwright@latest
     - name: Testing 
       run: |
-        cd openvidu-tutorials/.github/workflows/
+        cd /.github/workflows/
         npx playwright test
     
       
