@@ -20,7 +20,6 @@ jobs:
           node index.js &
           cd ..
           http-server openvidu-js/web &
-          wget http://127.0.0.1:8080/
     - name: Install playwright
       run: npm init playwright@latest
     - name: Testing 
