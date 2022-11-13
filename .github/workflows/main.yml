@@ -14,11 +14,11 @@ jobs:
       run: |
           docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.23.0 &
           ls -lart
-          cd openvidu-tutorials/openvidu-basic-node
+          cd openvidu-basic-node
           npm install
           node index.js &
           cd ..
-          http-server openvidu-tutorials/openvidu-js/web &
+          http-server openvidu-js/web &
     - name: Install playwright
       run: npm init playwright@latest
     - name: Testing 
