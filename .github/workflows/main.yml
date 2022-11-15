@@ -14,11 +14,15 @@ jobs:
     - name: Run the build process with Docker
       run: |
           docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.23.0 &
-          ls -lart
+    - name: Run server aplication
+      run: |
           cd openvidu-basic-node
           npm install
           node index.js &
+    - name: Run the client application tutorial
+      run: |
           cd ..
+          npm install --location=global http-server
           http-server openvidu-js/web &
     - uses: browser-actions/setup-chrome@latest
     - run: chrome --version
