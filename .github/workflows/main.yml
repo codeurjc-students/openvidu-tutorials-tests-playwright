@@ -20,12 +20,16 @@ jobs:
           node index.js &
           cd ..
           http-server openvidu-js/web &
-    - name: Install playwright
-      run: npm init playwright@latest
-    - name: Testing 
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - name: Install dependencies
+      run: npm ci
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    - name: Runin Test
       run: |
-        cd .github/workflows/
-        npm install -D @playwright/test
-        npx playwright test
-    
-      
+        cd tests
+        npx playwright test hello-world-openvidu.spec.js
+ 
