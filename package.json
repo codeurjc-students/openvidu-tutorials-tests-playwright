@@ -1,0 +1,21 @@
+{
+  "name": "openvidu-tutorials-tests-playwright",
+  "version": "1.0.0",
+  "description": "[![Backers on Open Collective](https://opencollective.com/openvidu/backers/badge.svg)](https://opencollective.com/openvidu#backers) [![Sponsors on Open Collective](https://opencollective.com/openvidu/sponsors/badge.svg)](https://opencollective.com/openvidu#sponsors) [![License badge](https://img.shields.io/badge/license-Apache2-orange.svg)](http://www.apache.org/licenses/LICENSE-2.0) [![OpenVidu Tests](https://github.com/OpenVidu/openvidu/actions/workflows/openvidu-ce-test.yml/badge.svg)](https://github.com/OpenVidu/openvidu/actions/workflows/openvidu-ce-test.yml) [![Documentation Status](https://readthedocs.org/projects/openvidu/badge/?version=stable)](https://docs.openvidu.io/en/stable/?badge=stable) [![Docker badge](https://img.shields.io/docker/pulls/openvidu/openvidu-server-kms.svg)](https://hub.docker.com/r/openvidu/openvidu-server-kms) [![Support badge](https://img.shields.io/badge/support-sof-yellowgreen.svg)](https://openvidu.discourse.group/) [![Twitter Follow](https://img.shields.io/twitter/follow/openvidu.svg?style=social)](https://twitter.com/openvidu)",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codeurjc-students/openvidu-tutorials-tests-playwright.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codeurjc-students/openvidu-tutorials-tests-playwright/issues"
+  },
+  "homepage": "https://github.com/codeurjc-students/openvidu-tutorials-tests-playwright#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.27.1"
+  }
+}

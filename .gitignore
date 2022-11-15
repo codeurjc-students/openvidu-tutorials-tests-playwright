@@ -43,3 +43,6 @@ openvidu-call/openvidu-call-back/public/
 openvidu-call/openvidu-call-back-java/src/main/resources/static/
 
 openvidu-components/openvidu-admin-dashboard/.vscode/
+/test-results/
+/playwright-report/
+/playwright/.cache/
