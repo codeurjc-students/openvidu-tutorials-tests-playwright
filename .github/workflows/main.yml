@@ -37,5 +37,5 @@ jobs:
     - name: Runin Test
       run: |
         cd tests
-        npx playwright test hello-world-openvidu.spec.js
+        npx playwright test example.spec.js
  
