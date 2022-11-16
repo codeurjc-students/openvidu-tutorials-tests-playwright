@@ -4,12 +4,12 @@ const { test, expect } = require('@playwright/test');
 test('homepage has title and links to intro page', async ({ page }) => {
   await page.goto('http://127.0.0.1:8080');
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle("openvidu-hello-world");
-
   // Makin a screenshot of full page
   await page.screenshot({ path: 'screenshot.png', fullPage: true });
 
+  // Expect a title "to contain" a substring.
+  await expect(page).toHaveTitle("openvidu-hello-world");
+  
   // create a locator
   //const getStarted = page.getByRole('link', { name: 'Join' });
 
