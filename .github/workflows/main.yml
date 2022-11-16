@@ -24,8 +24,6 @@ jobs:
           cd ..
           npm install --location=global http-server
           http-server openvidu-js/web &
-    - uses: browser-actions/setup-chrome@latest
-    - run: chrome --version
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
@@ -38,11 +36,10 @@ jobs:
       run: |
          cd tests
          npx playwright test hello-world-openvidu.spec.js
- 
     - uses: actions/upload-artifact@v3
       if: always()
       with:
         name: screenshot.png
-        path: playwright-report/screenshot.png
+        path: /playwright-report/screenshot.png
         retention-days: 30
    
