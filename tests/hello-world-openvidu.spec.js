@@ -2,7 +2,7 @@
 const { test, expect } = require('@playwright/test');
 
 test('homepage has title and links to intro page', async ({ page }) => {
-  await page.goto('http://127.0.0.1:8080');
+  await page.goto('http://www.google.com');
 
   // Makin a screenshot of full page
   await page.screenshot({ path: '../tests/screenshot.jpg', fullPage: true });
