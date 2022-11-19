@@ -22,8 +22,9 @@ jobs:
     - name: Run the client application tutorial
       run: |
           cd ..
+          pwd
           npm install --location=global http-server
-          http-server openvidu-js/web &
+          http-server oopenvidu-hello-world/web &
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
