@@ -36,6 +36,8 @@ jobs:
       run: |
          cd tests
          npx playwright test hello-world-openvidu.spec.js
+         cd ..
+         ls /playwright-report/
     - uses: actions/upload-artifact@v3
       if: always()
       with:
