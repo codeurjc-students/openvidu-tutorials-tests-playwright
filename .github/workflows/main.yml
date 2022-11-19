@@ -43,6 +43,6 @@ jobs:
       if: always()
       with:
         name: screenshot.png
-        path: /tests/screenshot.png
+        path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/tests
         retention-days: 30
    
