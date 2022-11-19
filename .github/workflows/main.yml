@@ -37,11 +37,11 @@ jobs:
          cd tests
          npx playwright test hello-world-openvidu.spec.js
          cd ..
-         ls /playwright-report/
+         ls /test/
     - uses: actions/upload-artifact@v3
       if: always()
       with:
         name: screenshot.png
-        path: /playwright-report/screenshot.png
+        path: /tests/screenshot.png
         retention-days: 30
    
