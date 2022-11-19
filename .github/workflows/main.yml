@@ -38,7 +38,6 @@ jobs:
          pwd
          npx playwright test hello-world-openvidu.spec.js
          cd ..
-         ls /test/
     - uses: actions/upload-artifact@v3
       if: always()
       with:
