@@ -25,6 +25,10 @@ jobs:
           pwd
           npm install --location=global http-server
           http-server /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-hello-world/web &
+ Playwright:
+    name:  Run playwright test 
+    runs-on: ubuntu-latest
+    steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
