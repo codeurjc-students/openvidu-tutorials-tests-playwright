@@ -19,4 +19,4 @@ jobs:
           distribution: 'adopt'
       - name: Build with Maven
         run: mvn spring-boot:run
-        working-directory: ../../../openvidu-tutorials-tests/openvidu-basic-java
+        working-directory: ./openvidu-basic-java
