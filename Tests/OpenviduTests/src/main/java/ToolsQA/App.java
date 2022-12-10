@@ -25,7 +25,7 @@ public class App
     static WebDriver driverFirefox;
     public static void main( String[] args ) throws Exception
     {
-        String evidencesFolder = "D:\\TFG\\codigo\\Tests\\DemoMavenProject\\src\\test\\evidence";
+        String evidencesFolder = "D:\\TFG\\codigo\\Tests\\OpenviduTests\\src\\test\\evidence";
         //"..\\..\\evidence";
 
 

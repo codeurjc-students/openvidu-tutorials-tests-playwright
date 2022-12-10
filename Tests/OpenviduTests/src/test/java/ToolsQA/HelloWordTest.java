@@ -134,7 +134,7 @@ class openViduJsTest {
         // see if the video is playing properly
         String currentTimeChrome = driverChrome.findElement(By.id("local-video-undefined")).getAttribute("currentTime");
         String currentTimeFirefox = driverFirefox.findElement(By.id("local-video-undefined")).getAttribute("currentTime");
-        takePhoto(evidencesFolder + "\\vpc.png", evidencesFolder + "\\vpf.png", driverChrome, driverFirefox);
+        takePhoto(evidencesFolder + "\\HW_VideoPlaying_C.png", evidencesFolder + "\\HW_VideoPlaying_F.png", driverChrome, driverFirefox);
 
 
         if (Float.parseFloat(currentTimeChrome) > 0 && Float.parseFloat(currentTimeFirefox) > 0){
