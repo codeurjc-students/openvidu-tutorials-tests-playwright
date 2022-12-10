@@ -2,6 +2,7 @@ package ToolsQA;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.io.FileUtils;
@@ -17,6 +18,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * Test with Java.
@@ -36,6 +39,7 @@ class openViduJsTest {
 
     String XpathJoinButton = "//*[@id='join']/form/p[2]/input";
     String xpathLeaveButton = "//*[@id='session']/input";
+    String xpathOtherCamera = "/html/body/div[2]/div/div[2]/video";
 
 
 /**
@@ -85,15 +89,15 @@ class openViduJsTest {
         try{
             if (!driverChrome.findElements(By.id("session-header")).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 1");
-                takePhoto(evidencesFolder + "\\COK.png");
+                takePhoto(evidencesFolder + "\\HW_OK_C.png", "", driverChrome, driverFirefox);
             }
             if (!driverFirefox.findElements(By.id("session-header")).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 2");
-                takePhoto(evidencesFolder + "\\FOK.png");
+                takePhoto("", evidencesFolder + "\\HW_OK_F.png", driverChrome, driverFirefox);
             }
         }catch (NoSuchElementException n){
             System.out.println("The app is not correctly inicializate");
-            takePhoto(evidencesFolder + "\\ErrorInicializate.png");
+            takePhoto(evidencesFolder + "\\HW_ErrorInicializate_C.png", evidencesFolder + "\\HW_ErrorInicializate_F.png", driverChrome, driverFirefox);
         }
     }
 
@@ -120,10 +124,17 @@ class openViduJsTest {
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
         joinButtonF.submit();
 
+        // see if the video is playing properly, moreover synchronize both videos
+        WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
+        waitC.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera)));
+        
+        WebDriverWait waitF = new WebDriverWait(driverFirefox, Duration.ofSeconds(30));
+        waitF.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera)));
+
         // see if the video is playing properly
         String currentTimeChrome = driverChrome.findElement(By.id("local-video-undefined")).getAttribute("currentTime");
         String currentTimeFirefox = driverFirefox.findElement(By.id("local-video-undefined")).getAttribute("currentTime");
-        takePhoto(evidencesFolder + "\\videoPlaying.png");
+        takePhoto(evidencesFolder + "\\vpc.png", evidencesFolder + "\\vpf.png", driverChrome, driverFirefox);
 
 
         if (Float.parseFloat(currentTimeChrome) > 0 && Float.parseFloat(currentTimeFirefox) > 0){
@@ -135,32 +146,27 @@ class openViduJsTest {
                 }
                 if(joinButtonC.isDisplayed()){
                     System.out.println("The app leave the session correctly in browser 1");
-                    takePhoto(evidencesFolder + "\\CLeaveSession.png");
+                    takePhoto(evidencesFolder + "\\HW_LeaveSession_C.png", "", driverChrome, driverFirefox);
                 }
 
-            }catch (NoSuchElementException n){
-                System.out.println("The app is not correctly working in browser 1");
-                takePhoto(evidencesFolder + "\\CError.png");
-            }
-
                 //Leave the session with Firefox
-            try{
+
                 WebElement leaveButtonF = driverFirefox.findElement(By.xpath(xpathLeaveButton));
                 if (leaveButtonF.isDisplayed()){ 
                     leaveButtonF.click();
                 }
                 if(joinButtonF.isDisplayed()){
                     System.out.println("The app leave the session correctly in browser 2");
-                    takePhoto(evidencesFolder + "\\FLeaveSession.png");
+                    takePhoto("", evidencesFolder + "\\HW_LeaveSession_F.png", driverChrome, driverFirefox);
                 }
 
             }catch (NoSuchElementException n){
-                System.out.println("The app is not correctly working in browser 2");
-                takePhoto(evidencesFolder + "\\FError.png");
+                System.out.println("The app is not correctly working");
+                takePhoto(evidencesFolder + "\\HW_Error_C.png", evidencesFolder + "\\HW_Error_F.png", driverChrome, driverFirefox);
             }
         }else{
             System.out.println("The video is not playing properly");
-            takePhoto(evidencesFolder + "\\VideoNotWorking.png");
+            takePhoto(evidencesFolder + "\\HW_VideoNotWorking_C.png", evidencesFolder + "\\HW_VideoNotWorking_F.png", driverChrome, driverFirefox);
         }
     }
 
@@ -172,25 +178,37 @@ class openViduJsTest {
  */
     @AfterEach
     void quit() {
-        driverFirefox.quit();
-        driverChrome.quit();
+        if (driverChrome != null){
+            driverChrome.quit();
+        }
+        if (driverFirefox != null){
+            driverFirefox.quit();
+        }
     }
 
+    
 /**
- * method.
- *
- * @author Andrea Acuña
- * Description: take a screenshot to create an evidence.
- * Parameters: 
- *          - url: the relative or absolute path to a evidence file
- */
-    public void takePhoto(String url) throws IOException{
+* method.
+*
+* @author Andrea Acuña
+* Description: take a screenshot to create an evidence.
+* Parameters: 
+*          - url1: the relative or absolute path to a evidence file of the chrome photo
+*          - url2: the relative or absolute path to a evidence file of the firefox photo
+*/
+    public static void takePhoto(String url1, String url2, WebDriver c, WebDriver f) throws IOException{
         try {
-            File scrFile = ((TakesScreenshot)driverChrome).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(scrFile, new File(url));
+            if(url1 != ""){
+                File scrFileC = ((TakesScreenshot)c).getScreenshotAs(OutputType.FILE);
+                FileUtils.copyFile(scrFileC, new File(url1));
+            }
+            if(url2 != ""){
+                File scrFileF = ((TakesScreenshot)f).getScreenshotAs(OutputType.FILE);
+                FileUtils.copyFile(scrFileF, new File(url2));
+            }          
         } catch (Exception e) {
             System.out.println("an error has occurred with the screenshot. Please preview the url");
         }
-        
     }
+
 }
