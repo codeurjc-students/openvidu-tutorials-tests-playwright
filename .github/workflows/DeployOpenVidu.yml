@@ -33,6 +33,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the server
-      run: npm install --location=global http-server
-      run: http-server openvidu-tutorials-tests/openvidu-hello-world/web
+      run: |
+        npm install --location=global http-server
+        http-server openvidu-tutorials-tests/openvidu-hello-world/web
       working-directory: .
