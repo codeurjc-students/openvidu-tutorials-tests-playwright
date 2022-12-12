@@ -19,7 +19,7 @@ jobs:
           npm install
           node index.js &
           cd ..
-          http-server openvidu-js/web &
+          http-server openvidu-js/web 
     - name: Install playwright
       run: npm init playwright@latest
     - name: Testing 
