@@ -35,10 +35,10 @@ jobs:
   build_server:
     runs-on: windows-latest
      steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: /
-        npm install --location=global http-server
-        http-server openvidu-tutorials-tests/openvidu-hello-world/web
-      with:
-        args: '"rollout status deployment/openvidu-basic-java"'
+      - uses: actions/checkout@v3
+      - name: Build the Docker image
+        run: /
+          npm install --location=global http-server
+          http-server openvidu-tutorials-tests/openvidu-hello-world/web
+        with:
+          args: '"rollout status deployment/openvidu-basic-java"'
