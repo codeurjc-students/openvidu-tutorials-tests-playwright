@@ -99,15 +99,15 @@ class openViduAngularTest {
         try{
             if (!driverChrome.findElements(By.id(idheader)).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 1");
-                takePhoto(evidencesFolder + "\\OKC.png", "");
+                takePhoto(evidencesFolder + "\\OKC.png", "", driverChrome, driverFirefox);
             }
             if (!driverFirefox.findElements(By.id(idheader)).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 2");
-                takePhoto("", evidencesFolder + "\\OKF.png");
+                takePhoto("", evidencesFolder + "\\OKF.png", driverChrome, driverFirefox);
             }
         }catch (NoSuchElementException n){
             System.out.println("The app is not correctly inicializate");
-            takePhoto(evidencesFolder + "\\ERRORInicializateC.png", evidencesFolder + "\\ERRORInicializateF.png");
+            takePhoto(evidencesFolder + "\\ERRORInicializateC.png", evidencesFolder + "\\ERRORInicializateF.png", driverChrome, driverFirefox);
         }
     }
 
@@ -151,7 +151,7 @@ class openViduAngularTest {
          String currentTimeChrome = driverChrome.findElement(By.id("local-video-undefined")).getAttribute("currentTime");
          String currentTimeFirefox = driverFirefox.findElement(By.id("local-video-undefined")).getAttribute("currentTime");
 
-         takePhoto(evidencesFolder + "\\videoPlayingC.png", evidencesFolder + "\\videoPlayingF.png");
+         takePhoto(evidencesFolder + "\\videoPlayingC.png", evidencesFolder + "\\videoPlayingF.png", driverChrome, driverFirefox);
  
          if (Float.parseFloat(currentTimeChrome) > 0 && Float.parseFloat(currentTimeFirefox) > 0){
                  //Leave the session with chrome
@@ -163,12 +163,12 @@ class openViduAngularTest {
                  WebElement titleC = driverChrome.findElement(By.xpath(xpathHeader));
                  if(titleC.isDisplayed()){
                      System.out.println("The app leave the session correctly in browser 1");
-                     takePhoto(evidencesFolder + "\\LeaveSessionC.png", "");
+                     takePhoto(evidencesFolder + "\\LeaveSessionC.png", "", driverChrome, driverFirefox);
                  }
  
              }catch (NoSuchElementException n){
                  System.out.println("The app is not correctly working in browser 1");
-                 takePhoto(evidencesFolder + "\\NOTLeaveSessionC.png", "");
+                 takePhoto(evidencesFolder + "\\NOTLeaveSessionC.png", "", driverChrome, driverFirefox);
              }
  
                  //Leave the session with Firefox
@@ -180,16 +180,16 @@ class openViduAngularTest {
                  WebElement titleF = driverFirefox.findElement(By.xpath(xpathHeader));
                  if(titleF.isDisplayed()){
                      System.out.println("The app leave the session correctly in browser 2");
-                     takePhoto("", evidencesFolder + "\\LeaveSessionF.png");
+                     takePhoto("", evidencesFolder + "\\LeaveSessionF.png", driverChrome, driverFirefox);
                  }
  
              }catch (NoSuchElementException n){
                  System.out.println("The app is not correctly working in browser 2");
-                 takePhoto("", evidencesFolder + "\\NOTLeaveSessionF.png");
+                 takePhoto("", evidencesFolder + "\\NOTLeaveSessionF.png", driverChrome, driverFirefox);
              }
          }else{
              System.out.println("The video is not playing properly");
-             takePhoto(evidencesFolder + "\\ERRORC.png", evidencesFolder + "\\ERRORF.png");
+             takePhoto(evidencesFolder + "\\ERRORC.png", evidencesFolder + "\\ERRORF.png", driverChrome, driverFirefox);
          }
     }
 
@@ -220,14 +220,14 @@ class openViduAngularTest {
     *          - url1: the relative or absolute path to a evidence file of the chrome photo
     *          - url2: the relative or absolute path to a evidence file of the firefox photo
     */
-    public void takePhoto(String url1, String url2) throws IOException{
+    public void takePhoto(String url1, String url2, WebDriver c, WebDriver f) throws IOException{
         try {
             if(url1 != ""){
-                File scrFileC = ((TakesScreenshot)driverChrome).getScreenshotAs(OutputType.FILE);
+                File scrFileC = ((TakesScreenshot)c).getScreenshotAs(OutputType.FILE);
                 FileUtils.copyFile(scrFileC, new File(url1));
             }
             if(url2 != ""){
-                File scrFileF = ((TakesScreenshot)driverFirefox).getScreenshotAs(OutputType.FILE);
+                File scrFileF = ((TakesScreenshot)f).getScreenshotAs(OutputType.FILE);
                 FileUtils.copyFile(scrFileF, new File(url2));
             }          
         } catch (Exception e) {
