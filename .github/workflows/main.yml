@@ -42,7 +42,7 @@ jobs:
     - uses: actions/upload-artifact@v3
       if: always()
       with:
-        name: screenshot.png
+        name: tests
         path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/tests
         retention-days: 30
    
