@@ -21,6 +21,7 @@ jobs:
           pwd
           sudo npm install --location=global http-server
           sudo http-server openvidu-hello-world/web &
+          sleep 20
           curl http://127.0.0.1:8080 
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
