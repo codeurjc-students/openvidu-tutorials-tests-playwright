@@ -13,18 +13,18 @@ jobs:
       uses: actions/checkout@v2
     - name: Run the build process with Docker
       run: |
-          docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.23.0 &
+          sudo docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.23.0 &
     - name: Run server aplication
       run: |
           cd openvidu-basic-node
-          npm install
-          node index.js &
+          sudo npm install
+          sudo node index.js &
     - name: Run the client application tutorial
       run: |
           cd ..
           pwd
-          npm install --location=global http-server
-          sudo http-server /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-hello-world/web &
+          sudo npm install --location=global http-server
+          sudo http-server openvidu-hello-world/web &
           curl http://127.0.0.1:8080
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
