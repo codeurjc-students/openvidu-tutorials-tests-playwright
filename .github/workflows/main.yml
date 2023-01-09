@@ -25,7 +25,7 @@ jobs:
           pwd
           npm install --location=global http-server
           http-server openvidu-hello-world/web &
-          netstat -ln | grep 8080
+          curl http://127.0.0.1:8080
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
@@ -37,7 +37,7 @@ jobs:
     - name: Runin Test
       run: |
          cd tests
-         curl http://127.0.0.1:8080
+    
          npx playwright test hello-world-openvidu.spec.js
          cd ..
     - uses: actions/upload-artifact@v3
