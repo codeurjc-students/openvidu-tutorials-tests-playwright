@@ -24,7 +24,8 @@ jobs:
           cd ..
           pwd
           npm install --location=global http-server
-          nohup http-server openvidu-hello-world/web > tests/logs &
+          http-server openvidu-hello-world/web &
+          netstat -ln | grep 8080
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
