@@ -19,8 +19,13 @@ jobs:
           cd openvidu-basic-node
           npm install
           node index.js &
+    - name: HTTP Server Action
+      uses: Eun/http-server-action@v1.0.6
+      with:
+        directory: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-hello-world/web
     - name: Run the client application tutorial
       run: |
+          curl http://127.0.0.1:8080
           cd ..
           pwd
           npm install --location=global http-server
