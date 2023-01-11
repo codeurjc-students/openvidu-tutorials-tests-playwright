@@ -52,7 +52,7 @@ jobs:
       working-directory: ./openvidu-angular
     - name: AngularTest
       run: mvn test -Dtest="openViduAngularTest"
-      working-directory: ./Tests/openViduAngularTest
+      working-directory: ./Tests/OpenviduTests
 
   javaScriptTest:
     runs-on: ubuntu-latest
