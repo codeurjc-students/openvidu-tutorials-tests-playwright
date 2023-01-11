@@ -31,7 +31,7 @@ class HelloWordTest {
     WebDriver driverChrome;
     WebDriver driverFirefox;
 
-    String URL = "app:8080";
+    String URL = "http://localhost:8080/";
 
     String NAMESESSION = "TestSession";
 
