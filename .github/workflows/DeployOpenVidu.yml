@@ -28,5 +28,5 @@ jobs:
         http-server openvidu-tutorials-tests/openvidu-hello-world/web &
       working-directory: .
     - name: TestHelloWord
-      run: VER COMO EJECUTAR ESTO &
-      working-directory: ./Tests/OpenviduTests/src/test/java/ToolsQA/HelloWordTest.java
+      run: mvn test -Dtest="HelloWordTest"
+      working-directory: ./Tests/OpenviduTests

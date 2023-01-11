@@ -1,5 +1,3 @@
-package ToolsQA;
-
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
@@ -26,7 +24,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * Test for the java deployment of open vidu 
  * @author Andrea Acuña
  */
-class openViduJsTest {
+class openViduVueTest {
 
     String evidencesFolder = "..\\..\\evidence";
 
@@ -89,15 +87,15 @@ class openViduJsTest {
         try{
             if (!driverChrome.findElements(By.id("session-header")).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 1");
-                takePhoto(evidencesFolder + "\\J_OK_C.png", "", driverChrome, driverFirefox);
+                takePhoto(evidencesFolder + "\\VUE_OK_C.png", "", driverChrome, driverFirefox);
             }
             if (!driverFirefox.findElements(By.id("session-header")).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 2");
-                takePhoto("", evidencesFolder + "\\J_OK_F.png", driverChrome, driverFirefox);
+                takePhoto("", evidencesFolder + "\\VUE_OK_F.png", driverChrome, driverFirefox);
             }
         }catch (NoSuchElementException n){
             System.out.println("The app is not correctly inicializate");
-            takePhoto(evidencesFolder + "\\J_ErrorInicializate_C.png", evidencesFolder + "\\J_ErrorInicializate_F.png", driverChrome, driverFirefox);
+            takePhoto(evidencesFolder + "\\VUE_ErrorInicializate_C.png", evidencesFolder + "\\VUE_ErrorInicializate_F.png", driverChrome, driverFirefox);
         }
     }
 
@@ -146,7 +144,7 @@ class openViduJsTest {
                 }
                 if(joinButtonC.isDisplayed()){
                     System.out.println("The app leave the session correctly in browser 1");
-                    takePhoto(evidencesFolder + "\\J_LeaveSession_C.png", "", driverChrome, driverFirefox);
+                    takePhoto(evidencesFolder + "\\VUE_LeaveSession_C.png", "", driverChrome, driverFirefox);
                 }
 
                 //Leave the session with Firefox
@@ -157,16 +155,16 @@ class openViduJsTest {
                 }
                 if(joinButtonF.isDisplayed()){
                     System.out.println("The app leave the session correctly in browser 2");
-                    takePhoto("", evidencesFolder + "\\J_LeaveSession_F.png", driverChrome, driverFirefox);
+                    takePhoto("", evidencesFolder + "\\VUE_LeaveSession_F.png", driverChrome, driverFirefox);
                 }
 
             }catch (NoSuchElementException n){
                 System.out.println("The app is not correctly working");
-                takePhoto(evidencesFolder + "\\J_Error_C.png", evidencesFolder + "\\J_Error_F.png", driverChrome, driverFirefox);
+                takePhoto(evidencesFolder + "\\VUE_Error_C.png", evidencesFolder + "\\VUE_Error_F.png", driverChrome, driverFirefox);
             }
         }else{
             System.out.println("The video is not playing properly");
-            takePhoto(evidencesFolder + "\\J_VideoNotWorking_C.png", evidencesFolder + "\\J_VideoNotWorking_F.png", driverChrome, driverFirefox);
+            takePhoto(evidencesFolder + "\\VUE_VideoNotWorking_C.png", evidencesFolder + "\\VUE_VideoNotWorking_F.png", driverChrome, driverFirefox);
         }
     }
 
