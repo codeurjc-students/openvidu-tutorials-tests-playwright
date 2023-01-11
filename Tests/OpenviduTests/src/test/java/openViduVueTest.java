@@ -49,11 +49,13 @@ class openViduVueTest {
     @BeforeEach
     void setup() {
         ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless", "--disable-gpu", "--ignore-certificate-errors","--disable-extensions","--no-sandbox","--disable-dev-shm-usage");
         options.addArguments("--use-fake-ui-for-media-stream");
         options.addArguments("--use-fake-device-for-media-stream");
         driverChrome = new ChromeDriver(options);
 
         FirefoxOptions optionsF = new FirefoxOptions();
+        optionsF.setHeadless(true);
         optionsF.addPreference("media.navigator.permission.disabled", true);
         optionsF.addPreference("media.navigator.streams.fake", true);
         driverFirefox = new FirefoxDriver(optionsF);
