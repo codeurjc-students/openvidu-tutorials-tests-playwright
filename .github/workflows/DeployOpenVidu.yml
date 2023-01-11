@@ -25,7 +25,7 @@ jobs:
     - name: Build the server
       run: |
         npm install --location=global http-server
-        http-server openvidu-tutorials-tests/openvidu-hello-world/web &
+        http-server openvidu-hello-world/web &
       working-directory: .
     - name: TestHelloWord
       run: mvn test -Dtest="HelloWordTest"
