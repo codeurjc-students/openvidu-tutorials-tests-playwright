@@ -41,6 +41,7 @@ class openViduReactTest {
     String idSession = "sessionId";
     String idheader = "session-title";
     String xpathHeader = "/html/body/app-root/div/div/div[1]/img";
+    String xpathOtherCamera = "/html/body/div/div/div/div[3]/div[2]/div/div/video";
 
 
 /**
@@ -143,10 +144,10 @@ class openViduReactTest {
 
         // see if the video is playing properly, moreover synchronize both videos
         WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
-        waitC.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='video-container']/div[3]/user-video/div/div/p")));
+        waitC.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera)));
         
         WebDriverWait waitF = new WebDriverWait(driverFirefox, Duration.ofSeconds(30));
-        waitF.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='video-container']/div[3]/user-video/div/div/p")));
+        waitF.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera)));
 
          String currentTimeChrome = driverChrome.findElement(By.id("local-video-undefined")).getAttribute("currentTime");
          String currentTimeFirefox = driverFirefox.findElement(By.id("local-video-undefined")).getAttribute("currentTime");

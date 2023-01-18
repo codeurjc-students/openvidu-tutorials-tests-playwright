@@ -37,7 +37,7 @@ class openViduJsTest {
 
     String XpathJoinButton = "//*[@id='join-dialog']/form/p[3]/input";
     String idLeaveButton = "buttonLeaveSession";
-    String xpathOtherCamera = "/html/body/div[2]/div/div[2]/video";
+    String xpathOtherCamera = "/html/body/div/div[2]/div[3]/video[2]";
 
 
 /**
