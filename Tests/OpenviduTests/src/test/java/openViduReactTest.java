@@ -40,7 +40,6 @@ class openViduReactTest {
     String idLeaveButton = "buttonLeaveSession";
     String idSession = "sessionId";
     String idheader = "session-title";
-    String idHeader = "join";
     String xpathOtherCamera = "/html/body/div/div/div/div[3]/div[2]/div/div/video";
 
 
@@ -161,7 +160,7 @@ class openViduReactTest {
                  if (leaveButtonC.isDisplayed()){ 
                      leaveButtonC.click();
                  }
-                 WebElement titleC = driverChrome.findElement(By.xpath(idHeader));
+                 WebElement titleC = driverChrome.findElement(By.id(idheader));
                  if(titleC.isDisplayed()){
                      System.out.println("The app leave the session correctly in browser 1");
                      takePhoto(evidencesFolder + "\\LeaveSessionC.png", "", driverChrome, driverFirefox);
@@ -178,7 +177,7 @@ class openViduReactTest {
                  if (leaveButtonF.isDisplayed()){ 
                      leaveButtonF.click();
                  }
-                 WebElement titleF = driverFirefox.findElement(By.xpath(idHeader));
+                 WebElement titleF = driverFirefox.findElement(By.id(idheader));
                  if(titleF.isDisplayed()){
                      System.out.println("The app leave the session correctly in browser 2");
                      takePhoto("", evidencesFolder + "\\LeaveSessionF.png", driverChrome, driverFirefox);
