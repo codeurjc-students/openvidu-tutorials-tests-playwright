@@ -116,8 +116,8 @@ jobs:
       working-directory: ./openvidu-basic-java
     - name: Build the server
       run: |
-        npm install
-        npm run serve --legacy-peer-deps &
+        npm install --legacy-peer-deps
+        npm run serve &
       working-directory: ./openvidu-vue
     - name: VueTest
       run: mvn test -Dtest="openViduVueTest"
