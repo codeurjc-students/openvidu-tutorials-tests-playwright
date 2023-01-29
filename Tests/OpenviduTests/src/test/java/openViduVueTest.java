@@ -32,12 +32,15 @@ class openViduVueTest {
     WebDriver driverFirefox;
 
     String URL = "http://localhost:8080/";
-
     String NAMESESSION = "TestSession";
 
-    String XpathJoinButton = "//*[@id='join-dialog']/form/p[3]/input";
+    String XpathJoinButton = "//*[@id='join-dialog']/div/p[3]/button";
+    String xpathOtherCamera = "/html/body/div/div/div[3]/div[2]/video";
+    String xpathSession = "//*[@id='join-dialog']/div/p[2]/input";
+
     String idLeaveButton = "buttonLeaveSession";
-    String xpathOtherCamera = "/html/body/div[2]/div/div[2]/video";
+    String idTitle = "session-title";
+    String idSelfCamera = "local-video-undefined";
 
 
 /**
@@ -74,24 +77,24 @@ class openViduVueTest {
     @Test
     void JoinSession() throws IOException {
         // Configurate the session in chrome
-        WebElement textBox = driverChrome.findElement(By.id("sessionId"));
+        WebElement textBox = driverChrome.findElement(By.id(xpathSession));
         textBox.clear();
         textBox.sendKeys(NAMESESSION);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
         joinButtonC.submit();
         //Configurate de session in firefox
-        WebElement textBoxF = driverFirefox.findElement(By.id("sessionId"));
+        WebElement textBoxF = driverFirefox.findElement(By.id(xpathSession));
         textBoxF.clear();
         textBoxF.sendKeys(NAMESESSION);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
         joinButtonF.submit();
 
         try{
-            if (!driverChrome.findElements(By.id("session-header")).isEmpty()){
+            if (!driverChrome.findElements(By.id(idTitle)).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 1");
                 takePhoto(evidencesFolder + "\\VUE_OK_C.png", "", driverChrome, driverFirefox);
             }
-            if (!driverFirefox.findElements(By.id("session-header")).isEmpty()){
+            if (!driverFirefox.findElements(By.id(idTitle)).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 2");
                 takePhoto("", evidencesFolder + "\\VUE_OK_F.png", driverChrome, driverFirefox);
             }
@@ -112,13 +115,13 @@ class openViduVueTest {
     void LeaveSession() throws IOException{
 
         // Configurate the session in chrome
-        WebElement textBox = driverChrome.findElement(By.id("sessionId"));
+        WebElement textBox = driverChrome.findElement(By.id(xpathSession));
         textBox.clear();
         textBox.sendKeys(NAMESESSION);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
         joinButtonC.submit();
         //Configurate de session in firefox
-        WebElement textBoxF = driverFirefox.findElement(By.id("sessionId"));
+        WebElement textBoxF = driverFirefox.findElement(By.id(xpathSession));
         textBoxF.clear();
         textBoxF.sendKeys(NAMESESSION);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
@@ -132,8 +135,8 @@ class openViduVueTest {
         waitF.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathOtherCamera)));
 
         // see if the video is playing properly
-        String currentTimeChrome = driverChrome.findElement(By.id("local-video-undefined")).getAttribute("currentTime");
-        String currentTimeFirefox = driverFirefox.findElement(By.id("local-video-undefined")).getAttribute("currentTime");
+        String currentTimeChrome = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
+        String currentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
         takePhoto(evidencesFolder + "\\J_VideoPlaying_C.png", evidencesFolder + "\\J_VideoPlaying_F.png", driverChrome, driverFirefox);
 
 
