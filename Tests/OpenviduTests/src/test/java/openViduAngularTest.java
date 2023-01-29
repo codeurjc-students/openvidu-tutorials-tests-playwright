@@ -36,11 +36,12 @@ class openViduAngularTest {
     String NAMESESSION = "TestSession";
 
     String XpathJoinButton = "//*[@id='join-dialog']/form/p[3]/input";
+    String xpathHeader = "/html/body/app-root/div/div/div[1]/img";
+    
     String idParticipant = "userName";
     String idLeaveButton = "buttonLeaveSession";
     String idSession = "sessionId";
     String idheader = "session-title";
-    String xpathHeader = "/html/body/app-root/div/div/div[1]/img";
 
 
 /**

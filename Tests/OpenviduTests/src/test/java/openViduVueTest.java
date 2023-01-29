@@ -81,13 +81,13 @@ class openViduVueTest {
         textBox.clear();
         textBox.sendKeys(NAMESESSION);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
-        joinButtonC.submit();
+        joinButtonC.click();
         //Configurate de session in firefox
         WebElement textBoxF = driverFirefox.findElement(By.xpath(xpathSession));
         textBoxF.clear();
         textBoxF.sendKeys(NAMESESSION);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
-        joinButtonF.submit();
+        joinButtonF.click();
 
         try{
             if (!driverChrome.findElements(By.id(idTitle)).isEmpty()){
@@ -119,13 +119,13 @@ class openViduVueTest {
         textBox.clear();
         textBox.sendKeys(NAMESESSION);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
-        joinButtonC.submit();
+        joinButtonC.click();
         //Configurate de session in firefox
         WebElement textBoxF = driverFirefox.findElement(By.xpath(xpathSession));
         textBoxF.clear();
         textBoxF.sendKeys(NAMESESSION);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
-        joinButtonF.submit();
+        joinButtonF.click();
 
         // see if the video is playing properly, moreover synchronize both videos
         WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
