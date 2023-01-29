@@ -77,13 +77,13 @@ class openViduVueTest {
     @Test
     void JoinSession() throws IOException {
         // Configurate the session in chrome
-        WebElement textBox = driverChrome.findElement(By.id(xpathSession));
+        WebElement textBox = driverChrome.findElement(By.xpath(xpathSession));
         textBox.clear();
         textBox.sendKeys(NAMESESSION);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
         joinButtonC.submit();
         //Configurate de session in firefox
-        WebElement textBoxF = driverFirefox.findElement(By.id(xpathSession));
+        WebElement textBoxF = driverFirefox.findElement(By.xpath(xpathSession));
         textBoxF.clear();
         textBoxF.sendKeys(NAMESESSION);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
@@ -115,13 +115,13 @@ class openViduVueTest {
     void LeaveSession() throws IOException{
 
         // Configurate the session in chrome
-        WebElement textBox = driverChrome.findElement(By.id(xpathSession));
+        WebElement textBox = driverChrome.findElement(By.xpath(xpathSession));
         textBox.clear();
         textBox.sendKeys(NAMESESSION);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
         joinButtonC.submit();
         //Configurate de session in firefox
-        WebElement textBoxF = driverFirefox.findElement(By.id(xpathSession));
+        WebElement textBoxF = driverFirefox.findElement(By.xpath(xpathSession));
         textBoxF.clear();
         textBoxF.sendKeys(NAMESESSION);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
