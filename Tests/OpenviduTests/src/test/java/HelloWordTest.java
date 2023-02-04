@@ -39,6 +39,10 @@ class HelloWordTest {
     String xpathLeaveButton = "//*[@id='session']/input";
     String xpathOtherCamera = "/html/body/div[2]/div/div[2]/video";
 
+    String idHeader = "session-header";
+    String idNameSession = "sessionId";
+    String idSelfCamera = "local-video-undefined";
+
 
 /**
  * BeforeEach.
@@ -72,26 +76,26 @@ class HelloWordTest {
  * @throws IOException
  */
     @Test
-    void JoinSession() throws IOException {
+    void T001_JoinSession() throws IOException {
         // Configurate the session in chrome
-        WebElement textBox = driverChrome.findElement(By.id("sessionId"));
+        WebElement textBox = driverChrome.findElement(By.id(idNameSession));
         textBox.clear();
         textBox.sendKeys(NAMESESSION);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
         joinButtonC.submit();
         //Configurate de session in firefox
-        WebElement textBoxF = driverFirefox.findElement(By.id("sessionId"));
+        WebElement textBoxF = driverFirefox.findElement(By.id(idNameSession));
         textBoxF.clear();
         textBoxF.sendKeys(NAMESESSION);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
         joinButtonF.submit();
 
         try{
-            if (!driverChrome.findElements(By.id("session-header")).isEmpty()){
+            if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 1");
                 takePhoto(evidencesFolder + "\\HW_OK_C.png", "", driverChrome, driverFirefox);
             }
-            if (!driverFirefox.findElements(By.id("session-header")).isEmpty()){
+            if (!driverFirefox.findElements(By.id(idHeader)).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 2");
                 takePhoto("", evidencesFolder + "\\HW_OK_F.png", driverChrome, driverFirefox);
             }
@@ -105,20 +109,20 @@ class HelloWordTest {
  * Test with Java.
  *
  * @author Andrea Acuña
- * Description: Join the session, verficate that the video is playing property and leave the session
+ * Description: Leave the session, verficate that the video is playing property and leave the session
  * @throws IOException
  */
     @Test
-    void LeaveSession() throws IOException{
+    void T002_LeaveSession() throws IOException{
 
         // Configurate the session in chrome
-        WebElement textBox = driverChrome.findElement(By.id("sessionId"));
+        WebElement textBox = driverChrome.findElement(By.id(idNameSession));
         textBox.clear();
         textBox.sendKeys(NAMESESSION);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
         joinButtonC.submit();
         //Configurate de session in firefox
-        WebElement textBoxF = driverFirefox.findElement(By.id("sessionId"));
+        WebElement textBoxF = driverFirefox.findElement(By.id(idNameSession));
         textBoxF.clear();
         textBoxF.sendKeys(NAMESESSION);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
@@ -132,8 +136,8 @@ class HelloWordTest {
         waitF.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera)));
 
         // see if the video is playing properly
-        String currentTimeChrome = driverChrome.findElement(By.id("local-video-undefined")).getAttribute("currentTime");
-        String currentTimeFirefox = driverFirefox.findElement(By.id("local-video-undefined")).getAttribute("currentTime");
+        String currentTimeChrome = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
+        String currentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
         takePhoto(evidencesFolder + "\\HW_VideoPlaying_C.png", evidencesFolder + "\\HW_VideoPlaying_F.png", driverChrome, driverFirefox);
 
 
@@ -167,6 +171,36 @@ class HelloWordTest {
         }else{
             System.out.println("The video is not playing properly");
             takePhoto(evidencesFolder + "\\HW_VideoNotWorking_C.png", evidencesFolder + "\\HW_VideoNotWorking_F.png", driverChrome, driverFirefox);
+        }
+    }
+
+
+/**
+ * Test with Java.
+ *
+ * @author Andrea Acuña
+ * Description: Joins the session and verifies that the session name is correct
+ * @throws IOException
+ */
+    @Test
+    void T003_SessionHeader() throws IOException {
+        // Configurate the session in chrome
+        WebElement textBox = driverChrome.findElement(By.id(idNameSession));
+        textBox.clear();
+        textBox.sendKeys(NAMESESSION);
+        WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
+        joinButtonC.submit();
+
+        try{
+            if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
+                if (driverChrome.findElement(By.id(idHeader)).getText() == NAMESESSION){
+                    System.out.println("The title is correctly set");
+                    takePhoto(evidencesFolder + "\\HW_OK_C.png", "", driverChrome, driverFirefox);
+                }
+            }
+        }catch (NoSuchElementException n){
+            System.out.println("The app is not correctly inicializate");
+            takePhoto(evidencesFolder + "\\HW_ErrorInicializate_C.png", evidencesFolder + "", driverChrome, driverFirefox);
         }
     }
 

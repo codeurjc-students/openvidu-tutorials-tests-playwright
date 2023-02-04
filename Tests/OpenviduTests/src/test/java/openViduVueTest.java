@@ -32,14 +32,17 @@ class openViduVueTest {
     WebDriver driverFirefox;
 
     String URL = "http://localhost:8080/";
+
     String NAMESESSION = "TestSession";
+    String NAMEPARTICIPANT = "TestParticipant";
 
     String XpathJoinButton = "//*[@id='join-dialog']/div/p[3]/button";
     String xpathOtherCamera = "/html/body/div/div/div[3]/div[2]/video";
-    String xpathSession = "//*[@id='join-dialog']/div/p[2]/input";
+    String xpathSessionName = "//*[@id='join-dialog']/div/p[2]/input";
+    String xpathParticipant = "//*[@id='main-video']/div/div/p";
 
     String idLeaveButton = "buttonLeaveSession";
-    String idTitle = "session-title";
+    String idHeader = "session-title";
     String idSelfCamera = "local-video-undefined";
 
 
@@ -77,24 +80,24 @@ class openViduVueTest {
     @Test
     void JoinSession() throws IOException {
         // Configurate the session in chrome
-        WebElement textBox = driverChrome.findElement(By.xpath(xpathSession));
+        WebElement textBox = driverChrome.findElement(By.xpath(xpathSessionName));
         textBox.clear();
         textBox.sendKeys(NAMESESSION);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
         joinButtonC.click();
         //Configurate de session in firefox
-        WebElement textBoxF = driverFirefox.findElement(By.xpath(xpathSession));
+        WebElement textBoxF = driverFirefox.findElement(By.xpath(xpathSessionName));
         textBoxF.clear();
         textBoxF.sendKeys(NAMESESSION);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
         joinButtonF.click();
 
         try{
-            if (!driverChrome.findElements(By.id(idTitle)).isEmpty()){
+            if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 1");
                 takePhoto(evidencesFolder + "\\VUE_OK_C.png", "", driverChrome, driverFirefox);
             }
-            if (!driverFirefox.findElements(By.id(idTitle)).isEmpty()){
+            if (!driverFirefox.findElements(By.id(idHeader)).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 2");
                 takePhoto("", evidencesFolder + "\\VUE_OK_F.png", driverChrome, driverFirefox);
             }
@@ -115,13 +118,13 @@ class openViduVueTest {
     void LeaveSession() throws IOException{
 
         // Configurate the session in chrome
-        WebElement textBox = driverChrome.findElement(By.xpath(xpathSession));
+        WebElement textBox = driverChrome.findElement(By.xpath(xpathSessionName));
         textBox.clear();
         textBox.sendKeys(NAMESESSION);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
         joinButtonC.click();
         //Configurate de session in firefox
-        WebElement textBoxF = driverFirefox.findElement(By.xpath(xpathSession));
+        WebElement textBoxF = driverFirefox.findElement(By.xpath(xpathSessionName));
         textBoxF.clear();
         textBoxF.sendKeys(NAMESESSION);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
@@ -137,7 +140,7 @@ class openViduVueTest {
         // see if the video is playing properly
         String currentTimeChrome = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
         String currentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
-        takePhoto(evidencesFolder + "\\J_VideoPlaying_C.png", evidencesFolder + "\\J_VideoPlaying_F.png", driverChrome, driverFirefox);
+        takePhoto(evidencesFolder + "\\VUE_VideoPlaying_C.png", evidencesFolder + "\\VUE_VideoPlaying_F.png", driverChrome, driverFirefox);
 
 
         if (Float.parseFloat(currentTimeChrome) > 0 && Float.parseFloat(currentTimeFirefox) > 0){
@@ -170,6 +173,63 @@ class openViduVueTest {
         }else{
             System.out.println("The video is not playing properly");
             takePhoto(evidencesFolder + "\\VUE_VideoNotWorking_C.png", evidencesFolder + "\\VUE_VideoNotWorking_F.png", driverChrome, driverFirefox);
+        }
+    }
+
+/**
+ * Test with Java.
+ *
+ * @author Andrea Acuña
+ * Description: Joins the session and verifies that the session name is correct
+ * @throws IOException
+ */
+    @Test
+        void T003_SessionHeader() throws IOException {
+            // Configurate the session in chrome
+            WebElement textBox = driverChrome.findElement(By.xpath(xpathSessionName));
+            textBox.clear();
+            textBox.sendKeys(NAMESESSION);
+            WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
+            joinButtonC.submit();
+
+            try{
+                if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
+                    if (driverChrome.findElement(By.id(idHeader)).getText() == NAMESESSION){
+                        System.out.println("The title is correctly set");
+                        takePhoto(evidencesFolder + "\\VUE_OK_C.png", "", driverChrome, driverFirefox);
+                    }
+                }
+            }catch (NoSuchElementException n){
+                System.out.println("The app is not correctly inicializate");
+                takePhoto(evidencesFolder + "\\VUE_ErrorInicializate_C.png", evidencesFolder + "", driverChrome, driverFirefox);
+            }
+    }
+
+/**
+* Test with Java.
+*
+* @author Andrea Acuña
+* Description: Joins the session and verifies that the participant name is correct
+* @throws IOException
+*/
+    @Test
+        void T004_ParticipantName() throws IOException {
+        // Configurate the session in chrome
+        WebElement nameTextBox = driverChrome.findElement(By.xpath(xpathSessionName));
+        nameTextBox.clear();
+        nameTextBox.sendKeys(NAMEPARTICIPANT);
+        WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
+        joinButtonC.submit();
+
+        try{
+            if (driverChrome.findElement(By.xpath(xpathParticipant)).getText() == NAMEPARTICIPANT){
+                    System.out.println("The name of the participant is correctly set");
+                    takePhoto(evidencesFolder + "\\VUE_OK_C.png", "", driverChrome, driverFirefox);
+            }
+            
+        }catch (NoSuchElementException n){
+            System.out.println("The app is not correctly inicializate");
+            takePhoto(evidencesFolder + "\\VUE_ErrorInicializate_C.png", evidencesFolder + "", driverChrome, driverFirefox);
         }
     }
 

@@ -34,15 +34,19 @@ class openViduReactTest {
     String URL = "http://localhost:3000/";
 
     String NAMESESSION = "TestSession";
+    String NAMEPARTICIPANT = "TestParticipant";
 
     String XpathJoinButton = "//*[@id='join-dialog']/form/p[3]/input";
     String xpathOtherCamera = "/html/body/div/div/div/div[3]/div[2]/div/div/video";
+    String xpathParticipant = "//*[@id='main-video']/div/div/div/p";
     
     String idParticipant = "userName";
     String idLeaveButton = "buttonLeaveSession";
-    String idSession = "sessionId";
-    String idheader = "session-title";
+    String idNameSession = "sessionId";
+    String idHeader = "session-title";
     String idMainTitle = "join";
+    String idSelfCamera = "local-video-undefined";
+    String idNameParticipant = "userName";
 
 
 /**
@@ -77,9 +81,9 @@ class openViduReactTest {
  * @throws IOException
  */
     @Test
-    void JoinSession() throws IOException {
+    void T001_JoinSession() throws IOException {
         // Configurate the session in chrome
-        WebElement sessionC = driverChrome.findElement(By.id(idSession));
+        WebElement sessionC = driverChrome.findElement(By.id(idNameSession));
         sessionC.clear();
         sessionC.sendKeys(NAMESESSION);
         WebElement participantC = driverChrome.findElement(By.id(idParticipant));
@@ -89,7 +93,7 @@ class openViduReactTest {
         joinButtonC.submit();
 
         //Configurate de session in firefox
-        WebElement textBoxF = driverFirefox.findElement(By.id(idSession));
+        WebElement textBoxF = driverFirefox.findElement(By.id(idNameSession));
         textBoxF.clear();
         textBoxF.sendKeys(NAMESESSION);
         WebElement participantF = driverFirefox.findElement(By.id(idParticipant));
@@ -99,17 +103,17 @@ class openViduReactTest {
         joinButtonF.submit();
 
         try{
-            if (!driverChrome.findElements(By.id(idheader)).isEmpty()){
+            if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 1");
-                takePhoto(evidencesFolder + "\\OKC.png", "", driverChrome, driverFirefox);
+                takePhoto(evidencesFolder + "\\R_OK_C.png", "", driverChrome, driverFirefox);
             }
-            if (!driverFirefox.findElements(By.id(idheader)).isEmpty()){
+            if (!driverFirefox.findElements(By.id(idHeader)).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 2");
-                takePhoto("", evidencesFolder + "\\OKF.png", driverChrome, driverFirefox);
+                takePhoto("", evidencesFolder + "\\R_OK_F.png", driverChrome, driverFirefox);
             }
         }catch (NoSuchElementException n){
             System.out.println("The app is not correctly inicializate");
-            takePhoto(evidencesFolder + "\\ERRORInicializateC.png", evidencesFolder + "\\ERRORInicializateF.png", driverChrome, driverFirefox);
+            takePhoto(evidencesFolder + "\\R_ERRORInicializate_C.png", evidencesFolder + "\\R_ERRORInicializate_F.png", driverChrome, driverFirefox);
         }
     }
 
@@ -121,10 +125,10 @@ class openViduReactTest {
  * @throws IOException
  */
     @Test
-    void LeaveSession() throws IOException {
+    void T002_LeaveSession() throws IOException {
 
         // Configurate the session in chrome
-        WebElement sessionC = driverChrome.findElement(By.id(idSession));
+        WebElement sessionC = driverChrome.findElement(By.id(idNameSession));
         sessionC.clear();
         sessionC.sendKeys(NAMESESSION);
         WebElement participantC = driverChrome.findElement(By.id(idParticipant));
@@ -134,7 +138,7 @@ class openViduReactTest {
         joinButtonC.submit();
 
         //Configurate de session in firefox
-        WebElement textBoxF = driverFirefox.findElement(By.id(idSession));
+        WebElement textBoxF = driverFirefox.findElement(By.id(idNameSession));
         textBoxF.clear();
         textBoxF.sendKeys(NAMESESSION);
         WebElement participantF = driverFirefox.findElement(By.id(idParticipant));
@@ -150,10 +154,10 @@ class openViduReactTest {
         WebDriverWait waitF = new WebDriverWait(driverFirefox, Duration.ofSeconds(30));
         waitF.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera)));
 
-         String currentTimeChrome = driverChrome.findElement(By.id("local-video-undefined")).getAttribute("currentTime");
-         String currentTimeFirefox = driverFirefox.findElement(By.id("local-video-undefined")).getAttribute("currentTime");
+         String currentTimeChrome = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
+         String currentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
 
-         takePhoto(evidencesFolder + "\\videoPlayingC.png", evidencesFolder + "\\videoPlayingF.png", driverChrome, driverFirefox);
+         takePhoto(evidencesFolder + "\\R_videoPlaying_C.png", evidencesFolder + "\\R_videoPlaying_F.png", driverChrome, driverFirefox);
  
          if (Float.parseFloat(currentTimeChrome) > 0 && Float.parseFloat(currentTimeFirefox) > 0){
                  //Leave the session with chrome
@@ -165,12 +169,12 @@ class openViduReactTest {
                  WebElement titleC = driverChrome.findElement(By.id(idMainTitle));
                  if(titleC.isDisplayed()){
                      System.out.println("The app leave the session correctly in browser 1");
-                     takePhoto(evidencesFolder + "\\LeaveSessionC.png", "", driverChrome, driverFirefox);
+                     takePhoto(evidencesFolder + "\\R_LeaveSession_C.png", "", driverChrome, driverFirefox);
                  }
  
              }catch (NoSuchElementException n){
                  System.out.println("The app is not correctly working in browser 1");
-                 takePhoto(evidencesFolder + "\\NOTLeaveSessionC.png", "", driverChrome, driverFirefox);
+                 takePhoto(evidencesFolder + "\\R_NOTLeaveSession_C.png", "", driverChrome, driverFirefox);
              }
  
                  //Leave the session with Firefox
@@ -182,19 +186,77 @@ class openViduReactTest {
                  WebElement titleF = driverFirefox.findElement(By.id(idMainTitle));
                  if(titleF.isDisplayed()){
                      System.out.println("The app leave the session correctly in browser 2");
-                     takePhoto("", evidencesFolder + "\\LeaveSessionF.png", driverChrome, driverFirefox);
+                     takePhoto("", evidencesFolder + "\\R_LeaveSession_F.png", driverChrome, driverFirefox);
                  }
  
              }catch (NoSuchElementException n){
                  System.out.println("The app is not correctly working in browser 2");
-                 takePhoto("", evidencesFolder + "\\NOTLeaveSessionF.png", driverChrome, driverFirefox);
+                 takePhoto("", evidencesFolder + "\\R_NOTLeaveSession_F.png", driverChrome, driverFirefox);
              }
          }else{
              System.out.println("The video is not playing properly");
-             takePhoto(evidencesFolder + "\\ERRORC.png", evidencesFolder + "\\ERRORF.png", driverChrome, driverFirefox);
+             takePhoto(evidencesFolder + "\\R_ERROR_C.png", evidencesFolder + "\\R_ERROR_F.png", driverChrome, driverFirefox);
          }
     }
 
+/**
+ * Test with Java.
+ *
+ * @author Andrea Acuña
+ * Description: Joins the session and verifies that the session name is correct
+ * @throws IOException
+ */
+    @Test
+    void T003_SessionHeader() throws IOException {
+        // Configurate the session in chrome
+        WebElement textBox = driverChrome.findElement(By.id(idNameSession));
+        textBox.clear();
+        textBox.sendKeys(NAMESESSION);
+        WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
+        joinButtonC.submit();
+
+        try{
+            if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
+                if (driverChrome.findElement(By.id(idHeader)).getText() == NAMESESSION){
+                    System.out.println("The title is correctly set");
+                    takePhoto(evidencesFolder + "\\R_OK_C.png", "", driverChrome, driverFirefox);
+                }
+            }
+        }catch (NoSuchElementException n){
+            System.out.println("The app is not correctly inicializate");
+            takePhoto(evidencesFolder + "\\R_ErrorInicializate_C.png", evidencesFolder + "", driverChrome, driverFirefox);
+        }
+    }
+
+/**
+ * Test with Java.
+ *
+ * @author Andrea Acuña
+ * Description: Joins the session and verifies that the participant name is correct
+ * @throws IOException
+ */
+@Test
+void T004_ParticipantName() throws IOException {
+    // Configurate the session in chrome
+    WebElement nameTextBox = driverChrome.findElement(By.id(idNameParticipant));
+    nameTextBox.clear();
+    nameTextBox.sendKeys(NAMEPARTICIPANT);
+    WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
+    joinButtonC.submit();
+
+    try{
+        if (driverChrome.findElement(By.xpath(xpathParticipant)).getText() == NAMEPARTICIPANT){
+                System.out.println("The name of the participant is correctly set");
+                takePhoto(evidencesFolder + "\\R_OK_C.png", "", driverChrome, driverFirefox);
+        }
+        
+    }catch (NoSuchElementException n){
+        System.out.println("The app is not correctly inicializate");
+        takePhoto(evidencesFolder + "\\R_ErrorInicializate_C.png", evidencesFolder + "", driverChrome, driverFirefox);
+    }
+}
+
+// ME GUSTARÍA HACER UN TEST PARA EL BOTÓN "SWITCH CAMERA"
 
     /**
     * AfterEach.
