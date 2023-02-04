@@ -38,7 +38,7 @@ class openViduReactTest {
 
     String XpathJoinButton = "//*[@id='join-dialog']/form/p[3]/input";
     String xpathOtherCamera = "/html/body/div/div/div/div[3]/div[2]/div/div/video";
-    String xpathParticipant = "//*[@id='main-video']/div/div/div/p";
+    String xpathParticipant = "//*[@id='video-container']/div/div/div/div/p";
     
     String idParticipant = "userName";
     String idLeaveButton = "buttonLeaveSession";

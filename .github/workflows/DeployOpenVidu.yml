@@ -47,7 +47,7 @@ jobs:
       working-directory: ./openvidu-basic-java
     - name: clientApplication
       run: |
-        npm install
+        npm install --legacy-peer-deps
         ng serve &
       working-directory: ./openvidu-angular
     - name: AngularTest
