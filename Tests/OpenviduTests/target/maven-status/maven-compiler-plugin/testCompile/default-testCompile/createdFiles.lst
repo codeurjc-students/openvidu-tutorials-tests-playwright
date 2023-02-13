@@ -1,5 +1,6 @@
-HelloWordTest.class
-openViduJsTest.class
-openViduVueTest.class
-openViduReactTest.class
-openViduAngularTest.class
+OpenViduReactTest.class
+OpenViduJsTest.class
+OpenViduVueTest.class
+OpenViduAngularTest.class
+Module.class
+OpenViduHelloWordTest.class

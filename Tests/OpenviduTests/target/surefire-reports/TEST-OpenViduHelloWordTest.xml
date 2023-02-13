@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="OpenViduVueTest" time="5.754" tests="4" errors="4" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="OpenViduHelloWordTest" time="4.398" tests="3" errors="3" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -56,7 +56,7 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="T003_SessionHeader" classname="OpenViduVueTest" time="1.352">
+  <testcase name="T003_SessionHeader" classname="OpenViduHelloWordTest" time="1.355">
     <error message="Could not start a new session. Response code 500. Message: session not created: This version of ChromeDriver only supports Chrome version 107&#10;Current browser version is 109.0.5414.120 with binary path C:\Program Files (x86)\Google\Chrome\Application\chrome.exe &#10;Host info: host: &apos;LAPTOP-1QEIDHPV&apos;, ip: &apos;192.168.1.35&apos;&#10;Build info: version: &apos;4.6.0&apos;, revision: &apos;79f1c02ae20&apos;&#10;System info: os.name: &apos;Windows 11&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;17.0.2&apos;&#10;Driver info: org.openqa.selenium.chrome.ChromeDriver&#10;Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}], desiredCapabilities=Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}}]" type="org.openqa.selenium.SessionNotCreatedException">org.openqa.selenium.SessionNotCreatedException: 
 Could not start a new session. Response code 500. Message: session not created: This version of ChromeDriver only supports Chrome version 107
 Current browser version is 109.0.5414.120 with binary path C:\Program Files (x86)\Google\Chrome\Application\chrome.exe 
@@ -65,15 +65,15 @@ Build info: version: '4.6.0', revision: '79f1c02ae20'
 System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.2'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
 Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}], desiredCapabilities=Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}}]
-	at OpenViduVueTest.setup(OpenViduVueTest.java:52)
+	at OpenViduHelloWordTest.setup(OpenViduHelloWordTest.java:50)
 </error>
-    <system-err><![CDATA[Starting ChromeDriver 107.0.5304.62 (1eec40d3a5764881c92085aaee66d25075c159aa-refs/branch-heads/5304@{#942}) on port 7309
+    <system-err><![CDATA[Starting ChromeDriver 107.0.5304.62 (1eec40d3a5764881c92085aaee66d25075c159aa-refs/branch-heads/5304@{#942}) on port 17126
 Only local connections are allowed.
 Please see https://chromedriver.chromium.org/security-considerations for suggestions on keeping ChromeDriver safe.
 ChromeDriver was started successfully.
 ]]></system-err>
   </testcase>
-  <testcase name="LeaveSession" classname="OpenViduVueTest" time="1.628">
+  <testcase name="T001_JoinSession" classname="OpenViduHelloWordTest" time="1.503">
     <error message="Could not start a new session. Response code 500. Message: session not created: This version of ChromeDriver only supports Chrome version 107&#10;Current browser version is 109.0.5414.120 with binary path C:\Program Files (x86)\Google\Chrome\Application\chrome.exe &#10;Host info: host: &apos;LAPTOP-1QEIDHPV&apos;, ip: &apos;192.168.1.35&apos;&#10;Build info: version: &apos;4.6.0&apos;, revision: &apos;79f1c02ae20&apos;&#10;System info: os.name: &apos;Windows 11&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;17.0.2&apos;&#10;Driver info: org.openqa.selenium.chrome.ChromeDriver&#10;Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}], desiredCapabilities=Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}}]" type="org.openqa.selenium.SessionNotCreatedException">org.openqa.selenium.SessionNotCreatedException: 
 Could not start a new session. Response code 500. Message: session not created: This version of ChromeDriver only supports Chrome version 107
 Current browser version is 109.0.5414.120 with binary path C:\Program Files (x86)\Google\Chrome\Application\chrome.exe 
@@ -82,15 +82,15 @@ Build info: version: '4.6.0', revision: '79f1c02ae20'
 System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.2'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
 Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}], desiredCapabilities=Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}}]
-	at OpenViduVueTest.setup(OpenViduVueTest.java:52)
+	at OpenViduHelloWordTest.setup(OpenViduHelloWordTest.java:50)
 </error>
-    <system-err><![CDATA[Starting ChromeDriver 107.0.5304.62 (1eec40d3a5764881c92085aaee66d25075c159aa-refs/branch-heads/5304@{#942}) on port 47216
+    <system-err><![CDATA[Starting ChromeDriver 107.0.5304.62 (1eec40d3a5764881c92085aaee66d25075c159aa-refs/branch-heads/5304@{#942}) on port 36885
 Only local connections are allowed.
 Please see https://chromedriver.chromium.org/security-considerations for suggestions on keeping ChromeDriver safe.
 ChromeDriver was started successfully.
 ]]></system-err>
   </testcase>
-  <testcase name="JoinSession" classname="OpenViduVueTest" time="1.52">
+  <testcase name="T002_LeaveSession" classname="OpenViduHelloWordTest" time="1.537">
     <error message="Could not start a new session. Response code 500. Message: session not created: This version of ChromeDriver only supports Chrome version 107&#10;Current browser version is 109.0.5414.120 with binary path C:\Program Files (x86)\Google\Chrome\Application\chrome.exe &#10;Host info: host: &apos;LAPTOP-1QEIDHPV&apos;, ip: &apos;192.168.1.35&apos;&#10;Build info: version: &apos;4.6.0&apos;, revision: &apos;79f1c02ae20&apos;&#10;System info: os.name: &apos;Windows 11&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;17.0.2&apos;&#10;Driver info: org.openqa.selenium.chrome.ChromeDriver&#10;Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}], desiredCapabilities=Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}}]" type="org.openqa.selenium.SessionNotCreatedException">org.openqa.selenium.SessionNotCreatedException: 
 Could not start a new session. Response code 500. Message: session not created: This version of ChromeDriver only supports Chrome version 107
 Current browser version is 109.0.5414.120 with binary path C:\Program Files (x86)\Google\Chrome\Application\chrome.exe 
@@ -99,26 +99,9 @@ Build info: version: '4.6.0', revision: '79f1c02ae20'
 System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.2'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
 Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}], desiredCapabilities=Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}}]
-	at OpenViduVueTest.setup(OpenViduVueTest.java:52)
+	at OpenViduHelloWordTest.setup(OpenViduHelloWordTest.java:50)
 </error>
-    <system-err><![CDATA[Starting ChromeDriver 107.0.5304.62 (1eec40d3a5764881c92085aaee66d25075c159aa-refs/branch-heads/5304@{#942}) on port 35741
-Only local connections are allowed.
-Please see https://chromedriver.chromium.org/security-considerations for suggestions on keeping ChromeDriver safe.
-ChromeDriver was started successfully.
-]]></system-err>
-  </testcase>
-  <testcase name="T004_ParticipantName" classname="OpenViduVueTest" time="1.245">
-    <error message="Could not start a new session. Response code 500. Message: session not created: This version of ChromeDriver only supports Chrome version 107&#10;Current browser version is 109.0.5414.120 with binary path C:\Program Files (x86)\Google\Chrome\Application\chrome.exe &#10;Host info: host: &apos;LAPTOP-1QEIDHPV&apos;, ip: &apos;192.168.1.35&apos;&#10;Build info: version: &apos;4.6.0&apos;, revision: &apos;79f1c02ae20&apos;&#10;System info: os.name: &apos;Windows 11&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;17.0.2&apos;&#10;Driver info: org.openqa.selenium.chrome.ChromeDriver&#10;Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}], desiredCapabilities=Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}}]" type="org.openqa.selenium.SessionNotCreatedException">org.openqa.selenium.SessionNotCreatedException: 
-Could not start a new session. Response code 500. Message: session not created: This version of ChromeDriver only supports Chrome version 107
-Current browser version is 109.0.5414.120 with binary path C:\Program Files (x86)\Google\Chrome\Application\chrome.exe 
-Host info: host: 'LAPTOP-1QEIDHPV', ip: '192.168.1.35'
-Build info: version: '4.6.0', revision: '79f1c02ae20'
-System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.2'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}], desiredCapabilities=Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}}]
-	at OpenViduVueTest.setup(OpenViduVueTest.java:52)
-</error>
-    <system-err><![CDATA[Starting ChromeDriver 107.0.5304.62 (1eec40d3a5764881c92085aaee66d25075c159aa-refs/branch-heads/5304@{#942}) on port 41488
+    <system-err><![CDATA[Starting ChromeDriver 107.0.5304.62 (1eec40d3a5764881c92085aaee66d25075c159aa-refs/branch-heads/5304@{#942}) on port 35802
 Only local connections are allowed.
 Please see https://chromedriver.chromium.org/security-considerations for suggestions on keeping ChromeDriver safe.
 ChromeDriver was started successfully.

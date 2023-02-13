@@ -1,30 +1,37 @@
 -------------------------------------------------------------------------------
-Test set: openViduJsTest
+Test set: OpenViduJsTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 15.699 s <<< FAILURE! - in openViduJsTest
-LeaveSession  Time elapsed: 7.81 s  <<< ERROR!
-org.openqa.selenium.NoSuchElementException: 
-no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id='join-dialog']/form/p[3]/input"}
-  (Session info: chrome=108.0.5359.125)
-For documentation on this error, please visit: https://selenium.dev/exceptions/#no_such_element
+Tests run: 3, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 4.961 s <<< FAILURE! - in OpenViduJsTest
+T003_SessionHeader  Time elapsed: 1.433 s  <<< ERROR!
+org.openqa.selenium.SessionNotCreatedException: 
+Could not start a new session. Response code 500. Message: session not created: This version of ChromeDriver only supports Chrome version 107
+Current browser version is 109.0.5414.120 with binary path C:\Program Files (x86)\Google\Chrome\Application\chrome.exe 
+Host info: host: 'LAPTOP-1QEIDHPV', ip: '192.168.1.35'
 Build info: version: '4.6.0', revision: '79f1c02ae20'
 System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.2'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Command: [ee626fbcdc075849ff3d27a8f2151e07, findElement {using=xpath, value=//*[@id='join-dialog']/form/p[3]/input}]
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 108.0.5359.125, chrome: {chromedriverVersion: 107.0.5304.62 (1eec40d3a576..., userDataDir: C:\Users\Usuario\AppData\Lo...}, goog:chromeOptions: {debuggerAddress: localhost:52699}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: WINDOWS, proxy: Proxy(), se:cdp: ws://localhost:52699/devtoo..., se:cdpVersion: 108.0.5359.125, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
-Session ID: ee626fbcdc075849ff3d27a8f2151e07
-	at openViduJsTest.LeaveSession(openViduJsTest.java:116)
+Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}], desiredCapabilities=Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}}]
+	at OpenViduJsTest.setup(OpenViduJsTest.java:50)
 
-JoinSession  Time elapsed: 7.889 s  <<< ERROR!
-org.openqa.selenium.NoSuchElementException: 
-no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id='join-dialog']/form/p[3]/input"}
-  (Session info: chrome=108.0.5359.125)
-For documentation on this error, please visit: https://selenium.dev/exceptions/#no_such_element
+T001_JoinSession  Time elapsed: 1.867 s  <<< ERROR!
+org.openqa.selenium.SessionNotCreatedException: 
+Could not start a new session. Response code 500. Message: session not created: This version of ChromeDriver only supports Chrome version 107
+Current browser version is 109.0.5414.120 with binary path C:\Program Files (x86)\Google\Chrome\Application\chrome.exe 
+Host info: host: 'LAPTOP-1QEIDHPV', ip: '192.168.1.35'
 Build info: version: '4.6.0', revision: '79f1c02ae20'
 System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.2'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Command: [89cdc70981a80c60333354a038173395, findElement {using=xpath, value=//*[@id='join-dialog']/form/p[3]/input}]
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 108.0.5359.125, chrome: {chromedriverVersion: 107.0.5304.62 (1eec40d3a576..., userDataDir: C:\Users\Usuario\AppData\Lo...}, goog:chromeOptions: {debuggerAddress: localhost:52812}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: WINDOWS, proxy: Proxy(), se:cdp: ws://localhost:52812/devtoo..., se:cdpVersion: 108.0.5359.125, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
-Session ID: 89cdc70981a80c60333354a038173395
-	at openViduJsTest.JoinSession(openViduJsTest.java:78)
+Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}], desiredCapabilities=Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}}]
+	at OpenViduJsTest.setup(OpenViduJsTest.java:50)
+
+T002_LeaveSession  Time elapsed: 1.657 s  <<< ERROR!
+org.openqa.selenium.SessionNotCreatedException: 
+Could not start a new session. Response code 500. Message: session not created: This version of ChromeDriver only supports Chrome version 107
+Current browser version is 109.0.5414.120 with binary path C:\Program Files (x86)\Google\Chrome\Application\chrome.exe 
+Host info: host: 'LAPTOP-1QEIDHPV', ip: '192.168.1.35'
+Build info: version: '4.6.0', revision: '79f1c02ae20'
+System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.2'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}], desiredCapabilities=Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}}]
+	at OpenViduJsTest.setup(OpenViduJsTest.java:50)
 

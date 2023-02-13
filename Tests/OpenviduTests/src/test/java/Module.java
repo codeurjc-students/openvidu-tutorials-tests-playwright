@@ -22,7 +22,7 @@ public class Module{
      * Description: set up two webDrivers with headless mode
      * Return: List with 2 browsers configurated
      */
-    List<WebDriver> setUpTwoBrowsers(){
+    public List<WebDriver> setUpTwoBrowsers(){
 
         WebDriver driverChrome;
         WebDriver driverFirefox;
@@ -45,42 +45,43 @@ public class Module{
         return browsers;
     }
 
-/**
-* method.
-*
-* @author Andrea Acuña
-* Description: take a screenshot to create an evidence.
-* Parameters: 
-*          - url1: the relative or absolute path to a evidence file of the chrome photo
-*          - url2: the relative or absolute path to a evidence file of the firefox photo
-*/
-static void takePhoto(String url1, String url2, WebDriver c, WebDriver f) throws IOException{
-    try {
-        if(url1 != ""){
-            File scrFileC = ((TakesScreenshot)c).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(scrFileC, new File(url1));
+    /**
+    * method.
+    *
+    * @author Andrea Acuña
+    * Description: take a screenshot to create an evidence.
+    * Parameters: 
+    *          - url1: the relative or absolute path to a evidence file of the chrome photo
+    *          - url2: the relative or absolute path to a evidence file of the firefox photo
+    */
+    public void takePhoto(String url1, String url2, WebDriver c, WebDriver f) throws IOException{
+        try {
+            if(url1 != ""){
+                File scrFileC = ((TakesScreenshot)c).getScreenshotAs(OutputType.FILE);
+                FileUtils.copyFile(scrFileC, new File(url1));
+            }
+            if(url2 != ""){
+                File scrFileF = ((TakesScreenshot)f).getScreenshotAs(OutputType.FILE);
+                FileUtils.copyFile(scrFileF, new File(url2));
+            }          
+        } catch (Exception e) {
+            System.out.println("an error has occurred with the screenshot. Please preview the url");
         }
-        if(url2 != ""){
-            File scrFileF = ((TakesScreenshot)f).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(scrFileF, new File(url2));
-        }          
-    } catch (Exception e) {
-        System.out.println("an error has occurred with the screenshot. Please preview the url");
     }
-}
 
-/**
- * method.
- *
- * @author Andrea Acuña
- * Description: close both drivers passed by parameter
- */
-void quitTwoBrowsers(WebDriver driverChrome, WebDriver driverFirefox) {
-    if (driverChrome != null){
-        driverChrome.quit();
+    /**
+     * method.
+     *
+     * @author Andrea Acuña
+     * Description: close both drivers passed by parameter
+     */
+    public void quitTwoBrowsers(WebDriver driverChrome, WebDriver driverFirefox) {
+        if (driverChrome != null){
+            driverChrome.quit();
+        }
+        if (driverFirefox != null){
+            driverFirefox.quit();
+        }
     }
-    if (driverFirefox != null){
-        driverFirefox.quit();
-    }
-}
+
 }

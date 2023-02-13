@@ -1,28 +1,48 @@
 -------------------------------------------------------------------------------
-Test set: openViduAngularTest
+Test set: OpenViduAngularTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 23.559 s <<< FAILURE! - in openViduAngularTest
-LeaveSession  Time elapsed: 11.433 s  <<< ERROR!
-org.openqa.selenium.WebDriverException: 
-unknown error: net::ERR_CONNECTION_REFUSED
-  (Session info: chrome=108.0.5359.125)
+Tests run: 4, Failures: 0, Errors: 4, Skipped: 0, Time elapsed: 8.868 s <<< FAILURE! - in OpenViduAngularTest
+T003_SessionHeader  Time elapsed: 4.258 s  <<< ERROR!
+org.openqa.selenium.SessionNotCreatedException: 
+Could not start a new session. Response code 500. Message: session not created: This version of ChromeDriver only supports Chrome version 107
+Current browser version is 109.0.5414.120 with binary path C:\Program Files (x86)\Google\Chrome\Application\chrome.exe 
+Host info: host: 'LAPTOP-1QEIDHPV', ip: '192.168.1.35'
 Build info: version: '4.6.0', revision: '79f1c02ae20'
 System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.2'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Command: [079d2b39865acd7618c3be1697cb1b26, get {url=http://localhost:4200/}]
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 108.0.5359.125, chrome: {chromedriverVersion: 107.0.5304.62 (1eec40d3a576..., userDataDir: C:\Users\Usuario\AppData\Lo...}, goog:chromeOptions: {debuggerAddress: localhost:52466}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: WINDOWS, proxy: Proxy(), se:cdp: ws://localhost:52466/devtoo..., se:cdpVersion: 108.0.5359.125, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
-Session ID: 079d2b39865acd7618c3be1697cb1b26
-	at openViduAngularTest.setup(openViduAngularTest.java:64)
+Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}], desiredCapabilities=Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}}]
+	at OpenViduAngularTest.setup(OpenViduAngularTest.java:55)
 
-JoinSession  Time elapsed: 12.126 s  <<< ERROR!
-org.openqa.selenium.WebDriverException: 
-unknown error: net::ERR_CONNECTION_REFUSED
-  (Session info: chrome=108.0.5359.125)
+T001_JoinSession  Time elapsed: 1.506 s  <<< ERROR!
+org.openqa.selenium.SessionNotCreatedException: 
+Could not start a new session. Response code 500. Message: session not created: This version of ChromeDriver only supports Chrome version 107
+Current browser version is 109.0.5414.120 with binary path C:\Program Files (x86)\Google\Chrome\Application\chrome.exe 
+Host info: host: 'LAPTOP-1QEIDHPV', ip: '192.168.1.35'
 Build info: version: '4.6.0', revision: '79f1c02ae20'
 System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.2'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Command: [e49518165b3f66e8ebc7c5a629c4bc97, get {url=http://localhost:4200/}]
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 108.0.5359.125, chrome: {chromedriverVersion: 107.0.5304.62 (1eec40d3a576..., userDataDir: C:\Users\Usuario\AppData\Lo...}, goog:chromeOptions: {debuggerAddress: localhost:52579}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: WINDOWS, proxy: Proxy(), se:cdp: ws://localhost:52579/devtoo..., se:cdpVersion: 108.0.5359.125, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
-Session ID: e49518165b3f66e8ebc7c5a629c4bc97
-	at openViduAngularTest.setup(openViduAngularTest.java:64)
+Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}], desiredCapabilities=Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}}]
+	at OpenViduAngularTest.setup(OpenViduAngularTest.java:55)
+
+T002_LeaveSession  Time elapsed: 1.581 s  <<< ERROR!
+org.openqa.selenium.SessionNotCreatedException: 
+Could not start a new session. Response code 500. Message: session not created: This version of ChromeDriver only supports Chrome version 107
+Current browser version is 109.0.5414.120 with binary path C:\Program Files (x86)\Google\Chrome\Application\chrome.exe 
+Host info: host: 'LAPTOP-1QEIDHPV', ip: '192.168.1.35'
+Build info: version: '4.6.0', revision: '79f1c02ae20'
+System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.2'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}], desiredCapabilities=Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}}]
+	at OpenViduAngularTest.setup(OpenViduAngularTest.java:55)
+
+T004_ParticipantName  Time elapsed: 1.487 s  <<< ERROR!
+org.openqa.selenium.SessionNotCreatedException: 
+Could not start a new session. Response code 500. Message: session not created: This version of ChromeDriver only supports Chrome version 107
+Current browser version is 109.0.5414.120 with binary path C:\Program Files (x86)\Google\Chrome\Application\chrome.exe 
+Host info: host: 'LAPTOP-1QEIDHPV', ip: '192.168.1.35'
+Build info: version: '4.6.0', revision: '79f1c02ae20'
+System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.2'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}], desiredCapabilities=Capabilities {browserName: chrome, goog:chromeOptions: {args: [--use-fake-ui-for-media-stream, --use-fake-device-for-media...], extensions: []}}}]
+	at OpenViduAngularTest.setup(OpenViduAngularTest.java:55)
 
