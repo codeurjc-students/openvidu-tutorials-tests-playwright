@@ -1,21 +1,16 @@
-import java.io.File;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.IOException;
 import java.time.Duration;
+import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -24,7 +19,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * Test for the hello word for open vidu 
  * @author Andrea Acuña
  */
-class HelloWordTest {
+class OpenViduHelloWordTest extends Module{
 
     String evidencesFolder = "..\\..\\evidence";
 
@@ -52,18 +47,9 @@ class HelloWordTest {
  */
     @BeforeEach
     void setup() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless", "--disable-gpu", "--ignore-certificate-errors","--disable-extensions","--no-sandbox","--disable-dev-shm-usage");
-        options.addArguments("--use-fake-ui-for-media-stream");
-        options.addArguments("--use-fake-device-for-media-stream");
-        driverChrome = new ChromeDriver(options);
-
-        FirefoxOptions optionsF = new FirefoxOptions();
-        optionsF.setHeadless(true);
-        optionsF.addPreference("media.navigator.permission.disabled", true);
-        optionsF.addPreference("media.navigator.streams.fake", true);
-        driverFirefox = new FirefoxDriver(optionsF);
-
+        List<WebDriver> browsers = setUpTwoBrowsers();
+        driverChrome = browsers.get(0);
+        driverFirefox = browsers.get(1);
         driverChrome.get(URL); 
         driverFirefox.get(URL);
     }
@@ -100,8 +86,8 @@ class HelloWordTest {
                 takePhoto("", evidencesFolder + "\\HW_OK_F.png", driverChrome, driverFirefox);
             }
         }catch (NoSuchElementException n){
-            System.out.println("The app is not correctly inicializate");
             takePhoto(evidencesFolder + "\\HW_ErrorInicializate_C.png", evidencesFolder + "\\HW_ErrorInicializate_F.png", driverChrome, driverFirefox);
+            fail("The app is not correctly inicializate");
         }
     }
 
@@ -165,12 +151,12 @@ class HelloWordTest {
                 }
 
             }catch (NoSuchElementException n){
-                System.out.println("The app is not correctly working");
                 takePhoto(evidencesFolder + "\\HW_Error_C.png", evidencesFolder + "\\HW_Error_F.png", driverChrome, driverFirefox);
+                fail("The app is not correctly working");
             }
         }else{
-            System.out.println("The video is not playing properly");
             takePhoto(evidencesFolder + "\\HW_VideoNotWorking_C.png", evidencesFolder + "\\HW_VideoNotWorking_F.png", driverChrome, driverFirefox);
+            fail("The video is not playing properly");
         }
     }
 
@@ -199,8 +185,8 @@ class HelloWordTest {
                 }
             }
         }catch (NoSuchElementException n){
-            System.out.println("The app is not correctly inicializate");
             takePhoto(evidencesFolder + "\\HW_ErrorInicializate_C.png", evidencesFolder + "", driverChrome, driverFirefox);
+            fail("The app is not correctly inicializate");
         }
     }
 
@@ -212,37 +198,6 @@ class HelloWordTest {
  */
     @AfterEach
     void quit() {
-        if (driverChrome != null){
-            driverChrome.quit();
-        }
-        if (driverFirefox != null){
-            driverFirefox.quit();
-        }
+        quitTwoBrowsers(driverChrome, driverFirefox);
     }
-
-    
-/**
-* method.
-*
-* @author Andrea Acuña
-* Description: take a screenshot to create an evidence.
-* Parameters: 
-*          - url1: the relative or absolute path to a evidence file of the chrome photo
-*          - url2: the relative or absolute path to a evidence file of the firefox photo
-*/
-    public static void takePhoto(String url1, String url2, WebDriver c, WebDriver f) throws IOException{
-        try {
-            if(url1 != ""){
-                File scrFileC = ((TakesScreenshot)c).getScreenshotAs(OutputType.FILE);
-                FileUtils.copyFile(scrFileC, new File(url1));
-            }
-            if(url2 != ""){
-                File scrFileF = ((TakesScreenshot)f).getScreenshotAs(OutputType.FILE);
-                FileUtils.copyFile(scrFileF, new File(url2));
-            }          
-        } catch (Exception e) {
-            System.out.println("an error has occurred with the screenshot. Please preview the url");
-        }
-    }
-
 }
