@@ -141,4 +141,4 @@ jobs:
         if: success() || failure()      
         with:
           name: test-results
-          path: ./Tests/./Tests/src/test/evidence/jest-*.xml   
+          path: jest-junit.xml   
