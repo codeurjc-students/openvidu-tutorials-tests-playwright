@@ -121,7 +121,7 @@ jobs:
       working-directory: ./openvidu-vue
     - name: VueTest
       run: mvn test -Dtest="OpenViduVueTest"
-      working-directory: ./Tests/./Tests
+      working-directory: ./Tests/OpenviduTests
 
   Report:
     name: Build & Test
