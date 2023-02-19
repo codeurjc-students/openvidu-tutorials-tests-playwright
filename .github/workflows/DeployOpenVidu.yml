@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-  HelloWordTestDeploy:
+  HelloWordTest:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -28,7 +28,7 @@ jobs:
         http-server openvidu-hello-world/web &
       working-directory: .
     - name: TestHelloWord
-      run: mvn test -Dtest="HelloWordTest"
+      run: mvn test -Dtest="OpenViduHelloWordTest"
       working-directory: ./Tests/OpenviduTests
 
   AngularTest:
@@ -51,7 +51,7 @@ jobs:
         ng serve &
       working-directory: ./openvidu-angular
     - name: AngularTest
-      run: mvn test -Dtest="openViduAngularTest"
+      run: mvn test -Dtest="OpenViduAngularTest"
       working-directory: ./Tests/OpenviduTests
 
   javaScriptTest:
@@ -74,7 +74,7 @@ jobs:
         http-server openvidu-js/web &
       working-directory: .
     - name: JSTest
-      run: mvn test -Dtest="openViduJsTest"
+      run: mvn test -Dtest="OpenViduJsTest"
       working-directory: ./Tests/OpenviduTests
 
   ReactTest:
@@ -97,7 +97,7 @@ jobs:
         npm start &
       working-directory: ./openvidu-react
     - name: ReactTest
-      run: mvn test -Dtest="openViduReactTest"
+      run: mvn test -Dtest="OpenViduReactTest"
       working-directory: ./Tests/OpenviduTests
 
   VueTest:
@@ -120,5 +120,5 @@ jobs:
         npm run serve &
       working-directory: ./openvidu-vue
     - name: VueTest
-      run: mvn test -Dtest="openViduVueTest"
+      run: mvn test -Dtest="OpenViduVueTest"
       working-directory: ./Tests/OpenviduTests
