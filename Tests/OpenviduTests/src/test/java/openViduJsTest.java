@@ -47,7 +47,7 @@ class OpenViduJsTest extends Module{
  */
     @BeforeEach
     void setup() {
-        List<WebDriver> browsers = setUpTwoBrowsers();
+        List<WebDriver> browsers = super.setUpTwoBrowsers();
         driverChrome = browsers.get(0);
         driverFirefox = browsers.get(1);
         driverChrome.get(URL); 
@@ -79,14 +79,14 @@ class OpenViduJsTest extends Module{
         try{
             if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 1");
-                takePhoto(evidencesFolder + "\\J_OK_C.png", "", driverChrome, driverFirefox);
+                super.takePhoto(evidencesFolder + "\\J_OK_C.png", "", driverChrome, driverFirefox);
             }
             if (!driverFirefox.findElements(By.id(idHeader)).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 2");
-                takePhoto("", evidencesFolder + "\\J_OK_F.png", driverChrome, driverFirefox);
+                super.takePhoto("", evidencesFolder + "\\J_OK_F.png", driverChrome, driverFirefox);
             }
         }catch (NoSuchElementException n){
-            takePhoto(evidencesFolder + "\\J_ErrorInicializate_C.png", evidencesFolder + "\\J_ErrorInicializate_F.png", driverChrome, driverFirefox);
+            super.takePhoto(evidencesFolder + "\\J_ErrorInicializate_C.png", evidencesFolder + "\\J_ErrorInicializate_F.png", driverChrome, driverFirefox);
             fail("The app is not correctly inicializate");
         }
     }
@@ -124,7 +124,7 @@ class OpenViduJsTest extends Module{
         // see if the video is playing properly
         String currentTimeChrome = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
         String currentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
-        takePhoto(evidencesFolder + "\\J_VideoPlaying_C.png", evidencesFolder + "\\J_VideoPlaying_F.png", driverChrome, driverFirefox);
+        super.takePhoto(evidencesFolder + "\\J_VideoPlaying_C.png", evidencesFolder + "\\J_VideoPlaying_F.png", driverChrome, driverFirefox);
 
 
         if (Float.parseFloat(currentTimeChrome) > 0 && Float.parseFloat(currentTimeFirefox) > 0){
@@ -136,7 +136,7 @@ class OpenViduJsTest extends Module{
                 }
                 if(joinButtonC.isDisplayed()){
                     System.out.println("The app leave the session correctly in browser 1");
-                    takePhoto(evidencesFolder + "\\J_LeaveSession_C.png", "", driverChrome, driverFirefox);
+                    super.takePhoto(evidencesFolder + "\\J_LeaveSession_C.png", "", driverChrome, driverFirefox);
                 }
 
                 //Leave the session with Firefox
@@ -147,15 +147,15 @@ class OpenViduJsTest extends Module{
                 }
                 if(joinButtonF.isDisplayed()){
                     System.out.println("The app leave the session correctly in browser 2");
-                    takePhoto("", evidencesFolder + "\\J_LeaveSession_F.png", driverChrome, driverFirefox);
+                    super.takePhoto("", evidencesFolder + "\\J_LeaveSession_F.png", driverChrome, driverFirefox);
                 }
 
             }catch (NoSuchElementException n){
-                takePhoto(evidencesFolder + "\\J_Error_C.png", evidencesFolder + "\\J_Error_F.png", driverChrome, driverFirefox);
+                super.takePhoto(evidencesFolder + "\\J_Error_C.png", evidencesFolder + "\\J_Error_F.png", driverChrome, driverFirefox);
                 fail("The app is not correctly working");
             }
         }else{
-            takePhoto(evidencesFolder + "\\J_VideoNotWorking_C.png", evidencesFolder + "\\J_VideoNotWorking_F.png", driverChrome, driverFirefox);
+            super.takePhoto(evidencesFolder + "\\J_VideoNotWorking_C.png", evidencesFolder + "\\J_VideoNotWorking_F.png", driverChrome, driverFirefox);
             fail("The video is not playing properly");
         }
     }
@@ -180,11 +180,11 @@ void T003_SessionHeader() throws IOException {
         if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
             if (driverChrome.findElement(By.id(idHeader)).getText() == NAMESESSION){
                 System.out.println("The title is correctly set");
-                takePhoto(evidencesFolder + "\\J_OK_C.png", "", driverChrome, driverFirefox);
+                super.takePhoto(evidencesFolder + "\\J_OK_C.png", "", driverChrome, driverFirefox);
             }
         }
     }catch (NoSuchElementException n){
-        takePhoto(evidencesFolder + "\\J_ErrorInicializate_C.png", evidencesFolder + "", driverChrome, driverFirefox);
+        super.takePhoto(evidencesFolder + "\\J_ErrorInicializate_C.png", evidencesFolder + "", driverChrome, driverFirefox);
         fail("The app is not correctly inicializate");
     }
 }
@@ -197,7 +197,7 @@ void T003_SessionHeader() throws IOException {
  */
     @AfterEach
     void quit() {
-        quitTwoBrowsers(driverChrome, driverFirefox);
+        super.quitTwoBrowsers(driverChrome, driverFirefox);
     }
 
 }

@@ -49,7 +49,7 @@ class OpenViduVueTest extends Module{
  */
     @BeforeEach
     void setup() {
-        List<WebDriver> browsers = setUpTwoBrowsers();
+        List<WebDriver> browsers = super.setUpTwoBrowsers();
         driverChrome = browsers.get(0);
         driverFirefox = browsers.get(1);
         driverChrome.get(URL); 
@@ -81,14 +81,14 @@ class OpenViduVueTest extends Module{
         try{
             if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 1");
-                takePhoto(evidencesFolder + "\\VUE_OK_C.png", "", driverChrome, driverFirefox);
+                super.takePhoto(evidencesFolder + "\\VUE_OK_C.png", "", driverChrome, driverFirefox);
             }
             if (!driverFirefox.findElements(By.id(idHeader)).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 2");
-                takePhoto("", evidencesFolder + "\\VUE_OK_F.png", driverChrome, driverFirefox);
+                super.takePhoto("", evidencesFolder + "\\VUE_OK_F.png", driverChrome, driverFirefox);
             }
         }catch (NoSuchElementException n){
-            takePhoto(evidencesFolder + "\\VUE_ErrorInicializate_C.png", evidencesFolder + "\\VUE_ErrorInicializate_F.png", driverChrome, driverFirefox);
+            super.takePhoto(evidencesFolder + "\\VUE_ErrorInicializate_C.png", evidencesFolder + "\\VUE_ErrorInicializate_F.png", driverChrome, driverFirefox);
             fail("The app is not correctly inicializate");
         }
     }
@@ -126,7 +126,7 @@ class OpenViduVueTest extends Module{
         // see if the video is playing properly
         String currentTimeChrome = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
         String currentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
-        takePhoto(evidencesFolder + "\\VUE_VideoPlaying_C.png", evidencesFolder + "\\VUE_VideoPlaying_F.png", driverChrome, driverFirefox);
+        super.takePhoto(evidencesFolder + "\\VUE_VideoPlaying_C.png", evidencesFolder + "\\VUE_VideoPlaying_F.png", driverChrome, driverFirefox);
 
 
         if (Float.parseFloat(currentTimeChrome) > 0 && Float.parseFloat(currentTimeFirefox) > 0){
@@ -138,7 +138,7 @@ class OpenViduVueTest extends Module{
                 }
                 if(joinButtonC.isDisplayed()){
                     System.out.println("The app leave the session correctly in browser 1");
-                    takePhoto(evidencesFolder + "\\VUE_LeaveSession_C.png", "", driverChrome, driverFirefox);
+                    super.takePhoto(evidencesFolder + "\\VUE_LeaveSession_C.png", "", driverChrome, driverFirefox);
                 }
 
                 //Leave the session with Firefox
@@ -149,15 +149,15 @@ class OpenViduVueTest extends Module{
                 }
                 if(joinButtonF.isDisplayed()){
                     System.out.println("The app leave the session correctly in browser 2");
-                    takePhoto("", evidencesFolder + "\\VUE_LeaveSession_F.png", driverChrome, driverFirefox);
+                    super.takePhoto("", evidencesFolder + "\\VUE_LeaveSession_F.png", driverChrome, driverFirefox);
                 }
 
             }catch (NoSuchElementException n){
-                takePhoto(evidencesFolder + "\\VUE_Error_C.png", evidencesFolder + "\\VUE_Error_F.png", driverChrome, driverFirefox);
+                super.takePhoto(evidencesFolder + "\\VUE_Error_C.png", evidencesFolder + "\\VUE_Error_F.png", driverChrome, driverFirefox);
                 fail("The app is not correctly working");
             }
         }else{
-            takePhoto(evidencesFolder + "\\VUE_VideoNotWorking_C.png", evidencesFolder + "\\VUE_VideoNotWorking_F.png", driverChrome, driverFirefox);
+            super.takePhoto(evidencesFolder + "\\VUE_VideoNotWorking_C.png", evidencesFolder + "\\VUE_VideoNotWorking_F.png", driverChrome, driverFirefox);
             fail("The video is not playing properly");
         }
     }
@@ -182,11 +182,11 @@ class OpenViduVueTest extends Module{
                 if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
                     if (driverChrome.findElement(By.id(idHeader)).getText() == NAMESESSION){
                         System.out.println("The title is correctly set");
-                        takePhoto(evidencesFolder + "\\VUE_OK_C.png", "", driverChrome, driverFirefox);
+                        super.takePhoto(evidencesFolder + "\\VUE_OK_C.png", "", driverChrome, driverFirefox);
                     }
                 }
             }catch (NoSuchElementException n){
-                takePhoto(evidencesFolder + "\\VUE_ErrorInicializate_C.png", evidencesFolder + "", driverChrome, driverFirefox);
+                super.takePhoto(evidencesFolder + "\\VUE_ErrorInicializate_C.png", evidencesFolder + "", driverChrome, driverFirefox);
                 fail("The app is not correctly inicializate");
             }
     }
@@ -210,11 +210,11 @@ class OpenViduVueTest extends Module{
         try{
             if (driverChrome.findElement(By.xpath(xpathParticipant)).getText() == NAMEPARTICIPANT){
                     System.out.println("The name of the participant is correctly set");
-                    takePhoto(evidencesFolder + "\\VUE_OK_C.png", "", driverChrome, driverFirefox);
+                    super.takePhoto(evidencesFolder + "\\VUE_OK_C.png", "", driverChrome, driverFirefox);
             }
             
         }catch (NoSuchElementException n){
-            takePhoto(evidencesFolder + "\\VUE_ErrorInicializate_C.png", evidencesFolder + "", driverChrome, driverFirefox);
+            super.takePhoto(evidencesFolder + "\\VUE_ErrorInicializate_C.png", evidencesFolder + "", driverChrome, driverFirefox);
             fail("The app is not correctly inicializate");
         }
     }
@@ -227,7 +227,7 @@ class OpenViduVueTest extends Module{
  */
     @AfterEach
     void quit() {
-        quitTwoBrowsers(driverChrome, driverFirefox);
+        super.quitTwoBrowsers(driverChrome, driverFirefox);
     }
 
 }

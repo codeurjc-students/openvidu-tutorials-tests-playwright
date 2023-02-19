@@ -52,7 +52,7 @@ class OpenViduAngularTest extends Module{
  */
     @BeforeEach
     void setup() {
-        List<WebDriver> browsers = setUpTwoBrowsers();
+        List<WebDriver> browsers = super.setUpTwoBrowsers();
         driverChrome = browsers.get(0);
         driverFirefox = browsers.get(1);
         driverChrome.get(URL); 
@@ -91,14 +91,14 @@ class OpenViduAngularTest extends Module{
         try{
             if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 1");
-                takePhoto(evidencesFolder + "\\A_OK_C.png", "", driverChrome, driverFirefox);
+                super.takePhoto(evidencesFolder + "\\A_OK_C.png", "", driverChrome, driverFirefox);
             }
             if (!driverFirefox.findElements(By.id(idHeader)).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 2");
-                takePhoto("", evidencesFolder + "\\A_OK_F.png", driverChrome, driverFirefox);
+                super.takePhoto("", evidencesFolder + "\\A_OK_F.png", driverChrome, driverFirefox);
             }
         }catch (NoSuchElementException n){
-            takePhoto(evidencesFolder + "\\A_ERRORInicializate_C.png", evidencesFolder + "\\A_ERRORInicializate_F.png", driverChrome, driverFirefox);
+            super.takePhoto(evidencesFolder + "\\A_ERRORInicializate_C.png", evidencesFolder + "\\A_ERRORInicializate_F.png", driverChrome, driverFirefox);
             fail("The app is not correctly inicializate");
         }
     }
@@ -143,7 +143,7 @@ class OpenViduAngularTest extends Module{
          String currentTimeChrome = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
          String currentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
 
-         takePhoto(evidencesFolder + "\\A_videoPlaying_C.png", evidencesFolder + "\\A_videoPlaying_F.png", driverChrome, driverFirefox);
+         super. takePhoto(evidencesFolder + "\\A_videoPlaying_C.png", evidencesFolder + "\\A_videoPlaying_F.png", driverChrome, driverFirefox);
  
          if (Float.parseFloat(currentTimeChrome) > 0 && Float.parseFloat(currentTimeFirefox) > 0){
                  //Leave the session with chrome
@@ -155,11 +155,11 @@ class OpenViduAngularTest extends Module{
                  WebElement titleC = driverChrome.findElement(By.xpath(xpathHeader));
                  if(titleC.isDisplayed()){
                      System.out.println("The app leave the session correctly in browser 1");
-                     takePhoto(evidencesFolder + "\\A_LeaveSession_C.png", "", driverChrome, driverFirefox);
+                     super.takePhoto(evidencesFolder + "\\A_LeaveSession_C.png", "", driverChrome, driverFirefox);
                  }
  
              }catch (NoSuchElementException n){
-                 takePhoto(evidencesFolder + "\\A_NOTLeaveSession_C.png", "", driverChrome, driverFirefox);
+                super.takePhoto(evidencesFolder + "\\A_NOTLeaveSession_C.png", "", driverChrome, driverFirefox);
                  fail("The app is not correctly working in browser 1");
              }
  
@@ -172,15 +172,15 @@ class OpenViduAngularTest extends Module{
                  WebElement titleF = driverFirefox.findElement(By.xpath(xpathHeader));
                  if(titleF.isDisplayed()){
                      System.out.println("The app leave the session correctly in browser 2");
-                     takePhoto("", evidencesFolder + "\\A_LeaveSession_F.png", driverChrome, driverFirefox);
+                     super.takePhoto("", evidencesFolder + "\\A_LeaveSession_F.png", driverChrome, driverFirefox);
                  }
  
              }catch (NoSuchElementException n){
-                 takePhoto("", evidencesFolder + "\\A_NOTLeaveSession_F.png", driverChrome, driverFirefox);
+                super.takePhoto("", evidencesFolder + "\\A_NOTLeaveSession_F.png", driverChrome, driverFirefox);
                  fail("The app is not correctly working in browser 2");
              }
          }else{
-             takePhoto(evidencesFolder + "\\A_ERROR_C.png", evidencesFolder + "\\A_ERROR_F.png", driverChrome, driverFirefox);
+            super.takePhoto(evidencesFolder + "\\A_ERROR_C.png", evidencesFolder + "\\A_ERROR_F.png", driverChrome, driverFirefox);
              fail("The video is not playing properly");
          }
     }
@@ -205,11 +205,11 @@ class OpenViduAngularTest extends Module{
             if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
                 if (driverChrome.findElement(By.id(idHeader)).getText() == NAMESESSION){
                     System.out.println("The title is correctly set");
-                    takePhoto(evidencesFolder + "\\A_OK_C.png", "", driverChrome, driverFirefox);
+                    super.takePhoto(evidencesFolder + "\\A_OK_C.png", "", driverChrome, driverFirefox);
                 }
             }
         }catch (NoSuchElementException n){
-            takePhoto(evidencesFolder + "\\A_ErrorInicializate_C.png", evidencesFolder + "", driverChrome, driverFirefox);
+            super.takePhoto(evidencesFolder + "\\A_ErrorInicializate_C.png", evidencesFolder + "", driverChrome, driverFirefox);
             fail("The app is not correctly inicializate");
         }
     }
@@ -233,11 +233,11 @@ class OpenViduAngularTest extends Module{
         try{
             if (driverChrome.findElement(By.xpath(xpathParticipant)).getText() == NAMEPARTICIPANT){
                     System.out.println("The name of the participant is correctly set");
-                    takePhoto(evidencesFolder + "\\A_OK_C.png", "", driverChrome, driverFirefox);
+                    super.takePhoto(evidencesFolder + "\\A_OK_C.png", "", driverChrome, driverFirefox);
             }
             
         }catch (NoSuchElementException n){
-            takePhoto(evidencesFolder + "\\A_ErrorInicializate_C.png", evidencesFolder + "", driverChrome, driverFirefox);
+            super.takePhoto(evidencesFolder + "\\A_ErrorInicializate_C.png", evidencesFolder + "", driverChrome, driverFirefox);
             fail("The app is not correctly inicializate");
         }
     }
@@ -250,7 +250,7 @@ class OpenViduAngularTest extends Module{
     */
     @AfterEach
     void quit() {
-        quitTwoBrowsers(driverChrome, driverFirefox);
+        super.quitTwoBrowsers(driverChrome, driverFirefox);
     }
 
 }
