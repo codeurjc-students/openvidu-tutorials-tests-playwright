@@ -128,14 +128,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2     
-      - run: |
-          if [ -e yarn.lock ]; then
-          yarn install --frozen-lockfile
-          elif [ -e package-lock.json ]; then
-          npm ci
-          else
-          npm i
-          fi               
+      - run: npm ci            
       - run: npm test  
       - uses: actions/upload-artifact@v2 
         if: success() || failure()      
