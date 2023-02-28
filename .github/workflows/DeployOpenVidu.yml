@@ -53,6 +53,8 @@ jobs:
     - name: Execute tests
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduAngularTest"
       working-directory: ./Tests/OpenviduTests
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3  
 
   javaScriptTest:
     runs-on: ubuntu-latest
