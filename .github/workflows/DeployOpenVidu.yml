@@ -12,22 +12,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
+    - name: Execute OpenVidu Dev container
       run: docker run --detach=true -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.24.0
     - name: Set up JDK 11
       uses: actions/setup-java@v3
       with:
         java-version: '11'
         distribution: 'adopt'
-    - name: Build with Maven
+    - name: Execute OpenVidu Tutorial Java Backend
       run: mvn --no-transfer-progress --batch-mode spring-boot:run &
       working-directory: ./openvidu-basic-java
-    - name: Build the server
+    - name: Execute http-server to serve static web
       run: |
         npm install --location=global http-server
         http-server openvidu-hello-world/web &
       working-directory: .
-    - name: TestHelloWord
+    - name: Execute tests
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduHelloWordTest"
       working-directory: ./Tests/OpenviduTests
 
@@ -35,22 +35,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
+    - name: Execute OpenVidu Dev container
       run: docker run --detach=true -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.24.0
     - name: Set up JDK 11
       uses: actions/setup-java@v3
       with:
         java-version: '11'
         distribution: 'adopt'
-    - name: Build with Maven
+    - name: Execute OpenVidu Tutorial Java Backend
       run: mvn --no-transfer-progress --batch-mode spring-boot:run &
       working-directory: ./openvidu-basic-java
-    - name: clientApplication
+    - name: Execute Angular app in dev mode (ng-serve)
       run: |
         npm install
         ng serve &
       working-directory: ./openvidu-angular
-    - name: AngularTest
+    - name: Execute tests
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduAngularTest"
       working-directory: ./Tests/OpenviduTests
 
@@ -58,22 +58,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
+    - name: Execute OpenVidu Dev container
       run: docker run --detach=true -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.24.0
     - name: Set up JDK 11
       uses: actions/setup-java@v3
       with:
         java-version: '11'
         distribution: 'adopt'
-    - name: Build with Maven
+    - name: Execute OpenVidu Tutorial Java Backend
       run: mvn --no-transfer-progress --batch-mode spring-boot:run &
       working-directory: ./openvidu-basic-java
-    - name: Build the server
+    - name: Execute http-server to serve static web
       run: |
         npm install --location=global http-server
         http-server openvidu-js/web &
       working-directory: .
-    - name: JSTest
+    - name: Execute tests
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduJsTest"
       working-directory: ./Tests/OpenviduTests
 
@@ -81,22 +81,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
+    - name: Execute OpenVidu Dev container
       run: docker run --detach=true -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.24.0
     - name: Set up JDK 11
       uses: actions/setup-java@v3
       with:
         java-version: '11'
         distribution: 'adopt'
-    - name: Build with Maven
+    - name: Execute OpenVidu Tutorial Java Backend
       run: mvn --no-transfer-progress --batch-mode spring-boot:run &
       working-directory: ./openvidu-basic-java
-    - name: Build the server
+    - name: Execute React app in dev mode
       run: |
         npm install
         npm start &
       working-directory: ./openvidu-react
-    - name: ReactTest
+    - name: Execute tests
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduReactTest"
       working-directory: ./Tests/OpenviduTests
 
@@ -104,22 +104,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
+    - name: Execute OpenVidu Dev container
       run: docker run --detach=true -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.24.0
     - name: Set up JDK 11
       uses: actions/setup-java@v3
       with:
         java-version: '11'
         distribution: 'adopt'
-    - name: Build with Maven
+    - name: Execute OpenVidu Tutorial Java Backend
       run: mvn --no-transfer-progress --batch-mode spring-boot:run &
       working-directory: ./openvidu-basic-java
-    - name: Build the server
+    - name: Execute Vue app in dev mode
       run: |
         npm install --legacy-peer-deps
         npm run serve &
       working-directory: ./openvidu-vue
-    - name: VueTest
+    - name: Execute tests
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduVueTest"
       working-directory: ./Tests/OpenviduTests
 
