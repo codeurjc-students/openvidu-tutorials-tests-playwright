@@ -20,7 +20,7 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
     - name: Build with Maven
-      run: mvn --batch-mode spring-boot:run &
+      run: mvn --no-transfer-progress --batch-mode spring-boot:run &
       working-directory: ./openvidu-basic-java
     - name: Build the server
       run: |
@@ -28,7 +28,7 @@ jobs:
         http-server openvidu-hello-world/web &
       working-directory: .
     - name: TestHelloWord
-      run: mvn test --batch-mode -Dtest="OpenViduHelloWordTest"
+      run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduHelloWordTest"
       working-directory: ./Tests/OpenviduTests
 
   AngularTest:
@@ -43,7 +43,7 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
     - name: Build with Maven
-      run: mvn --batch-mode spring-boot:run &
+      run: mvn --no-transfer-progress --batch-mode spring-boot:run &
       working-directory: ./openvidu-basic-java
     - name: clientApplication
       run: |
@@ -51,7 +51,7 @@ jobs:
         ng serve &
       working-directory: ./openvidu-angular
     - name: AngularTest
-      run: mvn test --batch-mode -Dtest="OpenViduAngularTest"
+      run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduAngularTest"
       working-directory: ./Tests/OpenviduTests
 
   javaScriptTest:
@@ -66,7 +66,7 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
     - name: Build with Maven
-      run: mvn --batch-mode spring-boot:run &
+      run: mvn --no-transfer-progress --batch-mode spring-boot:run &
       working-directory: ./openvidu-basic-java
     - name: Build the server
       run: |
@@ -74,7 +74,7 @@ jobs:
         http-server openvidu-js/web &
       working-directory: .
     - name: JSTest
-      run: mvn test --batch-mode -Dtest="OpenViduJsTest"
+      run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduJsTest"
       working-directory: ./Tests/OpenviduTests
 
   ReactTest:
@@ -89,7 +89,7 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
     - name: Build with Maven
-      run: mvn --batch-mode spring-boot:run &
+      run: mvn --no-transfer-progress --batch-mode spring-boot:run &
       working-directory: ./openvidu-basic-java
     - name: Build the server
       run: |
@@ -97,7 +97,7 @@ jobs:
         npm start &
       working-directory: ./openvidu-react
     - name: ReactTest
-      run: mvn test --batch-mode -Dtest="OpenViduReactTest"
+      run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduReactTest"
       working-directory: ./Tests/OpenviduTests
 
   VueTest:
@@ -112,7 +112,7 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
     - name: Build with Maven
-      run: mvn --batch-mode spring-boot:run &
+      run: mvn --no-transfer-progress --batch-mode spring-boot:run &
       working-directory: ./openvidu-basic-java
     - name: Build the server
       run: |
@@ -120,7 +120,7 @@ jobs:
         npm run serve &
       working-directory: ./openvidu-vue
     - name: VueTest
-      run: mvn test --batch-mode -Dtest="OpenViduVueTest"
+      run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduVueTest"
       working-directory: ./Tests/OpenviduTests
 
   Report:
