@@ -48,7 +48,7 @@ jobs:
     - name: Execute Angular app in dev mode (ng-serve)
       run: |
         npm install
-        ng serve &
+        npx ng serve &
       working-directory: ./openvidu-angular
     - name: Execute tests
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduAngularTest"
