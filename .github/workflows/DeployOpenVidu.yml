@@ -45,12 +45,12 @@ jobs:
     - name: Execute OpenVidu Tutorial Java Backend
       run: mvn --no-transfer-progress --batch-mode spring-boot:run &
       working-directory: ./openvidu-basic-java
-    - name: Execute Angular app in dev mode (ng-serve)
-      run: |
-        npm install
-        export NODE_OPTIONS=--openssl-legacy-provider
-        npx ng serve &
-      working-directory: ./openvidu-angular
+    #- name: Execute Angular app in dev mode (ng-serve)
+    #  run: |
+    #    npm install
+    #    export NODE_OPTIONS=--openssl-legacy-provider
+    #    npx ng serve &
+    #  working-directory: ./openvidu-angular
     - name: Setup tmate session
       uses: mxschmitt/action-tmate@v3        
     - name: Execute tests
