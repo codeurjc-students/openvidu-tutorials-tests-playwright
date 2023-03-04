@@ -93,6 +93,10 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
+    - name: Set up Node 16
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16' 
     - name: Execute OpenVidu Tutorial Java Backend
       run: mvn --no-transfer-progress --batch-mode spring-boot:run &
       working-directory: ./openvidu-basic-java
