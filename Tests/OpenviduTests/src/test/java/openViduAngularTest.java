@@ -1,3 +1,4 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
@@ -33,9 +34,10 @@ class OpenViduAngularTest extends Module{
 
     String XpathJoinButton = "//*[@id='join-dialog']/form/p[3]/input";
     String xpathHeader = "/html/body/app-root/div/div/div[1]/img";
-    String xpathOtherCamera = "//*[@id='video-container']/div[3]/user-video/div/div/p";
-    String xpathParticipant = "//*[@id='main-video']/user-video/div/div/p";
+    String xpathOtherCamera = "/html/body/app-root/div/div/div[3]/div[2]/user-video/div/ov-video/video";
     
+    String xpathParticipant = "//*[@id='main-video']/user-video/div/div/p";
+
     String idParticipant = "userName";
     String idLeaveButton = "buttonLeaveSession";
     String idNameSession = "sessionId";
@@ -231,10 +233,13 @@ class OpenViduAngularTest extends Module{
         joinButtonC.submit();
 
         try{
-            if (driverChrome.findElement(By.xpath(xpathParticipant)).getText() == NAMEPARTICIPANT){
-                    System.out.println("The name of the participant is correctly set");
-                    super.takePhoto(evidencesFolder + "\\A_OK_C.png", "", driverChrome, driverFirefox);
-            }
+            WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
+            waitC.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathParticipant)));
+
+            assertEquals(driverChrome.findElement(By.xpath(xpathParticipant)).getText(), NAMEPARTICIPANT);
+            System.out.println("The name of the participant is correctly set");
+            super.takePhoto(evidencesFolder + "\\A_OK_C.png", "", driverChrome, driverFirefox);
+            
             
         }catch (NoSuchElementException n){
             super.takePhoto(evidencesFolder + "\\A_ErrorInicializate_C.png", evidencesFolder + "", driverChrome, driverFirefox);
