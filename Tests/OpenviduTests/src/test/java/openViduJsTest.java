@@ -132,7 +132,7 @@ class OpenViduJsTest extends Module{
 
         driverChrome.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driverFirefox.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        Thread.sleep(100);
+        Thread.sleep(10000);
 
         String currentTimeChromeAfter = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
         String currentTimeFirefoxAfter = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
