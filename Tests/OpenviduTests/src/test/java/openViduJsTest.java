@@ -1,10 +1,10 @@
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -123,42 +123,43 @@ class OpenViduJsTest extends Module{
         waitF.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathOtherCamera)));
 
         // see if the video is playing properly
-        String currentTimeChrome = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
-        String currentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
+        String currentTimeChromeBefore = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
+        String currentTimeFirefoxBefore = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
 
         driverChrome.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driverFirefox.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
-        if (Float.parseFloat(currentTimeChrome) > 0 && Float.parseFloat(currentTimeFirefox) > 0){
+        String currentTimeChromeAfter = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
+        String currentTimeFirefoxAfter = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
+        
+        try{
+            assertNotEquals(Float.parseFloat(currentTimeChromeBefore), Float.parseFloat(currentTimeChromeAfter));
+            assertNotEquals(Float.parseFloat(currentTimeFirefoxBefore), Float.parseFloat(currentTimeFirefoxAfter));
             super.takePhoto(evidencesFolder + "\\J_VideoPlaying_C.png", evidencesFolder + "\\J_VideoPlaying_F.png", driverChrome, driverFirefox);
-                //Leave the session with chrome
-            try{
-                WebElement leaveButtonC = driverChrome.findElement(By.id(idLeaveButton));
-                if (leaveButtonC.isDisplayed()){ 
-                    leaveButtonC.click();
-                }
-                if(joinButtonC.isDisplayed()){
-                    System.out.println("The app leave the session correctly in browser 1");
-                    super.takePhoto(evidencesFolder + "\\J_LeaveSession_C.png", "", driverChrome, driverFirefox);
-                }
-
-                //Leave the session with Firefox
-
-                WebElement leaveButtonF = driverFirefox.findElement(By.id(idLeaveButton));
-                if (leaveButtonF.isDisplayed()){ 
-                    leaveButtonF.click();
-                }
-                if(joinButtonF.isDisplayed()){
-                    System.out.println("The app leave the session correctly in browser 2");
-                    super.takePhoto("", evidencesFolder + "\\J_LeaveSession_F.png", driverChrome, driverFirefox);
-                }
-
-            }catch (NoSuchElementException n){
-                super.takePhoto(evidencesFolder + "\\J_Error_C.png", evidencesFolder + "\\J_Error_F.png", driverChrome, driverFirefox);
-                fail("The app is not correctly working");
+                
+            //Leave the session with chrome
+            WebElement leaveButtonC = driverChrome.findElement(By.id(idLeaveButton));
+            if (leaveButtonC.isDisplayed()){ 
+                leaveButtonC.click();
             }
-        }else{
-            super.takePhoto(evidencesFolder + "\\J_VideoNotWorking_C.png", evidencesFolder + "\\J_VideoNotWorking_F.png", driverChrome, driverFirefox);
-            fail("The video is not playing properly");
+            if(joinButtonC.isDisplayed()){
+                System.out.println("The app leave the session correctly in browser 1");
+                super.takePhoto(evidencesFolder + "\\J_LeaveSession_C.png", "", driverChrome, driverFirefox);
+            }
+
+            //Leave the session with Firefox
+            WebElement leaveButtonF = driverFirefox.findElement(By.id(idLeaveButton));
+            if (leaveButtonF.isDisplayed()){ 
+                leaveButtonF.click();
+            }
+            if(joinButtonF.isDisplayed()){
+                System.out.println("The app leave the session correctly in browser 2");
+                super.takePhoto("", evidencesFolder + "\\J_LeaveSession_F.png", driverChrome, driverFirefox);
+            }
+
+        }catch (NoSuchElementException n){
+            super.takePhoto(evidencesFolder + "\\J_Error_C.png", evidencesFolder + "\\J_Error_F.png", driverChrome, driverFirefox);
+            fail("The app is not correctly working");
         }
     }
 
