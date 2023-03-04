@@ -98,9 +98,10 @@ class OpenViduJsTest extends Module{
  * @author Andrea Acuña
  * Description: Join the session, verficate that the video is playing property and leave the session
  * @throws IOException
+ * @throws InterruptedException
  */
     @Test
-    void T002_LeaveSession() throws IOException{
+    void T002_LeaveSession() throws IOException, InterruptedException{
 
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.id(idNameSession));
@@ -131,6 +132,7 @@ class OpenViduJsTest extends Module{
 
         driverChrome.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driverFirefox.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        Thread.sleep(100);
 
         String currentTimeChromeAfter = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
         String currentTimeFirefoxAfter = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
