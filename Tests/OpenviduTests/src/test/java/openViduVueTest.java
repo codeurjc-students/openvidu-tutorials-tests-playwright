@@ -31,7 +31,7 @@ class OpenViduVueTest extends Module{
     String NAMESESSION = "TestSession";
     String NAMEPARTICIPANT = "TestParticipant";
 
-    String XpathJoinButton = "//*[@id='join-dialog']/form/p[3]/input";
+    String XpathJoinButton = "//*[@id='join-dialog']/div/p[3]/button";
     String xpathOtherCamera = "/html/body/div/div/div[3]/div[2]/video";
     String xpathSessionName = "//*[@id='join-dialog']/div/p[2]/input";
     String xpathParticipant = "//*[@id='main-video']/div/div/p";
