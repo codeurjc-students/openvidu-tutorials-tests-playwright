@@ -1,3 +1,4 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
@@ -34,8 +35,8 @@ class OpenViduVueTest extends Module{
     String XpathJoinButton = "//*[@id='join-dialog']/div/p[3]/button";
     String xpathOtherCamera = "/html/body/div/div/div[3]/div[2]/video";
     String xpathSessionName = "//*[@id='join-dialog']/div/p[2]/input";
-    String xpathParticipant = "//*[@id='main-video']/div/div/p";
 
+    String idParticipant = "userName";
     String idLeaveButton = "buttonLeaveSession";
     String idHeader = "session-title";
     String idSelfCamera = "local-video-undefined";
@@ -208,10 +209,9 @@ class OpenViduVueTest extends Module{
         joinButtonC.click();
 
         try{
-            if (driverChrome.findElement(By.xpath(xpathParticipant)).getText() == NAMEPARTICIPANT){
-                    System.out.println("The name of the participant is correctly set");
-                    super.takePhoto(evidencesFolder + "\\VUE_OK_C.png", "", driverChrome, driverFirefox);
-            }
+            assertEquals(driverChrome.findElement(By.id(idParticipant)).getText(), NAMEPARTICIPANT);
+            System.out.println("The name of the participant is correctly set");
+            super.takePhoto(evidencesFolder + "\\VUE_OK_C.png", "", driverChrome, driverFirefox);
             
         }catch (NoSuchElementException n){
             super.takePhoto(evidencesFolder + "\\VUE_ErrorInicializate_C.png", evidencesFolder + "", driverChrome, driverFirefox);
