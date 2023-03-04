@@ -35,8 +35,8 @@ class OpenViduVueTest extends Module{
     String XpathJoinButton = "//*[@id='join-dialog']/div/p[3]/button";
     String xpathOtherCamera = "/html/body/div/div/div[3]/div[2]/video";
     String xpathSessionName = "//*[@id='join-dialog']/div/p[2]/input";
+    String XpathParticipant = "/html/body/div/div[2]/div[3]/div/p";
 
-    String idParticipant = "userName";
     String idLeaveButton = "buttonLeaveSession";
     String idHeader = "session-title";
     String idSelfCamera = "local-video-undefined";
@@ -209,7 +209,7 @@ class OpenViduVueTest extends Module{
         joinButtonC.click();
 
         try{
-            assertEquals(driverChrome.findElement(By.id(idParticipant)).getText(), NAMEPARTICIPANT);
+            assertEquals(driverChrome.findElement(By.xpath(XpathParticipant)).getText(), NAMEPARTICIPANT);
             System.out.println("The name of the participant is correctly set");
             super.takePhoto(evidencesFolder + "\\VUE_OK_C.png", "", driverChrome, driverFirefox);
             
