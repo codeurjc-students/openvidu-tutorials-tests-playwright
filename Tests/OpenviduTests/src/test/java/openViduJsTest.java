@@ -138,8 +138,8 @@ class OpenViduJsTest extends Module{
         String currentTimeFirefoxAfter = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
         
         try{
-            assertNotEquals(Float.parseFloat(currentTimeChromeBefore), Float.parseFloat(currentTimeChromeAfter));
-            assertNotEquals(Float.parseFloat(currentTimeFirefoxBefore), Float.parseFloat(currentTimeFirefoxAfter));
+            assertNotEquals(currentTimeChromeBefore, currentTimeChromeAfter);
+            assertNotEquals(currentTimeFirefoxBefore, currentTimeFirefoxAfter);
             super.takePhoto(evidencesFolder + "\\J_VideoPlaying_C.png", evidencesFolder + "\\J_VideoPlaying_F.png", driverChrome, driverFirefox);
                 
             //Leave the session with chrome
