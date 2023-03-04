@@ -122,6 +122,9 @@ class OpenViduJsTest extends Module{
         WebDriverWait waitF = new WebDriverWait(driverFirefox, Duration.ofSeconds(30));
         waitF.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathOtherCamera)));
 
+        driverChrome.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driverFirefox.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
         // see if the video is playing properly
         String currentTimeChromeBefore = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
         String currentTimeFirefoxBefore = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
