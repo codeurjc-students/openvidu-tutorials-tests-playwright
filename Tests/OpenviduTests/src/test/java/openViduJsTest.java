@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,7 +33,7 @@ class OpenViduJsTest extends Module{
 
     String XpathJoinButton = "//*[@id='join-dialog']/form/p[3]/input";
     String idLeaveButton = "buttonLeaveSession";
-    String xpathOtherCamera = "/html/body/div/div[2]/div[3]/video[2]";
+    String xpathOtherCamera = "/html/body/div/div[2]/div[3]/video[1]";
 
     String idHeader = "session-header";
     String idNameSession = "sessionId";
@@ -124,10 +125,11 @@ class OpenViduJsTest extends Module{
         // see if the video is playing properly
         String currentTimeChrome = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
         String currentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
-        super.takePhoto(evidencesFolder + "\\J_VideoPlaying_C.png", evidencesFolder + "\\J_VideoPlaying_F.png", driverChrome, driverFirefox);
 
+        driverChrome.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         if (Float.parseFloat(currentTimeChrome) > 0 && Float.parseFloat(currentTimeFirefox) > 0){
+            super.takePhoto(evidencesFolder + "\\J_VideoPlaying_C.png", evidencesFolder + "\\J_VideoPlaying_F.png", driverChrome, driverFirefox);
                 //Leave the session with chrome
             try{
                 WebElement leaveButtonC = driverChrome.findElement(By.id(idLeaveButton));
