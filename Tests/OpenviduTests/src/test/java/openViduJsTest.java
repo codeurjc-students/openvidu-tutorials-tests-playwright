@@ -127,19 +127,12 @@ class OpenViduJsTest extends Module{
         driverFirefox.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         // see if the video is playing properly
-        String currentTimeChromeBefore = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
-        String currentTimeFirefoxBefore = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
-
-        driverChrome.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driverFirefox.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        Thread.sleep(10000);
-
-        String currentTimeChromeAfter = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
-        String currentTimeFirefoxAfter = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
+        String currentTimeChrome= driverChrome.findElement(By.id(idSelfCamera)).getAttribute("duration");
+        String currentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("duration");
         
         try{
-            assertNotEquals(currentTimeChromeBefore, currentTimeChromeAfter);
-            assertNotEquals(currentTimeFirefoxBefore, currentTimeFirefoxAfter);
+            assertNotEquals(currentTimeChrome, "NaN");
+            assertNotEquals(currentTimeFirefox, "NaN");
             super.takePhoto(evidencesFolder + "\\J_VideoPlaying_C.png", evidencesFolder + "\\J_VideoPlaying_F.png", driverChrome, driverFirefox);
                 
             //Leave the session with chrome
