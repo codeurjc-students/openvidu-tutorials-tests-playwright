@@ -31,7 +31,7 @@ class OpenViduVueTest extends Module{
     String NAMESESSION = "TestSession";
     String NAMEPARTICIPANT = "TestParticipant";
 
-    String XpathJoinButton = "//*[@id='join-dialog']/div/p[3]/button";
+    String XpathJoinButton = "//*[@id='join-dialog']/form/p[3]/input";
     String xpathOtherCamera = "/html/body/div/div/div[3]/div[2]/video";
     String xpathSessionName = "//*[@id='join-dialog']/div/p[2]/input";
     String xpathParticipant = "//*[@id='main-video']/div/div/p";
@@ -64,7 +64,7 @@ class OpenViduVueTest extends Module{
  * @throws IOException
  */
     @Test
-    void JoinSession() throws IOException {
+    void T001_JoinSession() throws IOException {
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.xpath(xpathSessionName));
         textBox.clear();
@@ -101,7 +101,7 @@ class OpenViduVueTest extends Module{
  * @throws IOException
  */
     @Test
-    void LeaveSession() throws IOException{
+    void T002_LeaveSession() throws IOException{
 
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.xpath(xpathSessionName));
@@ -176,7 +176,7 @@ class OpenViduVueTest extends Module{
             textBox.clear();
             textBox.sendKeys(NAMESESSION);
             WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
-            joinButtonC.submit();
+            joinButtonC.click();
 
             try{
                 if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
@@ -205,7 +205,7 @@ class OpenViduVueTest extends Module{
         nameTextBox.clear();
         nameTextBox.sendKeys(NAMEPARTICIPANT);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
-        joinButtonC.submit();
+        joinButtonC.click();
 
         try{
             if (driverChrome.findElement(By.xpath(xpathParticipant)).getText() == NAMEPARTICIPANT){
