@@ -42,6 +42,7 @@ class OpenViduVueTest extends Module{
     String idLeaveButton = "buttonLeaveSession";
     String idHeader = "session-title";
     String idSelfCamera = "local-video-undefined";
+    String idHeaderStartPage = "img-div";
 
 
 /**
@@ -161,7 +162,8 @@ class OpenViduVueTest extends Module{
                 if (leaveButtonC.isDisplayed()){ 
                     leaveButtonC.click();
                 }
-                if(joinButtonC.isDisplayed()){
+                WebElement headerC = driverChrome.findElement(By.id(idHeaderStartPage));
+                if(headerC.isDisplayed()){
                     System.out.println("The app leave the session correctly in browser 1");
                     super.takePhoto(evidencesFolder + "\\VUE_LeaveSession_C.png", "", driverChrome, driverFirefox);
                 }
@@ -172,7 +174,8 @@ class OpenViduVueTest extends Module{
                 if (leaveButtonF.isDisplayed()){ 
                     leaveButtonF.click();
                 }
-                if(joinButtonF.isDisplayed()){
+                WebElement headerF = driverFirefox.findElement(By.id(idHeaderStartPage));
+                if(headerF.isDisplayed()){
                     System.out.println("The app leave the session correctly in browser 2");
                     super.takePhoto("", evidencesFolder + "\\VUE_LeaveSession_F.png", driverChrome, driverFirefox);
                 }
