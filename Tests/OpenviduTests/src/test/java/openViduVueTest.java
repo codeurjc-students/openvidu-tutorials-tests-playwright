@@ -238,7 +238,20 @@ class OpenViduVueTest extends Module{
         try{
            // WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
             //waitC.until(ExpectedConditions.visibilityOf(driverChrome.findElement(By.xpath(XpathParticipant))));
-            assertEquals(driverChrome.findElement(By.xpath(XpathParticipant)).getText(), NAMEPARTICIPANT);
+            int repeat = 0;
+            WebElement ParticipantName = null;
+            String ParticipantNameText = null;
+            while(repeat <= 5){
+                try{
+                    ParticipantName = driverChrome.findElement(By.xpath(XpathParticipant));
+                    ParticipantNameText = ParticipantName.getText();
+                    break;
+                }catch(StaleElementReferenceException exc){
+                    exc.printStackTrace();
+                }
+                repeat++;
+            }
+            assertEquals(ParticipantNameText, NAMEPARTICIPANT);
             System.out.println("The name of the participant is correctly set");
             super.takePhoto(evidencesFolder + "\\VUE_OK_C.png", "", driverChrome, driverFirefox);
             
