@@ -236,11 +236,11 @@ class OpenViduVueTest extends Module{
         joinButtonC.click();
 
         try{
-           // WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
-            //waitC.until(ExpectedConditions.visibilityOf(driverChrome.findElement(By.xpath(XpathParticipant))));
+            WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
             int repeat = 0;
             WebElement ParticipantName = null;
             String ParticipantNameText = null;
+            waitC.until(ExpectedConditions.visibilityOfElementLocated(By.id(idSelfCamera)));
             while(repeat <= 5){
                 try{
                     ParticipantName = driverChrome.findElement(By.xpath(XpathParticipant));
