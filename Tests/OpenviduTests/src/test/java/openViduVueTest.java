@@ -211,6 +211,8 @@ class OpenViduVueTest extends Module{
         joinButtonC.click();
 
         try{
+            WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
+            waitC.until(ExpectedConditions.stalenessOf(driverChrome.findElement(By.xpath(XpathParticipant))));
             assertEquals(driverChrome.findElement(By.xpath(XpathParticipant)).getText(), NAMEPARTICIPANT);
             System.out.println("The name of the participant is correctly set");
             super.takePhoto(evidencesFolder + "\\VUE_OK_C.png", "", driverChrome, driverFirefox);
