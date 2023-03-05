@@ -106,17 +106,17 @@ class OpenViduVueTest extends Module{
     @Test
     void T002_LeaveSession() throws IOException{
 
-        //WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
+        WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
         WebDriverWait waitF = new WebDriverWait(driverFirefox, Duration.ofSeconds(30));
         int repeat = 0;
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.xpath(xpathSessionName));
         textBox.clear();
         textBox.sendKeys(NAMESESSION);
-
+        WebElement joinButtonC = null;
         while(repeat <= 5){
             try{
-                WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton));
+                joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton));
                 //waitC.until(ExpectedConditions.stalenessOf(joinButtonC));
                 joinButtonC.click();
                 break;
