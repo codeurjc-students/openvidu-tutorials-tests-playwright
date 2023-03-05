@@ -36,6 +36,7 @@ class OpenViduVueTest extends Module{
     String xpathOtherCamera = "/html/body/div/div/div[3]/div[2]/video";
     String xpathSessionName = "//*[@id='join-dialog']/div/p[2]/input";
     String XpathParticipant = "//*[@id='main-video']/div/div/p";
+    String XpathParticipantName = "//*[@id='join-dialog']/div/p[1]/input";
 
     String idLeaveButton = "buttonLeaveSession";
     String idHeader = "session-title";
@@ -204,7 +205,7 @@ class OpenViduVueTest extends Module{
     @Test
         void T004_ParticipantName() throws IOException {
         // Configurate the session in chrome
-        WebElement nameTextBox = driverChrome.findElement(By.xpath(xpathSessionName));
+        WebElement nameTextBox = driverChrome.findElement(By.xpath(XpathParticipantName));
         nameTextBox.clear();
         nameTextBox.sendKeys(NAMEPARTICIPANT);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
