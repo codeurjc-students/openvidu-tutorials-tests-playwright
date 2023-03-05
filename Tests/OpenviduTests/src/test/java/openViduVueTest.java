@@ -10,6 +10,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -105,16 +106,27 @@ class OpenViduVueTest extends Module{
     @Test
     void T002_LeaveSession() throws IOException{
 
-        WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
+        //WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
         WebDriverWait waitF = new WebDriverWait(driverFirefox, Duration.ofSeconds(30));
-
+        int repeat = 0;
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.xpath(xpathSessionName));
         textBox.clear();
         textBox.sendKeys(NAMESESSION);
-        WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton));
-        waitC.until(ExpectedConditions.stalenessOf(joinButtonC));
-        joinButtonC.click();
+
+        while(repeat <= 5){
+            try{
+                WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton));
+                //waitC.until(ExpectedConditions.stalenessOf(joinButtonC));
+                joinButtonC.click();
+                break;
+            }catch(StaleElementReferenceException exc){
+                exc.printStackTrace();
+            }
+            repeat++;
+        }
+
+        
         //Configurate de session in firefox
         WebElement textBoxF = driverFirefox.findElement(By.xpath(xpathSessionName));
         textBoxF.clear();
@@ -213,7 +225,7 @@ class OpenViduVueTest extends Module{
 
         try{
             WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
-            waitC.until(ExpectedConditions.stalenessOf(driverChrome.findElement(By.xpath(XpathParticipant))));
+            waitC.until(ExpectedConditions.visibilityOf(driverChrome.findElement(By.xpath(XpathParticipant))));
             assertEquals(driverChrome.findElement(By.xpath(XpathParticipant)).getText(), NAMEPARTICIPANT);
             System.out.println("The name of the participant is correctly set");
             super.takePhoto(evidencesFolder + "\\VUE_OK_C.png", "", driverChrome, driverFirefox);
