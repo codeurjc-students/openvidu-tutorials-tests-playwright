@@ -126,14 +126,23 @@ class OpenViduVueTest extends Module{
             repeat++;
         }
 
-        
         //Configurate de session in firefox
         WebElement textBoxF = driverFirefox.findElement(By.xpath(xpathSessionName));
         textBoxF.clear();
         textBoxF.sendKeys(NAMESESSION);
-        WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton));
-        waitF.until(ExpectedConditions.stalenessOf(joinButtonF));
-        joinButtonF.click();
+        repeat = 0;
+        WebElement joinButtonF = null;
+        while(repeat <= 5){
+            try{
+                joinButtonF = driverChrome.findElement(By.xpath(XpathJoinButton));
+                //waitC.until(ExpectedConditions.stalenessOf(joinButtonF));
+                joinButtonF.click();
+                break;
+            }catch(StaleElementReferenceException exc){
+                exc.printStackTrace();
+            }
+            repeat++;
+        }
 
         // see if the video is playing properly, moreover synchronize both videos
         waitC.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathOtherCamera)));
@@ -224,8 +233,8 @@ class OpenViduVueTest extends Module{
         joinButtonC.click();
 
         try{
-            WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
-            waitC.until(ExpectedConditions.visibilityOf(driverChrome.findElement(By.xpath(XpathParticipant))));
+           // WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
+            //waitC.until(ExpectedConditions.visibilityOf(driverChrome.findElement(By.xpath(XpathParticipant))));
             assertEquals(driverChrome.findElement(By.xpath(XpathParticipant)).getText(), NAMEPARTICIPANT);
             System.out.println("The name of the participant is correctly set");
             super.takePhoto(evidencesFolder + "\\VUE_OK_C.png", "", driverChrome, driverFirefox);
