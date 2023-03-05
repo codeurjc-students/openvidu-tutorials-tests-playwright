@@ -35,7 +35,7 @@ class OpenViduVueTest extends Module{
     String XpathJoinButton = "//*[@id='join-dialog']/div/p[3]/button";
     String xpathOtherCamera = "/html/body/div/div/div[3]/div[2]/video";
     String xpathSessionName = "//*[@id='join-dialog']/div/p[2]/input";
-    String XpathParticipant = "/html/body/div/div[2]/div[3]/div/p";
+    String XpathParticipant = "//*[@id='main-video']/div/div/p";
 
     String idLeaveButton = "buttonLeaveSession";
     String idHeader = "session-title";
@@ -104,24 +104,26 @@ class OpenViduVueTest extends Module{
     @Test
     void T002_LeaveSession() throws IOException{
 
+        WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
+        WebDriverWait waitF = new WebDriverWait(driverFirefox, Duration.ofSeconds(30));
+
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.xpath(xpathSessionName));
         textBox.clear();
         textBox.sendKeys(NAMESESSION);
-        WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
+        WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton));
+        waitC.until(ExpectedConditions.stalenessOf(joinButtonC));
         joinButtonC.click();
         //Configurate de session in firefox
         WebElement textBoxF = driverFirefox.findElement(By.xpath(xpathSessionName));
         textBoxF.clear();
         textBoxF.sendKeys(NAMESESSION);
-        WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
+        WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton));
+        waitF.until(ExpectedConditions.stalenessOf(joinButtonF));
         joinButtonF.click();
 
         // see if the video is playing properly, moreover synchronize both videos
-        WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
         waitC.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathOtherCamera)));
-        
-        WebDriverWait waitF = new WebDriverWait(driverFirefox, Duration.ofSeconds(30));
         waitF.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathOtherCamera)));
 
         // see if the video is playing properly
