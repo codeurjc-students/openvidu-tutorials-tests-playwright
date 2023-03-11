@@ -137,5 +137,15 @@ jobs:
       working-directory: ./Tests/OpenviduTests
 
   Report:
-    - name: Test Reporter
-      uses: dorny/test-reporter@v1.6.0 
+    name: Build & Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2     
+      - run: npm ci            
+      - run: npm test  
+      - uses: actions/upload-artifact@v2 
+        if: success() || failure()      
+        with:
+          name: test-results
+          path: ./evidence/jest-junit.xml   
+          working-directory: ./Tests/OpenviduTests
