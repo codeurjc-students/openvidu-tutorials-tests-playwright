@@ -136,7 +136,7 @@ jobs:
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduVueTest"
       working-directory: ./Tests/OpenviduTests 
     - name: reportVueTest
-      uses: dorny/test-reporter@v1.6.0
+      uses: actions/upload-artifact@v2 
       if: success() || failure()      
       with:
         name: test-results
