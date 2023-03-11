@@ -140,7 +140,7 @@ jobs:
       if: success() || failure()      
       with:
         name: JEST Tests
-        path: ./TestReporter/__tests__/__results__/*.xml
+        path: evidence/*.xml
         reporter: jest-junit
       
           
