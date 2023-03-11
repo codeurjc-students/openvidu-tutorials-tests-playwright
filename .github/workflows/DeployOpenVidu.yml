@@ -141,11 +141,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2     
-      - run: npm ci            
-      - run: npm test  
+      - run: npm ci  
+        working-directory: ./Tests/OpenviduTests          
+      - run: npm test 
+        working-directory: ./Tests/OpenviduTests 
       - uses: actions/upload-artifact@v2 
         if: success() || failure()      
         with:
           name: test-results
           path: ./evidence/jest-junit.xml   
-          working-directory: ./Tests/OpenviduTests
+          
