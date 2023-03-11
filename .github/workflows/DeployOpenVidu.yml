@@ -134,20 +134,11 @@ jobs:
       working-directory: ./openvidu-vue
     - name: Execute tests
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduVueTest"
-      working-directory: ./Tests/OpenviduTests
-
-  Report:
-    name: Build & Test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2     
-      - run: npm ci  
-        working-directory: ./Tests/OpenviduTests          
-      - run: npm test 
-        working-directory: ./Tests/OpenviduTests 
-      - uses: actions/upload-artifact@v2 
+      working-directory: ./Tests/OpenviduTests 
+    - name: reportVueTest
+      uses: actions/upload-artifact@v2 
         if: success() || failure()      
         with:
           name: test-results
-          path: ./evidence/jest-junit.xml   
+          path: ./evidence/jest-junit.xml
           
