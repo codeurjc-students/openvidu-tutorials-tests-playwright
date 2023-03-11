@@ -139,7 +139,8 @@ jobs:
       uses: ./TestReporter
       if: success() || failure()      
       with:
-        name: test-results
-        path: ./evidence/jest-junit.xml
+        name: JEST Tests
+        path: ./TestReporter/__tests__/__results__/*.xml
+        reporter: jest-junit
       
           
