@@ -34,7 +34,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: TestNG report
-        path: test-output/Extent.html
+        path: ./Tests/OpenviduTests/test-output/Extent.html
 
   AngularTest:
     runs-on: ubuntu-latest
