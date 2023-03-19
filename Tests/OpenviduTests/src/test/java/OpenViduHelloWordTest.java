@@ -1,7 +1,6 @@
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -15,6 +14,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -215,7 +215,7 @@ class OpenViduHelloWordTest extends Module{
  * @author Andrea Acuña
  * Description: close both drivers
  */
-    @AfterEach
+    @AfterMethod
     void quit(ITestResult result){
         if (result.getStatus() == ITestResult.FAILURE) {
             test.log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " - Test Case Failed", ExtentColor.RED));
