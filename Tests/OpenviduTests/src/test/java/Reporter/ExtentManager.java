@@ -14,7 +14,7 @@ public class ExtentManager {
      * Description: create an ExtendReport object and set the report HTML file location and other configurations
      */
     public synchronized static ExtentReports createExtentReports() {
-        ExtentSparkReporter reporter = new ExtentSparkReporter("./extent-reports/extent-report.html");
+        ExtentSparkReporter reporter = new ExtentSparkReporter("./extent-report.html");
         reporter.config().setReportName("test Report");
         reporter.config().setTimeStampFormat("EEEE, MMMM dd, yyyy, hh:mm a '('zzz')'");
         reporter.config().setTheme(Theme.STANDARD);
