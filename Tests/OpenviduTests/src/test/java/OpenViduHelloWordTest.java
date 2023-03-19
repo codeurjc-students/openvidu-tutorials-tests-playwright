@@ -55,7 +55,7 @@ class OpenViduHelloWordTest extends Module{
  * Description: Execute before every single test. Configure the camera an set de url in each browser
  */
     @BeforeEach
-    void setup(@CurrentTestMethod Method method) {
+    void setup() {
         List<WebDriver> browsers = super.setUpTwoBrowsers();
         driverChrome = browsers.get(0);
         driverFirefox = browsers.get(1);
@@ -63,7 +63,7 @@ class OpenViduHelloWordTest extends Module{
         driverFirefox.get(URL);
 
         extentReports = super.createExtentReports();
-        TESTNAME = method.getName();
+        TESTNAME = Thread.currentThread().getStackTrace()[2].getMethodName();
         test = super.startTest(TESTNAME, "");
     }
 
