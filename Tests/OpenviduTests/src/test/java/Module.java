@@ -11,17 +11,17 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.testng.ITestResult;
+//import org.testng.ITestResult;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.Status;
+//import com.aventstack.extentreports.Status;
 
 import Reporter.ExtentManager;
 
 
 public class Module{
-    private ExtentTest test;
+    //private ExtentTest test;
     static ExtentReports extent = ExtentManager.createExtentReports();
 
     /**
