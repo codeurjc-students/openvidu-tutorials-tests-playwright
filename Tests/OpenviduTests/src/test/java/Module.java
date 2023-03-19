@@ -16,6 +16,8 @@ import org.testng.ITestResult;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
@@ -130,7 +132,7 @@ public class Module{
      * Description: create an ExtendReport object and set the report HTML file location and other configurations
      */
     public synchronized static ExtentReports createExtentReports() {
-        final ExtentReports extentReports = new ExtentReports();
+        ExtentReports extentReports = new ExtentReports();
         ExtentSparkReporter reporter = new ExtentSparkReporter("test-output/Extent.html");
         reporter.config().setReportName("test Report");
         reporter.config().setTimeStampFormat("EEEE, MMMM dd, yyyy, hh:mm a '('zzz')'");
@@ -139,6 +141,17 @@ public class Module{
         extentReports.setSystemInfo("Blog Name", "Automation Report");
         extentReports.setSystemInfo("Author", "Andrea P");
         return extentReports;
+    }
+
+    public void getResult(ITestResult result, ExtentTest test) {
+        if (result.getStatus() == ITestResult.FAILURE) {
+            test.log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " - Test Case Failed", ExtentColor.RED));
+            test.fail(result.getThrowable());
+        } else if (result.getStatus() == ITestResult.SKIP) {
+            test.log(Status.SKIP, MarkupHelper.createLabel(result.getName() + " - Test Case Skipped", ExtentColor.ORANGE));
+        } else {
+            test.log(Status.PASS, MarkupHelper.createLabel(result.getName() + " - Test Case Passed", ExtentColor.GREEN));
+        }
     }
 
      /**

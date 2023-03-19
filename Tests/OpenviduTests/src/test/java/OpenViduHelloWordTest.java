@@ -14,10 +14,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestResult;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 
 /**
  * Test with Java.
@@ -213,7 +216,16 @@ class OpenViduHelloWordTest extends Module{
  * Description: close both drivers
  */
     @AfterEach
-    void quit() {
+    void quit(ITestResult result){
+        if (result.getStatus() == ITestResult.FAILURE) {
+            test.log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " - Test Case Failed", ExtentColor.RED));
+            test.fail(result.getThrowable());
+        } else if (result.getStatus() == ITestResult.SKIP) {
+            test.log(Status.SKIP, MarkupHelper.createLabel(result.getName() + " - Test Case Skipped", ExtentColor.ORANGE));
+        } else {
+            test.log(Status.PASS, MarkupHelper.createLabel(result.getName() + " - Test Case Passed", ExtentColor.GREEN));
+        }
+        extentReports.flush();
         super.quitTwoBrowsers(driverChrome, driverFirefox);
     }
 }
