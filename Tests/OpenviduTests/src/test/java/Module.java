@@ -11,17 +11,19 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-//import org.testng.ITestResult;
+import org.testng.ITestResult;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
-//import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.aventstack.extentreports.reporter.configuration.Theme;
 
 import Reporter.ExtentManager;
 
 
 public class Module{
-    //private ExtentTest test;
+    private ExtentTest test;
     static ExtentReports extent = ExtentManager.createExtentReports();
 
     /**
@@ -111,7 +113,7 @@ public class Module{
      * @author Andrea Acuña
      * Description: administrate the result
      */
-    /**public void tearDownMethod(ITestResult result) {
+    public void tearDownMethod(ITestResult result) {
         if (result.getStatus() == ITestResult.FAILURE) {
           test.log(Status.FAIL, "Test failed: " + result.getThrowable());
         } else if (result.getStatus() == ITestResult.SKIP) {
@@ -119,6 +121,34 @@ public class Module{
         } else {
           test.log(Status.PASS, "Test passed");
         }
-      }*/
+      }
+
+      /**
+     * method.
+     *
+     * @author Andrea Acuña
+     * Description: create an ExtendReport object and set the report HTML file location and other configurations
+     */
+    public synchronized static ExtentReports createExtentReports() {
+        final ExtentReports extentReports = new ExtentReports();
+        ExtentSparkReporter reporter = new ExtentSparkReporter("./extent-report.html");
+        reporter.config().setReportName("test Report");
+        reporter.config().setTimeStampFormat("EEEE, MMMM dd, yyyy, hh:mm a '('zzz')'");
+        reporter.config().setTheme(Theme.STANDARD);
+        extentReports.attachReporter(reporter);
+        extentReports.setSystemInfo("Blog Name", "Automation Report");
+        extentReports.setSystemInfo("Author", "Andrea P");
+        return extentReports;
+    }
+
+     /**
+     * method.
+     *
+     * @author Andrea Acuña
+     * Description: remove all previous data
+     */
+    public void tearDown(ExtentReports extentReports){
+        extentReports.flush();
+    }
 
 }

@@ -1,6 +1,7 @@
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -14,8 +15,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
+
+import org.testng.annotations.BeforeEach;
+import org.testng.annotations.Test;
+import org.testng.annotations.CurrentTestMethod;
 
 /**
  * Test with Java.
@@ -27,6 +33,7 @@ class OpenViduHelloWordTest extends Module{
     String evidencesFolder = "..\\..\\evidence";
 
     private ExtentTest test;
+    public static ExtentReports extentReports = new ExtentReports();
 
     WebDriver driverChrome;
     WebDriver driverFirefox;
@@ -34,6 +41,7 @@ class OpenViduHelloWordTest extends Module{
     String URL = "http://localhost:8080/";
 
     String NAMESESSION = "TestSession";
+    String TESTNAME = "";
 
     String XpathJoinButton = "//*[@id='join']/form/p[2]/input";
     String xpathLeaveButton = "//*[@id='session']/input";
@@ -51,12 +59,16 @@ class OpenViduHelloWordTest extends Module{
  * Description: Execute before every single test. Configure the camera an set de url in each browser
  */
     @BeforeEach
-    void setup() {
+    void setup(@CurrentTestMethod Method method) {
         List<WebDriver> browsers = super.setUpTwoBrowsers();
         driverChrome = browsers.get(0);
         driverFirefox = browsers.get(1);
         driverChrome.get(URL); 
         driverFirefox.get(URL);
+
+        extentReports = super.createExtentReports();
+        TESTNAME = method.getName();
+        test = super.startTest(TESTNAME, "");
     }
 
 /**
@@ -68,7 +80,6 @@ class OpenViduHelloWordTest extends Module{
  */
     @Test
     void T001_JoinSession() throws IOException {
-        test = super.startTest("T001_JoinSession_Report", "Join the session and verificate that the two browsers are inside the session");
         test.log(Status.INFO, "Starting test");
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.id(idNameSession));
@@ -95,6 +106,7 @@ class OpenViduHelloWordTest extends Module{
             test.log(Status.PASS, "Join Session Ok");
         }catch (NoSuchElementException n){
             super.takePhoto(evidencesFolder + "\\HW_ErrorInicializate_C.png", evidencesFolder + "\\HW_ErrorInicializate_F.png", driverChrome, driverFirefox);
+            test.log(Status.FAIL, "Test Failed");
             fail("The app is not correctly inicializate");
         }
     }
