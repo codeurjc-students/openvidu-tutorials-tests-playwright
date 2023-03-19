@@ -14,6 +14,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+
 /**
  * Test with Java.
  * Test for the hello word for open vidu 
@@ -22,6 +25,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 class OpenViduHelloWordTest extends Module{
 
     String evidencesFolder = "..\\..\\evidence";
+
+    private ExtentTest test;
 
     WebDriver driverChrome;
     WebDriver driverFirefox;
@@ -63,6 +68,8 @@ class OpenViduHelloWordTest extends Module{
  */
     @Test
     void T001_JoinSession() throws IOException {
+        test = super.createTestReport("T001_JoinSession", "Join the session and verificate that the two browsers are inside the session");
+        test.log(Status.INFO, "Starting test");
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.id(idNameSession));
         textBox.clear();
@@ -75,7 +82,7 @@ class OpenViduHelloWordTest extends Module{
         textBoxF.sendKeys(NAMESESSION);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
         joinButtonF.submit();
-
+        test.log(Status.INFO, "Session configurated");
         try{
             if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 1");
@@ -85,6 +92,7 @@ class OpenViduHelloWordTest extends Module{
                 System.out.println("The app is correctly inicializate in browser 2");
                 super.takePhoto("", evidencesFolder + "\\HW_OK_F.png", driverChrome, driverFirefox);
             }
+            test.log(Status.PASS, "Join Session Ok");
         }catch (NoSuchElementException n){
             super.takePhoto(evidencesFolder + "\\HW_ErrorInicializate_C.png", evidencesFolder + "\\HW_ErrorInicializate_F.png", driverChrome, driverFirefox);
             fail("The app is not correctly inicializate");

@@ -12,7 +12,12 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
-public class Module{
+import com.aventstack.extentreports.ExtentTest;
+
+import Reporter.ExtentTestManager;
+
+
+public class Module extends ExtentTestManager{
 
 
     /**
@@ -82,6 +87,16 @@ public class Module{
         if (driverFirefox != null){
             driverFirefox.quit();
         }
+    }
+
+    /**
+     * method.
+     *
+     * @author Andrea Acuña
+     * Description: create a extend report for the test
+     */
+    public ExtentTest createTestReport(String testName, String desc) {
+        return super.startTest(testName, desc);
     }
 
 }

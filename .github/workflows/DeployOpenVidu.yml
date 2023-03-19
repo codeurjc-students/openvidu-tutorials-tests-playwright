@@ -134,13 +134,6 @@ jobs:
       working-directory: ./openvidu-vue
     - name: Execute tests
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduVueTest"
-      working-directory: ./Tests/OpenviduTests 
-    - name: reportVueTest
-      uses: ./TestReporter
-      if: success() || failure()      
-      with:
-        name: JEST Tests
-        path: evidence/*.xml
-        reporter: jest-junit
+      working-directory: ./Tests/OpenviduTests
       
           

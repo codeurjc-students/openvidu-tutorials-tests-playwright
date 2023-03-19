@@ -20,7 +20,7 @@
         <selenium.version>4.6.0</selenium.version>
         <phantomjsdriver.version>1.5.0</phantomjsdriver.version>
         <wdm.version>5.3.1</wdm.version>
-        <testng.version>7.6.1</testng.version>
+        <testng-version>7.7.1</testng-version>
         <appium-java-client.version>8.2.0</appium-java-client.version>
 
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
@@ -105,11 +105,20 @@
             <artifactId>org.apache.commons.io</artifactId>
             <version>2.4</version>
         </dependency>
-       
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-devtools-v102</artifactId>
             <version>4.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aventstack</groupId>
+            <artifactId>extentreports</artifactId>
+            <version>5.0.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng-version}</version>
         </dependency>
   </dependencies>
 </project>
