@@ -41,6 +41,7 @@ public class Module{
         options.addArguments("--headless", "--disable-gpu", "--ignore-certificate-errors","--disable-extensions","--no-sandbox","--disable-dev-shm-usage");
         options.addArguments("--use-fake-ui-for-media-stream");
         options.addArguments("--use-fake-device-for-media-stream");
+        options.addArguments("--remote-allow-origins=*");
         driverChrome = new ChromeDriver(options);
         browsers.add(driverChrome);
 
