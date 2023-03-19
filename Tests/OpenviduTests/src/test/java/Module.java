@@ -110,7 +110,7 @@ public class Module{
      * @author Andrea Acuña
      * Description: administrate the result
      */
-    public void tearDownMethod(ITestResult result) {
+    /**public void tearDownMethod(ITestResult result) {
         if (result.getStatus() == ITestResult.FAILURE) {
           test.log(Status.FAIL, "Test failed: " + result.getThrowable());
         } else if (result.getStatus() == ITestResult.SKIP) {
@@ -118,6 +118,6 @@ public class Module{
         } else {
           test.log(Status.PASS, "Test passed");
         }
-      }
+      }*/
 
 }
