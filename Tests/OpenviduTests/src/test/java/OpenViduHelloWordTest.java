@@ -68,7 +68,7 @@ class OpenViduHelloWordTest extends Module{
  */
     @Test
     void T001_JoinSession() throws IOException {
-        test = super.createTestReport("T001_JoinSession", "Join the session and verificate that the two browsers are inside the session");
+        test = super.startTest("T001_JoinSession", "Join the session and verificate that the two browsers are inside the session");
         test.log(Status.INFO, "Starting test");
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.id(idNameSession));

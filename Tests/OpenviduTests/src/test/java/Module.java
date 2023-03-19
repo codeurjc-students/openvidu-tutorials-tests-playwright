@@ -11,14 +11,18 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.testng.ITestResult;
 
+import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
 
-import Reporter.ExtentTestManager;
+import Reporter.ExtentManager;
 
 
-public class Module extends ExtentTestManager{
-
+public class Module{
+    private ExtentTest test;
+    static ExtentReports extent = ExtentManager.createExtentReports();
 
     /**
      * method.
@@ -95,8 +99,25 @@ public class Module extends ExtentTestManager{
      * @author Andrea Acuña
      * Description: create a extend report for the test
      */
-    public ExtentTest createTestReport(String testName, String desc) {
-        return super.startTest(testName, desc);
+    public static synchronized ExtentTest startTest(String testName, String desc) {
+        ExtentTest test = extent.createTest(testName, desc);
+        return test;
     }
+
+    /**
+     * method.
+     *
+     * @author Andrea Acuña
+     * Description: administrate the result
+     */
+    public void tearDownMethod(ITestResult result) {
+        if (result.getStatus() == ITestResult.FAILURE) {
+          test.log(Status.FAIL, "Test failed: " + result.getThrowable());
+        } else if (result.getStatus() == ITestResult.SKIP) {
+          test.log(Status.SKIP, "Test skipped: " + result.getThrowable());
+        } else {
+          test.log(Status.PASS, "Test passed");
+        }
+      }
 
 }
