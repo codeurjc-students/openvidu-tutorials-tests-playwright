@@ -30,6 +30,11 @@ jobs:
     - name: Execute tests
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduHelloWordTest"
       working-directory: ./Tests/OpenviduTests
+    - name: Upload TestNG report
+      uses: actions/upload-artifact@v2
+      with:
+        name: TestNG report
+        path: test-output/Extent.html
 
   AngularTest:
     runs-on: ubuntu-latest
