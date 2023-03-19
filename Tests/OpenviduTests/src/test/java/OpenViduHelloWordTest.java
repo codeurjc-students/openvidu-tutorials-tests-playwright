@@ -19,10 +19,6 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 
-import org.testng.annotations.BeforeEach;
-import org.testng.annotations.Test;
-import org.testng.annotations.CurrentTestMethod;
-
 /**
  * Test with Java.
  * Test for the hello word for open vidu 
