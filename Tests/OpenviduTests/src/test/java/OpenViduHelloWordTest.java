@@ -8,12 +8,14 @@ import java.util.NoSuchElementException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
 
 import com.aventstack.extentreports.ExtentReports;
@@ -53,6 +55,18 @@ class OpenViduHelloWordTest extends Module{
     String idNameSession = "sessionId";
     String idSelfCamera = "local-video-undefined";
 
+
+
+/**
+ * BeforeTest.
+ *
+ * @author Andrea Acuña
+ * Description: Execute before the grouf of tests. Configure the reporter
+ */
+    @BeforeTest
+    void setupReporter() {
+        extentReports = super.createExtentReports();
+    }
 
 /**
  * BeforeEach.
@@ -144,11 +158,20 @@ class OpenViduHelloWordTest extends Module{
         waitF.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera)));
 
         // see if the video is playing properly
-        String currentTimeChrome = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
-        String currentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
-        super.takePhoto(evidencesFolder + "\\HW_VideoPlaying_C.png", evidencesFolder + "\\HW_VideoPlaying_F.png", driverChrome, driverFirefox);
-
-
+        int repeat = 0;
+        String currentTimeChrome = "";
+        String currentTimeFirefox = "";
+        while (repeat <= 5){
+            try{
+                currentTimeChrome = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
+                currentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
+                super.takePhoto(evidencesFolder + "\\HW_VideoPlaying_C.png", evidencesFolder + "\\HW_VideoPlaying_F.png", driverChrome, driverFirefox);
+                break;
+            }catch(StaleElementReferenceException exc){
+                exc.printStackTrace();
+            }
+            repeat++;
+        }
         if (Float.parseFloat(currentTimeChrome) > 0 && Float.parseFloat(currentTimeFirefox) > 0){
                 //Leave the session with chrome
             try{
@@ -212,8 +235,10 @@ class OpenViduHelloWordTest extends Module{
         }
     }
 
+    
+
 /**
- * AfterEach.
+ * AfterMethod.
  *
  * @author Andrea Acuña
  * Description: close both drivers
