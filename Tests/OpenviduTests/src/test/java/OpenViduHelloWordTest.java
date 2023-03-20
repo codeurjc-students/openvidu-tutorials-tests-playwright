@@ -5,7 +5,6 @@ import java.time.Duration;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -15,7 +14,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Listeners;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -23,11 +22,14 @@ import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 
+import Listener.TestListener;
+
 /**
  * Test with Java.
  * Test for the hello word for open vidu 
  * @author Andrea Acuña
  */
+@Listeners(TestListener.class)
 class OpenViduHelloWordTest extends Module{
 
     String evidencesFolder = "..\\..\\evidence";
@@ -58,7 +60,7 @@ class OpenViduHelloWordTest extends Module{
  * @author Andrea Acuña
  * Description: Execute before every single test. Configure the camera an set de url in each browser
  */
-    @BeforeTest
+    @BeforeEach
     void setup() {
         List<WebDriver> browsers = super.setUpTwoBrowsers();
         driverChrome = browsers.get(0);
