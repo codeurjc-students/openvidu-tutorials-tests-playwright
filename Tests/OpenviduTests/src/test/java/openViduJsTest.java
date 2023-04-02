@@ -34,7 +34,7 @@ class OpenViduJsTest extends Module{
     String evidencesFolder = "..\\..\\evidence";
 
     private ExtentTest test;
-    public static ExtentReports extentReports = new ExtentReports();
+    private ExtentReports extentReports;
 
     WebDriver driverChrome;
     WebDriver driverFirefox;
@@ -77,7 +77,6 @@ void setupReporter() {
         driverChrome.get(URL); 
         driverFirefox.get(URL);
 
-        extentReports = super.createExtentReports();
         TESTNAME = Thread.currentThread().getStackTrace()[2].getMethodName();
         test = super.startTest(TESTNAME, "");
     }
