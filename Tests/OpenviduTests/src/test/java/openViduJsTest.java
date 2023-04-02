@@ -14,6 +14,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeTest;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 
 /**
  * Test with Java.
@@ -24,12 +33,16 @@ class OpenViduJsTest extends Module{
 
     String evidencesFolder = "..\\..\\evidence";
 
+    private ExtentTest test;
+    public static ExtentReports extentReports = new ExtentReports();
+
     WebDriver driverChrome;
     WebDriver driverFirefox;
 
     String URL = "http://localhost:8080/";
 
     String NAMESESSION = "TestSession";
+    String TESTNAME = "";
 
     String XpathJoinButton = "//*[@id='join-dialog']/form/p[3]/input";
     String idLeaveButton = "buttonLeaveSession";
@@ -39,6 +52,16 @@ class OpenViduJsTest extends Module{
     String idNameSession = "sessionId";
     String idSelfCamera = "local-video-undefined";
 
+/**
+ * BeforeTest.
+ *
+ * @author Andrea Acuña
+ * Description: Execute before the grouf of tests. Configure the reporter
+ */
+@BeforeTest
+void setupReporter() {
+    extentReports = super.createExtentReports();
+}
 
 /**
  * BeforeEach.
@@ -53,6 +76,10 @@ class OpenViduJsTest extends Module{
         driverFirefox = browsers.get(1);
         driverChrome.get(URL); 
         driverFirefox.get(URL);
+
+        extentReports = super.createExtentReports();
+        TESTNAME = Thread.currentThread().getStackTrace()[2].getMethodName();
+        test = super.startTest(TESTNAME, "");
     }
 
 /**
@@ -64,6 +91,8 @@ class OpenViduJsTest extends Module{
  */
     @Test
     void T001_JoinSession() throws IOException {
+        test.log(Status.INFO, "Starting test");
+        // test.log(Status.PASS, "The title is correctly set");
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.id(idNameSession));
         textBox.clear();
@@ -76,7 +105,7 @@ class OpenViduJsTest extends Module{
         textBoxF.sendKeys(NAMESESSION);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
         joinButtonF.submit();
-
+        test.log(Status.PASS, "Session configurated");
         try{
             if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 1");
@@ -86,8 +115,10 @@ class OpenViduJsTest extends Module{
                 System.out.println("The app is correctly inicializate in browser 2");
                 super.takePhoto("", evidencesFolder + "\\J_OK_F.png", driverChrome, driverFirefox);
             }
+            test.log(Status.PASS, "Join Session Ok");
         }catch (NoSuchElementException n){
             super.takePhoto(evidencesFolder + "\\J_ErrorInicializate_C.png", evidencesFolder + "\\J_ErrorInicializate_F.png", driverChrome, driverFirefox);
+            test.log(Status.FAIL, "Test Failed");
             fail("The app is not correctly inicializate");
         }
     }
@@ -191,14 +222,23 @@ void T003_SessionHeader() throws IOException {
 }
 
 /**
- * AfterEach.
+ * AfterMethod.
  *
  * @author Andrea Acuña
  * Description: close both drivers
  */
-    @AfterEach
-    void quit() {
-        super.quitTwoBrowsers(driverChrome, driverFirefox);
+@AfterMethod
+synchronized void afterMethod(ITestResult result){
+    if (result.getStatus() == ITestResult.FAILURE) {
+        test.log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " - Test Case Failed", ExtentColor.RED));
+        test.fail(result.getThrowable());
+    } else if (result.getStatus() == ITestResult.SKIP) {
+        test.log(Status.SKIP, MarkupHelper.createLabel(result.getName() + " - Test Case Skipped", ExtentColor.ORANGE));
+    } else {
+        test.log(Status.PASS, MarkupHelper.createLabel(result.getName() + " - Test Case Passed", ExtentColor.GREEN));
     }
+    extentReports.flush();
+    super.quitTwoBrowsers(driverChrome, driverFirefox);
+}
 
 }
