@@ -161,17 +161,27 @@ class OpenViduHelloWordTest extends Module{
         int repeat = 0;
         String currentTimeChrome = "";
         String currentTimeFirefox = "";
+        
         while (repeat <= 5){
             try{
                 currentTimeChrome = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
-                currentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
-                super.takePhoto(evidencesFolder + "\\HW_VideoPlaying_C.png", evidencesFolder + "\\HW_VideoPlaying_F.png", driverChrome, driverFirefox);
                 break;
             }catch(StaleElementReferenceException exc){
                 exc.printStackTrace();
             }
             repeat++;
         }
+        repeat = 0;
+        while (repeat <= 5){
+            try{
+                currentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
+                break;
+            }catch(StaleElementReferenceException exc){
+                exc.printStackTrace();
+            }
+            repeat++;
+        } 
+        super.takePhoto(evidencesFolder + "\\HW_VideoPlaying_C.png", evidencesFolder + "\\HW_VideoPlaying_F.png", driverChrome, driverFirefox);
         if (Float.parseFloat(currentTimeChrome) > 0 && Float.parseFloat(currentTimeFirefox) > 0){
                 //Leave the session with chrome
             try{
