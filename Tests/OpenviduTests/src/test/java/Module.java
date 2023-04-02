@@ -133,7 +133,7 @@ public class Module{
      */
     public synchronized static ExtentReports createExtentReports() {
         ExtentReports extentReports = new ExtentReports();
-        ExtentSparkReporter reporter = new ExtentSparkReporter(".\\test-output\\Extent.html");
+        ExtentSparkReporter reporter = new ExtentSparkReporter("./test-output/Extent.html");
         reporter.config().setReportName("test Report");
         reporter.config().setTimeStampFormat("EEEE, MMMM dd, yyyy, hh:mm a '('zzz')'");
         reporter.config().setTheme(Theme.STANDARD);
