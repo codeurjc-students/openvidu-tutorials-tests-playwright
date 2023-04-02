@@ -226,6 +226,7 @@ class OpenViduHelloWordTest extends Module{
             if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
                 if (driverChrome.findElement(By.id(idHeader)).getText() == NAMESESSION){
                     System.out.println("The title is correctly set");
+                    test.log(Status.PASS, "The title is correctly set");
                     super.takePhoto(evidencesFolder + "\\HW_OK_C.png", "", driverChrome, driverFirefox);
                 }
             }
@@ -244,7 +245,7 @@ class OpenViduHelloWordTest extends Module{
  * Description: close both drivers
  */
     @AfterMethod
-    void quit(ITestResult result){
+    synchronized void afterMethod(ITestResult result){
         if (result.getStatus() == ITestResult.FAILURE) {
             test.log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " - Test Case Failed", ExtentColor.RED));
             test.fail(result.getThrowable());
