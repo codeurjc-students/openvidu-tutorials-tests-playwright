@@ -6,7 +6,6 @@ import java.time.Duration;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -77,8 +76,6 @@ void setupReporter() {
         driverChrome.get(URL); 
         driverFirefox.get(URL);
 
-        TESTNAME = Thread.currentThread().getStackTrace()[2].getMethodName();
-        test = super.startTest(TESTNAME, "");
     }
 
 /**
@@ -90,6 +87,10 @@ void setupReporter() {
  */
     @Test
     void T001_JoinSession() throws IOException {
+        TESTNAME = Thread.currentThread().getStackTrace()[2].getMethodName();
+        test = super.startTest(TESTNAME, "");
+
+
         test.log(Status.INFO, "Starting test");
         // test.log(Status.PASS, "The title is correctly set");
         // Configurate the session in chrome
@@ -120,6 +121,7 @@ void setupReporter() {
             test.log(Status.FAIL, "Test Failed");
             fail("The app is not correctly inicializate");
         }
+        extentReports.flush();
     }
 
 /**
@@ -228,15 +230,14 @@ void T003_SessionHeader() throws IOException {
  */
 @AfterMethod
 synchronized void afterMethod(ITestResult result){
-    if (result.getStatus() == ITestResult.FAILURE) {
+    /*if (result.getStatus() == ITestResult.FAILURE) {
         test.log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " - Test Case Failed", ExtentColor.RED));
         test.fail(result.getThrowable());
     } else if (result.getStatus() == ITestResult.SKIP) {
         test.log(Status.SKIP, MarkupHelper.createLabel(result.getName() + " - Test Case Skipped", ExtentColor.ORANGE));
     } else {
         test.log(Status.PASS, MarkupHelper.createLabel(result.getName() + " - Test Case Passed", ExtentColor.GREEN));
-    }
-    extentReports.flush();
+    }*/
     super.quitTwoBrowsers(driverChrome, driverFirefox);
 }
 
