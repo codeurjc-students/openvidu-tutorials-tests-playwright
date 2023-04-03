@@ -93,7 +93,9 @@ void setupReporter() {
         test = super.startTest(TESTNAME, "", extentReports);
 
 
-        test.log(Status.INFO, "Starting test");
+        //test.log(Status.INFO, "Starting test");
+        test.pass("Starting test");
+        
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.id(idNameSession));
         textBox.clear();
