@@ -88,7 +88,7 @@ void setupReporter() {
     @Test
     void T001_JoinSession() throws IOException {
         TESTNAME = Thread.currentThread().getStackTrace()[2].getMethodName();
-        test = super.startTest(TESTNAME, "");
+        test = super.startTest(TESTNAME, "", extentReports);
 
 
         test.log(Status.INFO, "Starting test");

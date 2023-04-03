@@ -26,7 +26,7 @@ import Reporter.ExtentManager;
 
 public class Module{
     private ExtentTest test;
-    static ExtentReports extent = ExtentManager.createExtentReports();
+    static ExtentReports extent;
 
     /**
      * method.
@@ -104,8 +104,8 @@ public class Module{
      * @author Andrea Acuña
      * Description: create a extend report for the test
      */
-    public static synchronized ExtentTest startTest(String testName, String desc) {
-        ExtentTest test = extent.createTest(testName, desc);
+    public static synchronized ExtentTest startTest(String testName, String desc, ExtentReports e) {
+        ExtentTest test = e.createTest(testName, desc);
         return test;
     }
 
