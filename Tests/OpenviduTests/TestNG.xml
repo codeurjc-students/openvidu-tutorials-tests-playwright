@@ -2,12 +2,12 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="N11 Test Suite" >
     <listeners>
-        <listener class-name="utils.listeners.TestListener"/>
+        <listener class-name="src.test.java.Listener.TestListener"/>
         <listener class-name="utils.listeners.AnnotationTransformer"/>
     </listeners>
-    <test name="LoginTest">
+    <test name="JsTest">
         <classes>
-            <class name="tests.LoginTests"/>
+            <class name="src.test.java.OpenViduJsTest"/>
         </classes>
     </test>
 </suite>
