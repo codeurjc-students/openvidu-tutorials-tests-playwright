@@ -94,7 +94,6 @@ void setupReporter() {
 
 
         test.log(Status.INFO, "Starting test");
-        // test.log(Status.PASS, "The title is correctly set");
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.id(idNameSession));
         textBox.clear();
@@ -107,7 +106,8 @@ void setupReporter() {
         textBoxF.sendKeys(NAMESESSION);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
         joinButtonF.submit();
-        test.log(Status.PASS, "Session configurated");
+        //test.log(Status.PASS, "Session configurated");
+        test.pass("Session configurated");
         try{
             if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 1");
@@ -117,10 +117,12 @@ void setupReporter() {
                 System.out.println("The app is correctly inicializate in browser 2");
                 super.takePhoto("", evidencesFolder + "\\J_OK_F.png", driverChrome, driverFirefox);
             }
-            test.log(Status.PASS, "Join Session Ok");
+            test.pass("Join Session Ok");
+            //test.log(Status.PASS, "Join Session Ok");
         }catch (NoSuchElementException n){
             super.takePhoto(evidencesFolder + "\\J_ErrorInicializate_C.png", evidencesFolder + "\\J_ErrorInicializate_F.png", driverChrome, driverFirefox);
-            test.log(Status.FAIL, "Test Failed");
+            //test.log(Status.FAIL, "Test Failed");
+            test.fail("Error an inicializated");
             fail("The app is not correctly inicializate");
         }
         extentReports.flush();
