@@ -56,11 +56,12 @@ class OpenViduJsTest extends Module{
  *
  * @author Andrea Acuña
  * Description: Execute before the grouf of tests. Configure the reporter
- */
+ *
 @BeforeTest
 void setupReporter() {
     extentReports = super.createExtentReports();
 }
+*/
 
 /**
  * BeforeEach.
@@ -87,6 +88,7 @@ void setupReporter() {
  */
     @Test
     void T001_JoinSession() throws IOException {
+        extentReports = super.createExtentReports();
         TESTNAME = Thread.currentThread().getStackTrace()[2].getMethodName();
         test = super.startTest(TESTNAME, "", extentReports);
 
