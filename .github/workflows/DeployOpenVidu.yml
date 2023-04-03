@@ -98,7 +98,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: TestNG report
-        path: ./Tests/OpenviduTests/TestNG.xml
+        path: ./Tests/OpenviduTests/test-output/Extent.html
 
   ReactTest:
     runs-on: ubuntu-latest
