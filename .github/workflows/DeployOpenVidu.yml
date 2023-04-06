@@ -98,7 +98,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.ACCESS_GITHUB_TOKEN }}
     - name: Generate Extent Report
       run: |
-        mvn com.aventstack.extentreports:extentreports-maven-plugin:3.1.5:aggregate
+        mvn com.aventstack.extentreports:extentreports-maven-plugin:5.0.8:aggregate
       env:
         GITHUB_TOKEN: ${{ secrets.ACCESS_GITHUB_TOKEN }}
 
