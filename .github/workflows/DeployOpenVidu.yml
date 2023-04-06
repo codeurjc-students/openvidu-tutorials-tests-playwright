@@ -90,7 +90,7 @@ jobs:
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduJsTest"
       working-directory: ./Tests/OpenviduTests
     - name: Publish test results
-      uses: EnricoMi/publish-unit-test-result-action@v1.4.1
+      uses: EnricoMi/publish-unit-test-result-action@v2
       with:
         files: '**/TEST-*.xml'
         testResultFormat: junit
