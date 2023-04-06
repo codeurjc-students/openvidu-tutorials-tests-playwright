@@ -89,18 +89,16 @@ jobs:
     - name: Execute tests
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduJsTest"
       working-directory: ./Tests/OpenviduTests
-    - name: Publish test results
-      uses: EnricoMi/publish-unit-test-result-action@v2
+    - name: Publish Extent Reports
+      uses: d3sw/extentreports-github-action@v1.0.0
       with:
-        files: '**/TEST-*.xml'
-        testResultFormat: junit
-      env:
-        GITHUB_TOKEN: ${{ secrets.ACCESS_GITHUB_TOKEN }}
-    - name: Generate Extent Report
-      run: |
-        mvn com.aventstack.extentreports:extentreports-maven-plugin:5.0.8:aggregate
-      env:
-        GITHUB_TOKEN: ${{ secrets.ACCESS_GITHUB_TOKEN }}
+        inputFolder: ./Tests/OpenviduTests/target/surefire-reports
+        outputFolder: ./Tests/OpenviduTests/test-output
+        reportTitle: JavaScript Test Report
+        reportFileName: javascript-test-report
+        reportEncoding: utf-8
+        reportTheme: standard
+        extentReportsVersion: 5.0.8
 
   ReactTest:
     runs-on: ubuntu-latest
