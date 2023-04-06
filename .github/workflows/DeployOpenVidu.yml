@@ -34,11 +34,6 @@ jobs:
     - name: Execute tests
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduHelloWordTest"
       working-directory: ./Tests/OpenviduTests
-    - name: Upload TestNG report
-      uses: actions/upload-artifact@v2
-      with:
-        name: TestNG report
-        path: ./Tests/OpenviduTests/test-output/Extent.html
 
   AngularTest:
     runs-on: ubuntu-latest
@@ -94,11 +89,18 @@ jobs:
     - name: Execute tests
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduJsTest"
       working-directory: ./Tests/OpenviduTests
-    - name: Upload TestNG report
-      uses: actions/upload-artifact@v2
+    - name: Publish test results
+      uses: EnricoMi/publish-unit-test-result-action@v1.4.1
       with:
-        name: TestNG report
-        path: ./Tests/OpenviduTests/test-output/Extent.html
+        files: '**/TEST-*.xml'
+        testResultFormat: junit
+      env:
+        GITHUB_TOKEN: ${{ secrets.ACCESS_GITHUB_TOKEN }}
+    - name: Generate Extent Report
+      run: |
+        mvn com.aventstack.extentreports:extentreports-maven-plugin:3.1.5:aggregate
+      env:
+        GITHUB_TOKEN: ${{ secrets.ACCESS_GITHUB_TOKEN }}
 
   ReactTest:
     runs-on: ubuntu-latest
