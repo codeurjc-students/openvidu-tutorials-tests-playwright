@@ -89,16 +89,11 @@ jobs:
     - name: Execute tests
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduJsTest"
       working-directory: ./Tests/OpenviduTests
-    - name: Publish Extent Reports
-      uses: codeurjc-students/openvidu-tutorials-tests@v1.0.0
+    - name: Upload TestNG report
+      uses: actions/upload-artifact@v2
       with:
-        inputFolder: ./Tests/OpenviduTests/target/surefire-reports
-        outputFolder: ./Tests/OpenviduTests/test-output
-        reportTitle: JavaScript Test Report
-        reportFileName: javascript-test-report
-        reportEncoding: utf-8
-        reportTheme: standard
-        extentReportsVersion: 5.0.8
+        name: TestNG report
+        path: ./Tests/OpenviduTests/test-output/Extent.html
 
   ReactTest:
     runs-on: ubuntu-latest
