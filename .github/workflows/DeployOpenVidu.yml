@@ -90,7 +90,7 @@ jobs:
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduJsTest"
       working-directory: ./Tests/OpenviduTests
     - name: Publish Extent Reports
-      uses: d3sw/extentreports-github-action@v1.0.0
+      uses: codeurjc-students/openvidu-tutorials-tests@v1.0.0
       with:
         inputFolder: ./Tests/OpenviduTests/target/surefire-reports
         outputFolder: ./Tests/OpenviduTests/test-output
