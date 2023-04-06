@@ -35,7 +35,7 @@ class OpenViduJsTest extends Module{
     String evidencesFolder = "..\\..\\evidence";
 
     private ExtentTest test;
-    private ExtentReports extentReports;
+    private static ExtentReports extentReports;
 
     WebDriver driverChrome;
     WebDriver driverFirefox;
@@ -91,21 +91,18 @@ void setupReporter() {
     @Test
     void T001_JoinSession() throws IOException {
         //extentReports = super.createExtentReports();
-        ExtentReports extentReports = new ExtentReports();
+        extentReports = new ExtentReports();
         ExtentSparkReporter reporter = new ExtentSparkReporter("../../../test-output/Extent.html");
         reporter.config().setReportName("test Report");
-        reporter.config().setTimeStampFormat("EEEE, MMMM dd, yyyy, hh:mm a '('zzz')'");
         reporter.config().setTheme(Theme.STANDARD);
         extentReports.attachReporter(reporter);
-        extentReports.setSystemInfo("Blog Name", "Automation Report");
-        extentReports.setSystemInfo("Author", "Andrea P");
 
         
         
         TESTNAME = Thread.currentThread().getStackTrace()[2].getMethodName();
         //test = super.startTest(TESTNAME, "", extentReports);
 
-        ExtentTest test = extentReports.createTest(TESTNAME, "Descripcion test 1 prueba");
+        test = extentReports.createTest(TESTNAME, "Descripcion test 1 prueba");
 
 
         test.log(Status.INFO, "Starting test");
