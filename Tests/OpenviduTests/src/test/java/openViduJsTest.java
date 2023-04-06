@@ -22,6 +22,8 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.aventstack.extentreports.reporter.configuration.Theme;
 
 /**
  * Test with Java.
@@ -88,9 +90,22 @@ void setupReporter() {
  */
     @Test
     void T001_JoinSession() throws IOException {
-        extentReports = super.createExtentReports();
+        //extentReports = super.createExtentReports();
+        ExtentReports extentReports = new ExtentReports();
+        ExtentSparkReporter reporter = new ExtentSparkReporter("../../../test-output/Extent.html");
+        reporter.config().setReportName("test Report");
+        reporter.config().setTimeStampFormat("EEEE, MMMM dd, yyyy, hh:mm a '('zzz')'");
+        reporter.config().setTheme(Theme.STANDARD);
+        extentReports.attachReporter(reporter);
+        extentReports.setSystemInfo("Blog Name", "Automation Report");
+        extentReports.setSystemInfo("Author", "Andrea P");
+
+        
+        
         TESTNAME = Thread.currentThread().getStackTrace()[2].getMethodName();
-        test = super.startTest(TESTNAME, "", extentReports);
+        //test = super.startTest(TESTNAME, "", extentReports);
+
+        ExtentTest test = extentReports.createTest(TESTNAME, "Descripcion test 1 prueba");
 
 
         test.log(Status.INFO, "Starting test");
