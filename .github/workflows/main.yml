@@ -10,7 +10,7 @@ jobs:
   runs-on: ubuntu-latest
   steps:
     - name: Check out the repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Run the build process with Docker
       run: |
           sudo docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.23.0 &
@@ -18,29 +18,23 @@ jobs:
           sudo npm install
           sudo node index.js &
           cd ..
-          pwd
-          sudo npm install --location=global http-server
+          npm install --location=global http-server
           sudo http-server openvidu-hello-world/web &
-          sleep 20
-          curl http://127.0.0.1:8080 
-    - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
         node-version: 16
     - name: Install dependencies
       run: npm ci
+    - uses: browser-actions/setup-chrome@v1
     - name: Install Playwright Browsers
       run: npx playwright install 
     - name: Runin Test
       run: |
          cd tests
-    
          npx playwright test hello-world-openvidu.spec.js
-         cd ..
     - uses: actions/upload-artifact@v3
       if: always()
       with:
         name: tests
         path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/tests
         retention-days: 30
-   
