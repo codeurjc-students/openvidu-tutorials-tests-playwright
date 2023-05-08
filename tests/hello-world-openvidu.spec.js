@@ -22,9 +22,21 @@ test('homepage has title and links to intro page', async () => {
   //await page2.fill('#sessionId', 'SessionS');
   await page2.click('#join input[type="submit"]');
   await page2.waitForSelector('#session', { visible: true });
-  await page1.waitForTimeout(20000); 
+  await page2.waitForTimeout(5000); 
+  
+ 
 
-  await page2.screenshot({ path: 'pr.png' });
+  // Capturar imágenes de video en ambas páginas.
+  const screenshot1 = await page1.screenshot({ type: 'jpeg', quality: 60, clip: { x: 0, y: 0, width: 640, height: 480 } });
+  const screenshot2 = await page2.screenshot({ type: 'jpeg', quality: 60, clip: { x: 0, y: 0, width: 640, height: 480 } });
+
+  // Comparar las imágenes de video.
+  expect(screenshot1).toEqual(screenshot2);
+
+  // Cerrar las páginas y el navegador.
+  await Promise.all([page1.close(), page2.close()]);
+  await browser.close();
+
   // Cerrar las páginas y el navegador
   await Promise.all([page1.close(), page2.close()]);
   await browser.close();  
