@@ -27,7 +27,7 @@ test('homepage has title and links to intro page', async () => {
  
 
   // Capturar imágenes de video en ambas páginas.
-  const screenshot1 = await page2.screenshot({ path: 'pr.png' });
+  const screenshot1 = await page1.screenshot({ path: 'pr.png' });
   const screenshot2 = await page2.screenshot({ path: 'pr1.png' });
 
   // Comparar las imágenes de video.
@@ -37,7 +37,4 @@ test('homepage has title and links to intro page', async () => {
   await Promise.all([page1.close(), page2.close()]);
   await browser.close();
 
-  // Cerrar las páginas y el navegador
-  await Promise.all([page1.close(), page2.close()]);
-  await browser.close();  
 });
