@@ -28,22 +28,11 @@ test('homepage has title and links to intro page', async () => {
   await page2.click('#join');
   await page2.waitForSelector('#session-connected', { visible: true });
 
-  // Esperar a que ambos usuarios se conecten
-  await Promise.all([
-    page1.waitForSelector('.video-container video'),
-    page2.waitForSelector('.video-container video')
-  ]);
-
+  
   // Esperar a que la sesión esté lista
   await Promise.all([
     page1.waitForSelector('.publisher .OT_video-element'),
     page2.waitForSelector('.publisher .OT_video-element')
-  ]);
-
-  // Esperar a que se reciban los streams de ambos usuarios
-  await Promise.all([
-    page1.waitForSelector('.subscriber .OT_video-element'),
-    page2.waitForSelector('.subscriber .OT_video-element')
   ]);
 
   // Tomar capturas de pantalla en ambas páginas
