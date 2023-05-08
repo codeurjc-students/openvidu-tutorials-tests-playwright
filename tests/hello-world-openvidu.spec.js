@@ -27,8 +27,8 @@ test('homepage has title and links to intro page', async () => {
  
 
   // Capturar imágenes de video en ambas páginas.
-  const screenshot1 = await page1.screenshot({ type: 'jpeg', quality: 60, clip: { x: 0, y: 0, width: 640, height: 480 } });
-  const screenshot2 = await page2.screenshot({ type: 'jpeg', quality: 60, clip: { x: 0, y: 0, width: 640, height: 480 } });
+  const screenshot1 = await page1.screenshot({ type: 'jpeg'});
+  const screenshot2 = await page2.screenshot({ type: 'jpeg'});
 
   // Comparar las imágenes de video.
   expect(screenshot1).toEqual(screenshot2);
