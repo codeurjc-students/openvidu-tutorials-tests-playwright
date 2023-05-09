@@ -25,7 +25,7 @@ const browser = await chromium.launch({ headless: true , deviceScaleFactor: 1, /
    await page2.waitForTimeout(5000); */
    
    // Buscar los elementos HTML que contienen los streams de video
-   const videoElements = await page1.$$('video');
+   const videoElements =  page1.$$('video');
 
 // Comprobar que hay exactamente dos elementos encontrados
    expect(videoElements.length).toEqual(2);
