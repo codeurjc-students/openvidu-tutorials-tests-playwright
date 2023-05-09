@@ -23,13 +23,14 @@ const browser = await chromium.launch({ headless: true , deviceScaleFactor: 1, /
    await page2.click('#join input[type="submit"]');
    await page2.waitForSelector('#session', { visible: true });
    await page2.waitForTimeout(5000); 
-
-
-
-   // Capturar imágenes de video en ambas páginas.
    
-   await page1.screenshot({ path: 'pg1.png' });
-   await page2.screenshot({ path: 'pg2.png' });
+   // Buscar los elementos HTML que contienen los streams de video
+   const videoElements = await page2.locatorAll('video');
+
+// Comprobar que hay exactamente dos elementos encontrados
+   expect(videoElements.length).toEqual(2);
+
+
   
 
 
