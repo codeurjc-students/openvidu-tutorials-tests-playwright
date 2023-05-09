@@ -40,7 +40,7 @@ test('homepage has title and links to intro page', async () => {
    expect(videoElements.length).toEqual(2);
    
    // Buscar los elementos HTML que contienen los streams de video en la página 2
-   videoElements =  page2.$$('video');
+   const videoElements =  page2.$$('video');
 
    // Comprobar que hay exactamente dos elementos encontrados
    expect(videoElements.length).toEqual(2);
