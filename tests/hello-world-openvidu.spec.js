@@ -2,7 +2,7 @@
 const { test, expect, chromium } = require('@playwright/test');
 
 // Definir el test a realizar
-test('homepage has title and links to intro page', async () => {
+test('Checking for the presence of two active webcams in an OpenVidu session', async () => {
 
    // Abrir una instancia del navegador Chromium en modo headless
    const browser = await chromium.launch({ 
