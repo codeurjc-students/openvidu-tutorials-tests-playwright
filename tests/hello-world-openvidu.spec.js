@@ -40,7 +40,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
    expect(videoElements.length).toEqual(2);
    
    // Buscar los elementos HTML que contienen los streams de video en la página 2
-   const videoElements =  page2.$$('video');
+   videoElements =  page2.$$('video');
 
    // Comprobar que hay exactamente dos elementos encontrados
    expect(videoElements.length).toEqual(2);
