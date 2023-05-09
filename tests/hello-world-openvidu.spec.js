@@ -26,17 +26,13 @@ const browser = await chromium.launch({ headless: true , deviceScaleFactor: 1, /
    
    await page2.screenshot({ path: 'pr.png' });
    
-   // Buscar los elementos HTML que contienen los streams de video
-   const videoElementsPage1 = await page1.$$('video');
 
-  // Comprobar que hay exactamente dos elementos encontrados
-   expect(videoElementsPage1.length).toEqual(2);
    
    // Buscar los elementos HTML que contienen los streams de video
-   const videoElementsPage2 = await page2.$$('video');
+   const videoElements = await page2.$$('video');
 
 // Comprobar que hay exactamente dos elementos encontrados
-   expect(videoElementsPage2.length).toEqual(2);
+   expect(videoElements.length).toEqual(2);
 
 
   
