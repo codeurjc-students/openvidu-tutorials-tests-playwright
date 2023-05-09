@@ -32,7 +32,10 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
    // Hacer clic en el botón de unirse a la sesión y esperar a que aparezca la página de sesión
    await page2.click('#join input[type="submit"]');
    await page2.waitForSelector('#session', { visible: true });
-
+   
+   await page1.screenshot({ path: 'pr1.png' });
+   await page2.screenshot({ path: 'pr2.png' });
+   
    // Buscar los elementos HTML que contienen los streams de video en la página 1
    const videoElements =  page1.$$('video');
 
