@@ -28,13 +28,10 @@ jobs:
     - uses: browser-actions/setup-chrome@v1
     - name: Install Playwright Browsers
       run: npx playwright install 
-    - name: Install Playwright Report
-      run: npm install jest-html-reporter --save-dev
     - name: Runin Test
       run: |
          cd tests
-         npx playwright test hello-world-openvidu.spec.js
-         jest
+         npx playwright test hello-world-openvidu.spec.js --reporter=html --output=tests/report.html  
     - uses: actions/upload-artifact@v3
       if: always()
       with:
