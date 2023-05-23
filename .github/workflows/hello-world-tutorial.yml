@@ -1,4 +1,4 @@
-name: Test en playwright
+name: openvidu-Hello-World-tutorial-test 
 
 on: 
   push:
