@@ -36,5 +36,5 @@ jobs:
       if: always()
       with:
         name: tests
-        path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/tests
+        path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/
         retention-days: 30
