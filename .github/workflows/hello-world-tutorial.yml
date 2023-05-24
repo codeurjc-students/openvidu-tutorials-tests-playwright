@@ -2,7 +2,7 @@ name: openvidu-Hello-World-tutorial-test
 
 on: 
   workflow_dispatch:
-  push:
+
 
 jobs:
  OpenVidu_deployment:
@@ -31,7 +31,7 @@ jobs:
     - name: Runin Test
       run: |
          cd tests
-         npx playwright test hello-world-openvidu.spec.js --reporter=html --output=tests/report.html  
+         npx playwright test hello-world-openvidu.spec.js
     - uses: actions/upload-artifact@v3
       if: always()
       with:
