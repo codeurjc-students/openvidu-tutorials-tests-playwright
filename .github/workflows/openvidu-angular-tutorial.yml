@@ -20,6 +20,7 @@ jobs:
           sudo node index.js &
           sleep 5
           npm -v
+          npm install -g @angular/cli
           ng v
           cd ../openvidu-angular
           npm install
