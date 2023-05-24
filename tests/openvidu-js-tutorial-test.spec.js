@@ -30,7 +30,7 @@ const browser = await chromium.launch({ headless: true , deviceScaleFactor: 1, /
    const videoElements = await page2.$$('video');
 
    // Comprobar que hay exactamente dos elementos encontrados
-   expect(videoElements.length).toBeGreaterThan(2);
+   expect(videoElements.length).toEqual(3);
 
    // Cerrar las páginas y el navegador.
 
