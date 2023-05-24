@@ -1,8 +1,11 @@
+//Test for Angular, React & Vue tutorials.
 const { test, expect, chromium } = require('@playwright/test');
 
+
+
 test('Checking for the presence of two active webcams in an OpenVidu session', async () => {
-const browser = await chromium.launch({ headless: true , deviceScaleFactor: 1, // especificar el factor de escala de la página
-   userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36', // especificar el user agent
+const browser = await chromium.launch({ headless: true , deviceScaleFactor: 1, 
+   userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36', 
    args : ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream"]
  });
 

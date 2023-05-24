@@ -1,6 +1,7 @@
-name: openvidu-js-tutorial-test 
+name: openvidu-angular-tutorial-test 
 
 on: 
+  push:
   workflow_dispatch:
 
 jobs:
@@ -16,9 +17,11 @@ jobs:
           cd openvidu-basic-node
           sudo npm install
           sudo node index.js &
-          cd ..
-          npm install --location=global http-server
-          sudo http-server openvidu-js/web &
+          npm -v
+          ng v
+          cd ../openvidu-angular
+          npm install
+          ng serve
     - uses: actions/setup-node@v3
       with:
         node-version: 16
@@ -30,7 +33,7 @@ jobs:
     - name: Runin Test
       run: |
          cd tests
-         npx playwright test openvidu-basic-web-tutorial.spec.js
+         npx playwright test openvidu-js-tutorial-test.spec.js
     - uses: actions/upload-artifact@v3
       if: always()
       with:
