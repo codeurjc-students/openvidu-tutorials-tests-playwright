@@ -14,11 +14,11 @@ jobs:
     - name: Run the build process with Docker
       run: |
           sudo docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.23.0 &
-          sleep 10
+          sleep 30
           cd openvidu-basic-node
           sudo npm install
           sudo node index.js &
-          sleep 5
+          sleep 30
           npm -v
           npm install -g @angular/cli
           ng v
