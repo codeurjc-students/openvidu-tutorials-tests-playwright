@@ -23,7 +23,6 @@ jobs:
           cd ../openvidu-angular
           npm install
           ng serve --open
-      continue-on-error: true
     - uses: actions/setup-node@v3
       with:
         node-version: 16
