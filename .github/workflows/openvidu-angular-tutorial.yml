@@ -23,7 +23,7 @@ jobs:
           ng v
           cd ../openvidu-angular
           npm install
-          ng server
+          ng serve --open
     - uses: actions/setup-node@v3
       with:
         node-version: 16
