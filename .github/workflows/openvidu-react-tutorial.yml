@@ -1,8 +1,7 @@
-name: openvidu-Hello-World-tutorial-test 
+name: openvidu-js-tutorial-test 
 
 on: 
   workflow_dispatch:
-
 
 jobs:
  OpenVidu_deployment:
@@ -13,13 +12,14 @@ jobs:
       uses: actions/checkout@v3
     - name: Run the build process with Docker
       run: |
-          sudo docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.23.0 &
+          sudo docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0 &
           cd openvidu-basic-node
           sudo npm install
           sudo node index.js &
           cd ..
-          npm install --location=global http-server
-          sudo http-server openvidu-hello-world/web &
+          cd openvidu-react
+          npm install
+          npm start
     - uses: actions/setup-node@v3
       with:
         node-version: 16
@@ -31,10 +31,10 @@ jobs:
     - name: Runin Test
       run: |
          cd tests
-         npx playwright test openvidu-hello-world-test.spec.js
+         npx playwright test openvidu-js-web-tutorial.spec.js
     - uses: actions/upload-artifact@v3
       if: always()
       with:
         name: tests
-        path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/
+        path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/tests
         retention-days: 30

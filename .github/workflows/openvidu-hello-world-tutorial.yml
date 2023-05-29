@@ -1,7 +1,8 @@
-name: openvidu-js-tutorial-test 
+name: openvidu-Hello-World-tutorial-test 
 
 on: 
   workflow_dispatch:
+
 
 jobs:
  OpenVidu_deployment:
@@ -18,7 +19,7 @@ jobs:
           sudo node index.js &
           cd ..
           npm install --location=global http-server
-          sudo http-server openvidu-js/web &
+          sudo http-server openvidu-hello-world/web &
     - uses: actions/setup-node@v3
       with:
         node-version: 16
@@ -30,10 +31,10 @@ jobs:
     - name: Runin Test
       run: |
          cd tests
-         npx playwright test openvidu-js-web-tutorial.spec.js
+         npx playwright test openvidu-hello-world-test.spec.js
     - uses: actions/upload-artifact@v3
       if: always()
       with:
         name: tests
-        path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/tests
+        path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/
         retention-days: 30
