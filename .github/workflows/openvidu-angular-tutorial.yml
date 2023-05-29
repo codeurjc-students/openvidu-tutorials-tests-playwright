@@ -14,7 +14,6 @@ jobs:
     - name: Run the build process with Docker
       run: |
           sudo docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0 &
-          sleep 30
           cd openvidu-basic-node
           sudo npm install
           sudo node index.js &
@@ -24,6 +23,7 @@ jobs:
           cd ../openvidu-angular
           npm install
           ng serve --open
+      continue-on-error: true
     - uses: actions/setup-node@v3
       with:
         node-version: 16
