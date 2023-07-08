@@ -21,7 +21,9 @@ import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
-import Reporter.ExtentManager;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+//import Reporter.ExtentManager;
 
 
 public class Module{
@@ -41,6 +43,9 @@ public class Module{
         WebDriver driverFirefox;
 
         List<WebDriver> browsers = new ArrayList<WebDriver>();
+
+        WebDriverManager.chromedriver().setup();
+
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless", "--disable-gpu", "--ignore-certificate-errors","--disable-extensions","--no-sandbox","--disable-dev-shm-usage");
         options.addArguments("--use-fake-ui-for-media-stream");
@@ -48,6 +53,8 @@ public class Module{
         options.addArguments("--remote-allow-origins=*");
         driverChrome = new ChromeDriver(options);
         browsers.add(driverChrome);
+
+        WebDriverManager.firefoxdriver().setup();
 
         FirefoxOptions optionsF = new FirefoxOptions();
         optionsF.setHeadless(true);
@@ -132,14 +139,18 @@ public class Module{
      * Description: create an ExtendReport object and set the report HTML file location and other configurations
      */
     public synchronized static ExtentReports createExtentReports() {
+        
+        String filePath = "test-output/Extent.html";
+
         ExtentReports extentReports = new ExtentReports();
-        ExtentSparkReporter reporter = new ExtentSparkReporter("../../../test-output/Extent.html");
+        ExtentSparkReporter reporter = new ExtentSparkReporter(filePath);
         reporter.config().setReportName("test Report");
         reporter.config().setTimeStampFormat("EEEE, MMMM dd, yyyy, hh:mm a '('zzz')'");
-        reporter.config().setTheme(Theme.STANDARD);
+        reporter.config().setTheme(Theme.DARK);
         extentReports.attachReporter(reporter);
         extentReports.setSystemInfo("Blog Name", "Automation Report");
         extentReports.setSystemInfo("Author", "Andrea P");
+
         return extentReports;
     }
 
@@ -163,5 +174,7 @@ public class Module{
     public void tearDown(ExtentReports extentReports){
         extentReports.flush();
     }
+
+
 
 }

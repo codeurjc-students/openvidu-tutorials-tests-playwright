@@ -6,6 +6,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -13,15 +14,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeTest;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
-import com.aventstack.extentreports.markuputils.ExtentColor;
-import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
@@ -78,7 +74,6 @@ void setupReporter() {
         driverFirefox = browsers.get(1);
         driverChrome.get(URL); 
         driverFirefox.get(URL);
-
     }
 
 /**
@@ -90,19 +85,12 @@ void setupReporter() {
  */
     @Test
     void T001_JoinSession() throws IOException {
-        //extentReports = super.createExtentReports();
-        extentReports = new ExtentReports();
-        ExtentSparkReporter reporter = new ExtentSparkReporter("../../../test-output/Extent.html");
-        reporter.config().setReportName("test Report");
-        reporter.config().setTheme(Theme.STANDARD);
-        extentReports.attachReporter(reporter);
-
-        
+        extentReports = super.createExtentReports();
         
         TESTNAME = Thread.currentThread().getStackTrace()[2].getMethodName();
-        //test = super.startTest(TESTNAME, "", extentReports);
+        test = super.startTest(TESTNAME, "", extentReports);
 
-        test = extentReports.createTest(TESTNAME, "Descripcion test 1 prueba");
+        //test = extentReports.createTest(TESTNAME, "Descripcion test 1 prueba 2");
 
 
         test.log(Status.INFO, "Starting test");
@@ -122,7 +110,6 @@ void setupReporter() {
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
         joinButtonF.submit();
         test.log(Status.PASS, "Session configurated");
-        //test.pass("Session configurated");
         try{
             if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 1");
@@ -132,12 +119,11 @@ void setupReporter() {
                 System.out.println("The app is correctly inicializate in browser 2");
                 super.takePhoto("", evidencesFolder + "\\J_OK_F.png", driverChrome, driverFirefox);
             }
-            //test.pass("Join Session Ok");
             test.log(Status.PASS, "Join Session Ok");
         }catch (NoSuchElementException n){
             super.takePhoto(evidencesFolder + "\\J_ErrorInicializate_C.png", evidencesFolder + "\\J_ErrorInicializate_F.png", driverChrome, driverFirefox);
             test.log(Status.FAIL, "Test Failed");
-            //test.fail("Error an inicializated");
+            test.fail("Error an inicializated");
             fail("The app is not correctly inicializate");
         }
         extentReports.flush();
@@ -247,16 +233,8 @@ void T003_SessionHeader() throws IOException {
  * @author Andrea Acuña
  * Description: close both drivers
  */
-@AfterMethod
-synchronized void afterMethod(ITestResult result){
-    /*if (result.getStatus() == ITestResult.FAILURE) {
-        test.log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " - Test Case Failed", ExtentColor.RED));
-        test.fail(result.getThrowable());
-    } else if (result.getStatus() == ITestResult.SKIP) {
-        test.log(Status.SKIP, MarkupHelper.createLabel(result.getName() + " - Test Case Skipped", ExtentColor.ORANGE));
-    } else {
-        test.log(Status.PASS, MarkupHelper.createLabel(result.getName() + " - Test Case Passed", ExtentColor.GREEN));
-    }*/
+@AfterEach
+void quit(){
     super.quitTwoBrowsers(driverChrome, driverFirefox);
 }
 
