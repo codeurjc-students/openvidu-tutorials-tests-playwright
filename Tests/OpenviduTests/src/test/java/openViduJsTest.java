@@ -6,6 +6,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,12 +15,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
-import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import com.aventstack.extentreports.reporter.configuration.Theme;
 
 /**
  * Test with Java.
@@ -31,7 +35,9 @@ class OpenViduJsTest extends Module{
     String evidencesFolder = "..\\..\\evidence";
 
     private ExtentTest test;
-    private static ExtentReports extentReports;
+    public static ExtentReports extentReports;
+    //ExtentTest test;
+    //ExtentReports extentReports;
 
     WebDriver driverChrome;
     WebDriver driverFirefox;
@@ -49,17 +55,11 @@ class OpenViduJsTest extends Module{
     String idNameSession = "sessionId";
     String idSelfCamera = "local-video-undefined";
 
-/**
- * BeforeTest.
- *
- * @author Andrea Acuña
- * Description: Execute before the grouf of tests. Configure the reporter
- *
-@BeforeTest
-void setupReporter() {
-    extentReports = super.createExtentReports();
-}
-*/
+    public OpenViduJsTest() {
+        if (extentReports == null){
+            extentReports = super.createExtentReports();
+        }
+    }
 
 /**
  * BeforeEach.
@@ -85,17 +85,11 @@ void setupReporter() {
  */
     @Test
     void T001_JoinSession() throws IOException {
-        extentReports = super.createExtentReports();
-        
-        TESTNAME = Thread.currentThread().getStackTrace()[2].getMethodName();
-        test = super.startTest(TESTNAME, "", extentReports);
 
-        //test = extentReports.createTest(TESTNAME, "Descripcion test 1 prueba 2");
-
+        TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
+        test = super.startTest(TESTNAME, "Join the session and verificate that the two browsers are inside the session", extentReports);
 
         test.log(Status.INFO, "Starting test");
-        //test.pass("Starting test");
-
 
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.id(idNameSession));
@@ -109,7 +103,9 @@ void setupReporter() {
         textBoxF.sendKeys(NAMESESSION);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
         joinButtonF.submit();
+
         test.log(Status.PASS, "Session configurated");
+
         try{
             if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
                 System.out.println("The app is correctly inicializate in browser 1");
@@ -126,7 +122,6 @@ void setupReporter() {
             test.fail("Error an inicializated");
             fail("The app is not correctly inicializate");
         }
-        extentReports.flush();
     }
 
 /**
@@ -139,6 +134,9 @@ void setupReporter() {
  */
     @Test
     void T002_LeaveSession() throws IOException, InterruptedException{
+
+        TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
+        test = super.startTest(TESTNAME, "Join the session, verficate that the video is playing property and leave the session", extentReports);
 
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.id(idNameSession));
@@ -191,7 +189,7 @@ void setupReporter() {
                 System.out.println("The app leave the session correctly in browser 2");
                 super.takePhoto("", evidencesFolder + "\\J_LeaveSession_F.png", driverChrome, driverFirefox);
             }
-
+            //test.log(Status.PASS, "Session configurated");
         }catch (NoSuchElementException n){
             super.takePhoto(evidencesFolder + "\\J_Error_C.png", evidencesFolder + "\\J_Error_F.png", driverChrome, driverFirefox);
             fail("The app is not correctly working");
@@ -207,6 +205,10 @@ void setupReporter() {
  */
 @Test
 void T003_SessionHeader() throws IOException {
+
+    TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
+    test = super.startTest(TESTNAME, "Joins the session and verifies that the session name is correct", extentReports);
+
     // Configurate the session in chrome
     WebElement textBox = driverChrome.findElement(By.id(idNameSession));
     textBox.clear();
@@ -236,6 +238,11 @@ void T003_SessionHeader() throws IOException {
 @AfterEach
 void quit(){
     super.quitTwoBrowsers(driverChrome, driverFirefox);
+}
+
+@AfterAll
+public static void tearDown() {
+    extentReports.flush();
 }
 
 }

@@ -12,6 +12,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.ITestResult;
+import org.testng.TestNG;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -26,9 +27,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 //import Reporter.ExtentManager;
 
 
-public class Module{
-    private ExtentTest test;
-    static ExtentReports extent;
+public class Module extends TestNG{
 
     /**
      * method.
@@ -109,9 +108,9 @@ public class Module{
      * method.
      *
      * @author Andrea Acuña
-     * Description: create a extend report for the test
+     * Description: create a extend report for the test static synchronized
      */
-    public static synchronized ExtentTest startTest(String testName, String desc, ExtentReports e) {
+    public ExtentTest startTest(String testName, String desc, ExtentReports e) {
         ExtentTest test = e.createTest(testName, desc);
         return test;
     }
@@ -121,7 +120,7 @@ public class Module{
      *
      * @author Andrea Acuña
      * Description: administrate the result
-     */
+    
     public void tearDownMethod(ITestResult result) {
         if (result.getStatus() == ITestResult.FAILURE) {
           test.log(Status.FAIL, "Test failed: " + result.getThrowable());
@@ -130,7 +129,7 @@ public class Module{
         } else {
           test.log(Status.PASS, "Test passed");
         }
-      }
+      } */
 
       /**
      * method.
@@ -138,7 +137,7 @@ public class Module{
      * @author Andrea Acuña
      * Description: create an ExtendReport object and set the report HTML file location and other configurations
      */
-    public synchronized static ExtentReports createExtentReports() {
+    public ExtentReports createExtentReports() {
         
         String filePath = "test-output/Extent.html";
 
@@ -171,7 +170,7 @@ public class Module{
      * @author Andrea Acuña
      * Description: remove all previous data
      */
-    public void tearDown(ExtentReports extentReports){
+    public void tearDownExtent(ExtentReports extentReports){
         extentReports.flush();
     }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="N11 Test Suite" >
+<suite name="N11 Test Suite" verbose="10" preserve-order="true" configfailurepolicy="continue" thread-count="2">
     <listeners>
         <listener class-name="src.test.java.Listener.TestListener"/>
         <listener class-name="utils.listeners.AnnotationTransformer"/>
@@ -8,6 +8,11 @@
     <test name="JsTest">
         <classes>
             <class name="src.test.java.OpenViduJsTest"/>
+            <methods> 
+                    <include name="T001_JoinSession"/>
+                    <include name="T002_LeaveSession"/>
+                    <include name="T003_SessionHeader"/>
+            </methods>
         </classes>
     </test>
 </suite>
