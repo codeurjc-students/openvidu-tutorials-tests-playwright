@@ -15,11 +15,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -33,27 +28,26 @@ import com.aventstack.extentreports.Status;
 class OpenViduJsTest extends Module{
 
     String evidencesFolder = "..\\..\\evidence";
+    String testLocation = "test-input/Parameters.xlsx";
 
     private ExtentTest test;
     public static ExtentReports extentReports;
-    //ExtentTest test;
-    //ExtentReports extentReports;
 
     WebDriver driverChrome;
     WebDriver driverFirefox;
 
-    String URL = "http://localhost:8080/";
+    String URL;
 
-    String NAMESESSION = "TestSession";
-    String TESTNAME = "";
+    String NAMESESSION;
+    String TESTNAME;
 
-    String XpathJoinButton = "//*[@id='join-dialog']/form/p[3]/input";
-    String idLeaveButton = "buttonLeaveSession";
-    String xpathOtherCamera = "/html/body/div/div[2]/div[3]/video[1]";
+    String XpathJoinButton;
+    String idLeaveButton;
+    String xpathOtherCamera;
 
-    String idHeader = "session-header";
-    String idNameSession = "sessionId";
-    String idSelfCamera = "local-video-undefined";
+    String idHeader;
+    String idNameSession;
+    String idSelfCamera;
 
     public OpenViduJsTest() {
         if (extentReports == null){
@@ -69,11 +63,21 @@ class OpenViduJsTest extends Module{
  */
     @BeforeEach
     void setup() {
+        URL = readVariablesFromExcel(testLocation, "OpenViduJsTest", "URL");
         List<WebDriver> browsers = super.setUpTwoBrowsers();
         driverChrome = browsers.get(0);
         driverFirefox = browsers.get(1);
         driverChrome.get(URL); 
         driverFirefox.get(URL);
+
+        NAMESESSION = readVariablesFromExcel(testLocation, "OpenViduJsTest", "NAMESESSION");
+        TESTNAME = readVariablesFromExcel(testLocation, "OpenViduJsTest", "TESTNAME");
+        XpathJoinButton = readVariablesFromExcel(testLocation, "OpenViduJsTest", "XpathJoinButton");
+        idLeaveButton = readVariablesFromExcel(testLocation, "OpenViduJsTest", "idLeaveButton");
+        xpathOtherCamera = readVariablesFromExcel(testLocation, "OpenViduJsTest", "xpathOtherCamera");
+        idHeader = readVariablesFromExcel(testLocation, "OpenViduJsTest", "idHeader");
+        idNameSession = readVariablesFromExcel(testLocation, "OpenViduJsTest", "idNameSession");
+        idSelfCamera = readVariablesFromExcel(testLocation, "OpenViduJsTest", "idSelfCamera");
     }
 
 /**
@@ -87,9 +91,9 @@ class OpenViduJsTest extends Module{
     void T001_JoinSession() throws IOException {
 
         TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
-        test = super.startTest(TESTNAME, "Join the session and verificate that the two browsers are inside the session", extentReports);
+        test = super.startTest(TESTNAME, "Join the session and verifies that the two browsers are inside the session", extentReports);
 
-        test.log(Status.INFO, "Starting test");
+        test.log(Status.INFO, "Starting test " + TESTNAME);
 
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.id(idNameSession));
@@ -104,7 +108,7 @@ class OpenViduJsTest extends Module{
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
         joinButtonF.submit();
 
-        test.log(Status.PASS, "Session configurated");
+        test.log(Status.INFO, "Session configurated with session name: " + NAMESESSION);
 
         try{
             if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
@@ -115,11 +119,12 @@ class OpenViduJsTest extends Module{
                 System.out.println("The app is correctly inicializate in browser 2");
                 super.takePhoto("", evidencesFolder + "\\J_OK_F.png", driverChrome, driverFirefox);
             }
-            test.log(Status.PASS, "Join Session Ok");
+            test.log(Status.PASS, "TEST: " + TESTNAME +" ok: Join Session Ok in both browsers");
+
         }catch (NoSuchElementException n){
             super.takePhoto(evidencesFolder + "\\J_ErrorInicializate_C.png", evidencesFolder + "\\J_ErrorInicializate_F.png", driverChrome, driverFirefox);
-            test.log(Status.FAIL, "Test Failed");
-            test.fail("Error an inicializated");
+            test.log(Status.FAIL, "Session is not correctly inicializate");
+            test.fail("Error while configurated");
             fail("The app is not correctly inicializate");
         }
     }
@@ -136,7 +141,9 @@ class OpenViduJsTest extends Module{
     void T002_LeaveSession() throws IOException, InterruptedException{
 
         TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
-        test = super.startTest(TESTNAME, "Join the session, verficate that the video is playing property and leave the session", extentReports);
+        test = super.startTest(TESTNAME, "Join the session, verifies that the video is playing property and leave the session", extentReports);
+
+        test.log(Status.INFO, "Starting test " + TESTNAME);
 
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.id(idNameSession));
@@ -150,6 +157,8 @@ class OpenViduJsTest extends Module{
         textBoxF.sendKeys(NAMESESSION);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
         joinButtonF.submit();
+
+        test.log(Status.INFO, "Session configurated with session name: " + NAMESESSION);
 
         // see if the video is playing properly, moreover synchronize both videos
         WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
@@ -174,25 +183,44 @@ class OpenViduJsTest extends Module{
             WebElement leaveButtonC = driverChrome.findElement(By.id(idLeaveButton));
             if (leaveButtonC.isDisplayed()){ 
                 leaveButtonC.click();
+            }else{
+                test.log(Status.FAIL, "Leave button in chrome is not display");
+                test.fail("Error while leave the session");
+                fail("The app is not correctly leave");
             }
             if(joinButtonC.isDisplayed()){
                 System.out.println("The app leave the session correctly in browser 1");
                 super.takePhoto(evidencesFolder + "\\J_LeaveSession_C.png", "", driverChrome, driverFirefox);
+            }else{
+                test.log(Status.FAIL, "Join button in chrome is not display");
+                test.fail("Error while leave the session");
+                fail("The app is not correctly leave");
             }
 
             //Leave the session with Firefox
             WebElement leaveButtonF = driverFirefox.findElement(By.id(idLeaveButton));
             if (leaveButtonF.isDisplayed()){ 
                 leaveButtonF.click();
+            }else{
+                test.log(Status.FAIL, "Leave button in firefox is not display");
+                test.fail("Error while leave the session");
+                fail("The app is not correctly leave");
             }
+
             if(joinButtonF.isDisplayed()){
                 System.out.println("The app leave the session correctly in browser 2");
                 super.takePhoto("", evidencesFolder + "\\J_LeaveSession_F.png", driverChrome, driverFirefox);
+            }else{
+                test.log(Status.FAIL, "Join button in chrome is not display");
+                test.fail("Error while leave the session");
+                fail("The app is not correctly leave");
             }
-            //test.log(Status.PASS, "Session configurated");
+            test.log(Status.PASS, "TEST: " + TESTNAME +" ok: Session correctly leave in both drivers");
         }catch (NoSuchElementException n){
             super.takePhoto(evidencesFolder + "\\J_Error_C.png", evidencesFolder + "\\J_Error_F.png", driverChrome, driverFirefox);
-            fail("The app is not correctly working");
+            test.log(Status.FAIL, " Session is not correctly leaving");
+            test.fail("Error while configurated");
+            fail("The app is not correctly leaving");
         }
     }
 
@@ -209,6 +237,8 @@ void T003_SessionHeader() throws IOException {
     TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
     test = super.startTest(TESTNAME, "Joins the session and verifies that the session name is correct", extentReports);
 
+    test.log(Status.INFO, "Starting test " + TESTNAME);
+     
     // Configurate the session in chrome
     WebElement textBox = driverChrome.findElement(By.id(idNameSession));
     textBox.clear();
@@ -217,20 +247,30 @@ void T003_SessionHeader() throws IOException {
     joinButtonC.submit();
 
     try{
+        WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
+        waitC.until(ExpectedConditions.elementToBeClickable(By.id(idHeader)));
         if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
             if (driverChrome.findElement(By.id(idHeader)).getText() == NAMESESSION){
-                System.out.println("The title is correctly set");
+                test.log(Status.INFO, "The header is correct:  " + NAMESESSION);
                 super.takePhoto(evidencesFolder + "\\J_OK_C.png", "", driverChrome, driverFirefox);
+            }else{
+                test.log(Status.FAIL, "The header it should be: " + NAMESESSION + "but is: " + driverChrome.findElement(By.id(idHeader)).getText());
+                test.fail("Error getting the header");
             }
+        }else{
+            test.log(Status.FAIL, "The header it should be: " + NAMESESSION + "but is blank");
+            test.fail("Error getting the header");
         }
     }catch (NoSuchElementException n){
         super.takePhoto(evidencesFolder + "\\J_ErrorInicializate_C.png", evidencesFolder + "", driverChrome, driverFirefox);
+        test.log(Status.FAIL, "General error is occur");
+        test.fail("Error while configurated");
         fail("The app is not correctly inicializate");
     }
 }
 
 /**
- * AfterMethod.
+ * AfterEach.
  *
  * @author Andrea Acuña
  * Description: close both drivers
@@ -240,6 +280,12 @@ void quit(){
     super.quitTwoBrowsers(driverChrome, driverFirefox);
 }
 
+/**
+ * AfterAll.
+ *
+ * @author Andrea Acuña
+ * Description: Close and generate the report
+ */
 @AfterAll
 public static void tearDown() {
     extentReports.flush();

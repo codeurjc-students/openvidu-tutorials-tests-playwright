@@ -1,9 +1,14 @@
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.sl.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -21,6 +26,7 @@ import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+import com.google.common.collect.Table.Cell;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -174,6 +180,62 @@ public class Module extends TestNG{
         extentReports.flush();
     }
 
+    /**
+     * method.
+     *
+     * @author Andrea Acuña
+     * Description: open the excel file and read the value specified
+     */
+    public static String readVariablesFromExcel(String filePath, String testName, String ColValue) {
 
+        try (FileInputStream fileInputStream = new FileInputStream(filePath);
+         Workbook workbook = WorkbookFactory.create(fileInputStream)) {
+        org.apache.poi.ss.usermodel.Sheet sheet = workbook.getSheetAt(0); // Obtener la primera hoja del archivo Excel
+
+        int testNameColumnIndex = 0; // Columna de la variable "testName"
+        int colValueColumnIndex = -1; // Columna de la variable "ColValue"
+
+        // Buscar la columna cuyo valor sea "ColValue"
+        Row firstRow = sheet.getRow(0); // Obtener la primera fila
+        int lastCellNum = firstRow.getLastCellNum(); // Obtener el número de celdas en la primera fila
+
+        for (int i = 0; i < lastCellNum; i++) {
+            org.apache.poi.ss.usermodel.Cell cell = firstRow.getCell(i);
+            if (cell.getStringCellValue().equals(ColValue)) {
+                colValueColumnIndex = i;
+                break;
+            }
+        }
+
+        if (colValueColumnIndex == -1) {
+            System.out.println("No se encontró la columna: " + ColValue + " en el archivo Excel.");
+            return null;
+        }
+
+        // Buscar la fila cuyo valor en la columna "testNameColumnIndex" sea "testName"
+        int lastRowIndex = sheet.getLastRowNum(); // Obtener el índice de la última fila
+
+        for (int i = 1; i <= lastRowIndex; i++) {
+            Row row = sheet.getRow(i);
+            org.apache.poi.ss.usermodel.Cell testNameCell = row.getCell(testNameColumnIndex);
+
+            if (testNameCell != null && testNameCell.getStringCellValue().equals(testName)) {
+                org.apache.poi.ss.usermodel.Cell valueCell = row.getCell(colValueColumnIndex);
+
+                if (valueCell != null) {
+                    return valueCell.getStringCellValue();
+                } else {
+                    return null;
+                }
+            }
+        }
+
+        System.out.println("No se encontró la fila con el valor de testName: " + testName + " en el archivo Excel.");
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+    return null;
+    }
 
 }
