@@ -27,7 +27,7 @@ import com.aventstack.extentreports.Status;
  */
 class OpenViduJsTest extends Module{
 
-    String evidencesFolder = "..\\..\\evidence";
+    String evidencesFolder = "test-output/screenShots/";
     String testLocation = "test-input/Parameters.xlsx";
 
     private ExtentTest test;
@@ -93,7 +93,7 @@ class OpenViduJsTest extends Module{
         TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
         test = super.startTest(TESTNAME, "Join the session and verifies that the two browsers are inside the session", extentReports);
 
-        test.log(Status.INFO, "Starting test " + TESTNAME);
+        addStepWithoutCapture(test, "INFO", "Starting test " + TESTNAME);
 
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.id(idNameSession));
@@ -101,30 +101,38 @@ class OpenViduJsTest extends Module{
         textBox.sendKeys(NAMESESSION);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
         joinButtonC.submit();
+        addStep(test, "INFO", driverChrome, "Session configurated in Chrome with session name: " + NAMESESSION);    
+
         //Configurate de session in firefox
         WebElement textBoxF = driverFirefox.findElement(By.id(idNameSession));
         textBoxF.clear();
         textBoxF.sendKeys(NAMESESSION);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
         joinButtonF.submit();
-
-        test.log(Status.INFO, "Session configurated with session name: " + NAMESESSION);
+        addStep(test, "INFO", driverFirefox, "Session configurated in Firefox with session name: " + NAMESESSION);    
 
         try{
             if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
-                System.out.println("The app is correctly inicializate in browser 1");
-                super.takePhoto(evidencesFolder + "\\J_OK_C.png", "", driverChrome, driverFirefox);
+                addStep(test, "PASS", driverChrome, "The app is correctly inicializate in Chrome");    
+
+            }else{
+                addStep(test, "FAIL", driverChrome, "The header is empty in Chrome");    
+                fail("General error");
+
             }
+
             if (!driverFirefox.findElements(By.id(idHeader)).isEmpty()){
-                System.out.println("The app is correctly inicializate in browser 2");
-                super.takePhoto("", evidencesFolder + "\\J_OK_F.png", driverChrome, driverFirefox);
+                addStep(test, "PASS", driverFirefox, "The app is correctly inicializate in Firefox");    
+
+            }else{
+                addStep(test, "FAIL", driverFirefox, "The header is empty in Firefox");    
+                fail("General error");
+
             }
-            test.log(Status.PASS, "TEST: " + TESTNAME +" ok: Join Session Ok in both browsers");
 
         }catch (NoSuchElementException n){
-            super.takePhoto(evidencesFolder + "\\J_ErrorInicializate_C.png", evidencesFolder + "\\J_ErrorInicializate_F.png", driverChrome, driverFirefox);
-            test.log(Status.FAIL, "Session is not correctly inicializate");
-            test.fail("Error while configurated");
+ 
+            addStepWithoutCapture(test, "FAIL", "General error is occur");
             fail("The app is not correctly inicializate");
         }
     }
@@ -143,7 +151,7 @@ class OpenViduJsTest extends Module{
         TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
         test = super.startTest(TESTNAME, "Join the session, verifies that the video is playing property and leave the session", extentReports);
 
-        test.log(Status.INFO, "Starting test " + TESTNAME);
+        addStepWithoutCapture(test, "INFO", "Starting test " + TESTNAME);
 
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.id(idNameSession));
@@ -151,49 +159,49 @@ class OpenViduJsTest extends Module{
         textBox.sendKeys(NAMESESSION);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
         joinButtonC.submit();
+        addStep(test, "INFO", driverChrome, "Session configurated in Chrome with session name: " + NAMESESSION);    
+
         //Configurate de session in firefox
         WebElement textBoxF = driverFirefox.findElement(By.id(idNameSession));
         textBoxF.clear();
         textBoxF.sendKeys(NAMESESSION);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
         joinButtonF.submit();
+        addStep(test, "INFO", driverFirefox, "Session configurated in Firefox with session name: " + NAMESESSION);    
 
-        test.log(Status.INFO, "Session configurated with session name: " + NAMESESSION);
-
-        // see if the video is playing properly, moreover synchronize both videos
-        WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
-        waitC.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathOtherCamera)));
-        
-        WebDriverWait waitF = new WebDriverWait(driverFirefox, Duration.ofSeconds(30));
-        waitF.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathOtherCamera)));
-
-        driverChrome.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driverFirefox.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-        // see if the video is playing properly
-        String currentTimeChrome= driverChrome.findElement(By.id(idSelfCamera)).getAttribute("duration");
-        String currentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("duration");
-        
         try{
+            // see if the video is playing properly, moreover synchronize both videos
+            WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
+            waitC.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathOtherCamera)));
+            
+            WebDriverWait waitF = new WebDriverWait(driverFirefox, Duration.ofSeconds(30));
+            waitF.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathOtherCamera)));
+
+            driverChrome.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            driverFirefox.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+            // see if the video is playing properly
+            String currentTimeChrome= driverChrome.findElement(By.id(idSelfCamera)).getAttribute("duration");
+            String currentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("duration");
+              
             assertNotEquals(currentTimeChrome, "NaN");
             assertNotEquals(currentTimeFirefox, "NaN");
-            super.takePhoto(evidencesFolder + "\\J_VideoPlaying_C.png", evidencesFolder + "\\J_VideoPlaying_F.png", driverChrome, driverFirefox);
-                
+            
             //Leave the session with chrome
             WebElement leaveButtonC = driverChrome.findElement(By.id(idLeaveButton));
             if (leaveButtonC.isDisplayed()){ 
                 leaveButtonC.click();
+                addStep(test, "INFO", driverChrome, "Leave button was click");    
             }else{
-                test.log(Status.FAIL, "Leave button in chrome is not display");
-                test.fail("Error while leave the session");
+                addStep(test, "FAIL", driverChrome, "Leave button in chrome is not display");    
                 fail("The app is not correctly leave");
             }
+
             if(joinButtonC.isDisplayed()){
-                System.out.println("The app leave the session correctly in browser 1");
-                super.takePhoto(evidencesFolder + "\\J_LeaveSession_C.png", "", driverChrome, driverFirefox);
+                addStep(test, "INFO", driverChrome, "The app leave the session correctly in Chrome");    
+                
             }else{
-                test.log(Status.FAIL, "Join button in chrome is not display");
-                test.fail("Error while leave the session");
+                addStep(test, "FAIL", driverChrome, "Join button in chrome is not display");    
                 fail("The app is not correctly leave");
             }
 
@@ -201,26 +209,26 @@ class OpenViduJsTest extends Module{
             WebElement leaveButtonF = driverFirefox.findElement(By.id(idLeaveButton));
             if (leaveButtonF.isDisplayed()){ 
                 leaveButtonF.click();
+                addStep(test, "INFO", driverFirefox, "Leave button was click"); 
             }else{
-                test.log(Status.FAIL, "Leave button in firefox is not display");
-                test.fail("Error while leave the session");
+                addStep(test, "FAIL", driverChrome, "Leave button in firefox is not display");    
                 fail("The app is not correctly leave");
             }
 
             if(joinButtonF.isDisplayed()){
-                System.out.println("The app leave the session correctly in browser 2");
-                super.takePhoto("", evidencesFolder + "\\J_LeaveSession_F.png", driverChrome, driverFirefox);
+                addStep(test, "INFO", driverChrome, "The app leave the session correctly in Firefox");    
+            
             }else{
-                test.log(Status.FAIL, "Join button in chrome is not display");
-                test.fail("Error while leave the session");
+                addStep(test, "FAIL", driverChrome, "Join button in chrome is not display");    
                 fail("The app is not correctly leave");
             }
-            test.log(Status.PASS, "TEST: " + TESTNAME +" ok: Session correctly leave in both drivers");
-        }catch (NoSuchElementException n){
-            super.takePhoto(evidencesFolder + "\\J_Error_C.png", evidencesFolder + "\\J_Error_F.png", driverChrome, driverFirefox);
-            test.log(Status.FAIL, " Session is not correctly leaving");
-            test.fail("Error while configurated");
-            fail("The app is not correctly leaving");
+            
+             addStep(test, "PASS", driverChrome, "TEST: " + TESTNAME +" ok: Session correctly leave in both drivers");
+        
+            }catch (NoSuchElementException n){
+            
+                addStepWithoutCapture(test, "FAIL", "General error is occur");
+                fail("The app is not correctly inicializate");
         }
     }
 
@@ -237,7 +245,7 @@ void T003_SessionHeader() throws IOException {
     TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
     test = super.startTest(TESTNAME, "Joins the session and verifies that the session name is correct", extentReports);
 
-    test.log(Status.INFO, "Starting test " + TESTNAME);
+    addStepWithoutCapture(test, "INFO", "Starting test " + TESTNAME);
      
     // Configurate the session in chrome
     WebElement textBox = driverChrome.findElement(By.id(idNameSession));
@@ -249,22 +257,25 @@ void T003_SessionHeader() throws IOException {
     try{
         WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
         waitC.until(ExpectedConditions.elementToBeClickable(By.id(idHeader)));
+
         if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
-            if (driverChrome.findElement(By.id(idHeader)).getText() == NAMESESSION){
-                test.log(Status.INFO, "The header is correct:  " + NAMESESSION);
-                super.takePhoto(evidencesFolder + "\\J_OK_C.png", "", driverChrome, driverFirefox);
+            
+            if (NAMESESSION.equals(driverChrome.findElement(By.id(idHeader)).getText())){
+                addStep(test, "INFO", driverChrome, "The header text is correct: " + NAMESESSION);
             }else{
-                test.log(Status.FAIL, "The header it should be: " + NAMESESSION + "but is: " + driverChrome.findElement(By.id(idHeader)).getText());
-                test.fail("Error getting the header");
+                addStep(test, "FAIL", driverChrome, "The header it should be: " + NAMESESSION + "but is: " + driverChrome.findElement(By.id(idHeader)).getText());
+                fail("Test fail");
             }
         }else{
             test.log(Status.FAIL, "The header it should be: " + NAMESESSION + "but is blank");
-            test.fail("Error getting the header");
+            addStep(test, "FAIL", driverChrome, "The header it should be: " + NAMESESSION + "but is blank");
+            fail("Test fail");
         }
+        addStep(test, "PASS", driverChrome, "TEST: " + TESTNAME +" ok: Session name is: " + NAMESESSION);
+            
     }catch (NoSuchElementException n){
-        super.takePhoto(evidencesFolder + "\\J_ErrorInicializate_C.png", evidencesFolder + "", driverChrome, driverFirefox);
-        test.log(Status.FAIL, "General error is occur");
-        test.fail("Error while configurated");
+
+        addStepWithoutCapture(test, "FAIL", "General error is occur");
         fail("The app is not correctly inicializate");
     }
 }
