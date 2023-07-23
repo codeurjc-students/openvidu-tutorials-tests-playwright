@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: OpenViduJsTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 45.472 s - in OpenViduJsTest
+Tests run: 3, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 36.551 s <<< FAILURE! - in OpenViduJsTest
+T003_SessionHeader  Time elapsed: 11.406 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Test fail
+	at OpenViduJsTest.T003_SessionHeader(OpenViduJsTest.java:268)
+

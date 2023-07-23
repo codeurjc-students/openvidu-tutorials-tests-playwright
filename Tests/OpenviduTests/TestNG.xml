@@ -14,5 +14,13 @@
                     <include name="T003_SessionHeader"/>
             </methods>
         </classes>
+        <class name="src.test.java.OpenViduAngularTest"/>
+            <methods> 
+                    <include name="T001_JoinSession"/>
+                    <include name="T002_LeaveSession"/>
+                    <include name="T003_SessionHeader"/>
+                    <include name="T004_ParticipantName"/>
+            </methods>
+        </classes>
     </test>
 </suite>

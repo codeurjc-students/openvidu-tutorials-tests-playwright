@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.poi.sl.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
@@ -23,18 +22,13 @@ import org.testng.TestNG;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
-import com.aventstack.extentreports.model.Media;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-import com.google.common.collect.Table.Cell;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-
-//import Reporter.ExtentManager;
 
 
 public class Module extends TestNG{
@@ -147,9 +141,9 @@ public class Module extends TestNG{
      * @author Andrea Acuña
      * Description: create an ExtendReport object and set the report HTML file location and other configurations
      */
-    public ExtentReports createExtentReports() {
+    public ExtentReports createExtentReports(String output) {
         
-        String filePath = "test-output/Extent.html";
+        String filePath = "test-output/" + output;
 
         ExtentReports extentReports = new ExtentReports();
         ExtentSparkReporter reporter = new ExtentSparkReporter(filePath);
@@ -252,14 +246,13 @@ public class Module extends TestNG{
 
         try (FileInputStream fileInputStream = new FileInputStream(filePath);
          Workbook workbook = WorkbookFactory.create(fileInputStream)) {
-        org.apache.poi.ss.usermodel.Sheet sheet = workbook.getSheetAt(0); // Obtener la primera hoja del archivo Excel
+        org.apache.poi.ss.usermodel.Sheet sheet = workbook.getSheetAt(0);
 
-        int testNameColumnIndex = 0; // Columna de la variable "testName"
-        int colValueColumnIndex = -1; // Columna de la variable "ColValue"
+        int testNameColumnIndex = 0;
+        int colValueColumnIndex = -1;
 
-        // Buscar la columna cuyo valor sea "ColValue"
-        Row firstRow = sheet.getRow(0); // Obtener la primera fila
-        int lastCellNum = firstRow.getLastCellNum(); // Obtener el número de celdas en la primera fila
+        Row firstRow = sheet.getRow(0);
+        int lastCellNum = firstRow.getLastCellNum();
 
         for (int i = 0; i < lastCellNum; i++) {
             org.apache.poi.ss.usermodel.Cell cell = firstRow.getCell(i);
@@ -274,8 +267,7 @@ public class Module extends TestNG{
             return null;
         }
 
-        // Buscar la fila cuyo valor en la columna "testNameColumnIndex" sea "testName"
-        int lastRowIndex = sheet.getLastRowNum(); // Obtener el índice de la última fila
+        int lastRowIndex = sheet.getLastRowNum();
 
         for (int i = 1; i <= lastRowIndex; i++) {
             Row row = sheet.getRow(i);

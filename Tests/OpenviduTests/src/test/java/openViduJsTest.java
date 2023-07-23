@@ -18,7 +18,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.Status;
 
 /**
  * Test with Java.
@@ -27,8 +26,8 @@ import com.aventstack.extentreports.Status;
  */
 class OpenViduJsTest extends Module{
 
-    String evidencesFolder = "test-output/screenShots/";
     String testLocation = "test-input/Parameters.xlsx";
+    String reportLocation = "OpenViduJsTestTestReport.html";
 
     private ExtentTest test;
     public static ExtentReports extentReports;
@@ -51,7 +50,7 @@ class OpenViduJsTest extends Module{
 
     public OpenViduJsTest() {
         if (extentReports == null){
-            extentReports = super.createExtentReports();
+            extentReports = super.createExtentReports(reportLocation);
         }
     }
 
@@ -159,16 +158,14 @@ class OpenViduJsTest extends Module{
         textBox.sendKeys(NAMESESSION);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
         joinButtonC.submit();
-        addStep(test, "INFO", driverChrome, "Session configurated in Chrome with session name: " + NAMESESSION);    
-
+        
         //Configurate de session in firefox
         WebElement textBoxF = driverFirefox.findElement(By.id(idNameSession));
         textBoxF.clear();
         textBoxF.sendKeys(NAMESESSION);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
         joinButtonF.submit();
-        addStep(test, "INFO", driverFirefox, "Session configurated in Firefox with session name: " + NAMESESSION);    
-
+        
         try{
             // see if the video is playing properly, moreover synchronize both videos
             WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
@@ -186,6 +183,9 @@ class OpenViduJsTest extends Module{
               
             assertNotEquals(currentTimeChrome, "NaN");
             assertNotEquals(currentTimeFirefox, "NaN");
+
+            addStep(test, "INFO", driverChrome, "Session configurated in Chrome with session name: " + NAMESESSION);    
+            addStep(test, "INFO", driverFirefox, "Session configurated in Firefox with session name: " + NAMESESSION);    
             
             //Leave the session with chrome
             WebElement leaveButtonC = driverChrome.findElement(By.id(idLeaveButton));
@@ -267,7 +267,6 @@ void T003_SessionHeader() throws IOException {
                 fail("Test fail");
             }
         }else{
-            test.log(Status.FAIL, "The header it should be: " + NAMESESSION + "but is blank");
             addStep(test, "FAIL", driverChrome, "The header it should be: " + NAMESESSION + "but is blank");
             fail("Test fail");
         }
