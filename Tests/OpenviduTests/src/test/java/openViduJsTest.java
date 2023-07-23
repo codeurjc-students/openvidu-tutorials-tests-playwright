@@ -211,24 +211,24 @@ class OpenViduJsTest extends Module{
                 leaveButtonF.click();
                 addStep(test, "INFO", driverFirefox, "Leave button was click"); 
             }else{
-                addStep(test, "FAIL", driverChrome, "Leave button in firefox is not display");    
+                addStep(test, "FAIL", driverFirefox, "Leave button in firefox is not display");    
                 fail("The app is not correctly leave");
             }
 
             if(joinButtonF.isDisplayed()){
-                addStep(test, "INFO", driverChrome, "The app leave the session correctly in Firefox");    
+                addStep(test, "INFO", driverFirefox, "The app leave the session correctly in Firefox");    
             
             }else{
-                addStep(test, "FAIL", driverChrome, "Join button in chrome is not display");    
+                addStep(test, "FAIL", driverFirefox, "Join button in chrome is not display");    
                 fail("The app is not correctly leave");
             }
             
              addStep(test, "PASS", driverChrome, "TEST: " + TESTNAME +" ok: Session correctly leave in both drivers");
         
-            }catch (NoSuchElementException n){
+        }catch (NoSuchElementException n){
             
-                addStepWithoutCapture(test, "FAIL", "General error is occur");
-                fail("The app is not correctly inicializate");
+            addStepWithoutCapture(test, "FAIL", "General error is occur");
+            fail("The app is not correctly inicializate");
         }
     }
 

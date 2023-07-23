@@ -123,22 +123,6 @@ public class Module extends TestNG{
      * method.
      *
      * @author Andrea Acuña
-     * Description: administrate the result
-    
-    public void tearDownMethod(ITestResult result) {
-        if (result.getStatus() == ITestResult.FAILURE) {
-          test.log(Status.FAIL, "Test failed: " + result.getThrowable());
-        } else if (result.getStatus() == ITestResult.SKIP) {
-          test.log(Status.SKIP, "Test skipped: " + result.getThrowable());
-        } else {
-          test.log(Status.PASS, "Test passed");
-        }
-      } */
-
-    /**
-     * method.
-     *
-     * @author Andrea Acuña
      * Description: create an ExtendReport object and set the report HTML file location and other configurations
      */
     public ExtentReports createExtentReports(String output) {

@@ -68,13 +68,13 @@ class OpenViduAngularTest extends Module{
  */
     @BeforeEach
     void setup() {
+        URL = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "URL");
         List<WebDriver> browsers = super.setUpTwoBrowsers();
         driverChrome = browsers.get(0);
         driverFirefox = browsers.get(1);
         driverChrome.get(URL); 
         driverFirefox.get(URL);
 
-        URL = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "URL");
         NAMESESSION = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "NAMESESSION");
         NAMEPARTICIPANT = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "NAMEPARTICIPANT");
         XpathJoinButton = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "XpathJoinButton");

@@ -126,6 +126,11 @@ jobs:
     - name: Execute tests
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduReactTest"
       working-directory: ./Tests/OpenviduTests
+    - name: Upload TestNG report
+      uses: actions/upload-artifact@v2
+      with:
+        name: TestNG report
+        path: ./Tests/OpenviduTests/test-output/OpenViduReactTestTestReport.html
 
   VueTest:
     runs-on: ubuntu-latest
@@ -153,5 +158,10 @@ jobs:
     - name: Execute tests
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduVueTest"
       working-directory: ./Tests/OpenviduTests
+    - name: Upload TestNG report
+      uses: actions/upload-artifact@v2
+      with:
+        name: TestNG report
+        path: ./Tests/OpenviduTests/test-output/OpenViduVueTestTestReport.html
       
           
