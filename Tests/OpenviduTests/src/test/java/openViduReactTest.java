@@ -156,6 +156,11 @@ class OpenViduReactTest extends Module{
     @Test
     void T002_LeaveSession() throws IOException {
 
+        TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
+        test = super.startTest(TESTNAME, "Join the session and verifies that the two browsers are inside the session", extentReports);
+
+        addStepWithoutCapture(test, "INFO", "Starting test " + TESTNAME);
+
         // Configurate the session in chrome
         WebElement sessionC = driverChrome.findElement(By.id(idNameSession));
         sessionC.clear();

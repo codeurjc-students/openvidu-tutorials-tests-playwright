@@ -84,7 +84,7 @@ class OpenViduAngularTest extends Module{
         idParticipant = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "idParticipant");
         idLeaveButton = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "idLeaveButton");
         idNameSession = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "idNameSession");
-        idHeader = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "NAMEidHeaderSESSION");
+        idHeader = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "idHeader");
         idSelfCamera = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "idSelfCamera");
         idNameParticipant = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "idNameParticipant");
     }
@@ -216,6 +216,7 @@ class OpenViduAngularTest extends Module{
                 fail("The app is not correctly leave");
             }
 
+            joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
             if(joinButtonC.isDisplayed()){
                 addStep(test, "INFO", driverChrome, "The app leave the session correctly in Chrome");    
                 

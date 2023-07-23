@@ -27,6 +27,19 @@
                     <include name="T003_SessionHeader"/>
                     <include name="T004_ParticipantName"/>
             </methods>
+            <class name="src.test.java.OpenViduHelloWordTest"/>
+            <methods> 
+                    <include name="T001_JoinSession"/>
+                    <include name="T002_LeaveSession"/>
+                    <include name="T003_SessionHeader"/>
+            </methods>
+            <class name="src.test.java.OpenViduVueTest"/>
+            <methods> 
+                    <include name="T001_JoinSession"/>
+                    <include name="T002_LeaveSession"/>
+                    <include name="T003_SessionHeader"/>
+                    <include name="T004_ParticipantName"/>
+            </methods>
         </classes>
     </test>
 </suite>

@@ -34,6 +34,12 @@ jobs:
     - name: Execute tests
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduHelloWordTest"
       working-directory: ./Tests/OpenviduTests
+    - name: Upload TestNG report
+      uses: actions/upload-artifact@v2
+      with:
+        name: TestNG report
+        path: ./Tests/OpenviduTests/test-output/OpenViduHelloWordTestTestReport.html
+      if: always()
 
   AngularTest:
     runs-on: ubuntu-latest
@@ -66,6 +72,7 @@ jobs:
       with:
         name: TestNG report
         path: ./Tests/OpenviduTests/test-output/OpenViduAngularTestReport.html
+      if: always()
 
 
   javaScriptTest:
@@ -99,6 +106,7 @@ jobs:
       with:
         name: TestNG report
         path: ./Tests/OpenviduTests/test-output/OpenViduJsTestTestReport.html
+      if: always()
 
   ReactTest:
     runs-on: ubuntu-latest
@@ -131,6 +139,7 @@ jobs:
       with:
         name: TestNG report
         path: ./Tests/OpenviduTests/test-output/OpenViduReactTestTestReport.html
+      if: always()
 
   VueTest:
     runs-on: ubuntu-latest
@@ -163,5 +172,6 @@ jobs:
       with:
         name: TestNG report
         path: ./Tests/OpenviduTests/test-output/OpenViduVueTestTestReport.html
+      if: always()
       
           

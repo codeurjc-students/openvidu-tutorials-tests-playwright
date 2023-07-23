@@ -152,6 +152,11 @@ class OpenViduVueTest extends Module{
     @Test
     void T002_LeaveSession() throws IOException{
 
+        TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
+        test = super.startTest(TESTNAME, "Join the session and verifies that the two browsers are inside the session", extentReports);
+
+        addStepWithoutCapture(test, "INFO", "Starting test " + TESTNAME);
+
         WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
         WebDriverWait waitF = new WebDriverWait(driverFirefox, Duration.ofSeconds(30));
         int repeat = 0;
