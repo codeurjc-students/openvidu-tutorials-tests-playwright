@@ -82,7 +82,7 @@ class OpenViduVueTest extends Module{
         XpathJoinButton = readVariablesFromExcel(testLocation, "OpenViduVueTest", "XpathJoinButton");
         xpathOtherCamera = readVariablesFromExcel(testLocation, "OpenViduVueTest", "xpathOtherCamera");
         xpathSessionName = readVariablesFromExcel(testLocation, "OpenViduVueTest", "xpathSessionName");
-        XpathParticipant = readVariablesFromExcel(testLocation, "OpenViduVueTest", "XpathParticipant");
+        XpathParticipant = readVariablesFromExcel(testLocation, "OpenViduVueTest", "xpathParticipant");
         XpathParticipantName = readVariablesFromExcel(testLocation, "OpenViduVueTest", "XpathParticipantName");
         idLeaveButton = readVariablesFromExcel(testLocation, "OpenViduVueTest", "idLeaveButton");
         idHeader = readVariablesFromExcel(testLocation, "OpenViduVueTest", "idHeader");
