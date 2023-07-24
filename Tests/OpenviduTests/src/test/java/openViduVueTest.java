@@ -275,7 +275,7 @@ class OpenViduVueTest extends Module{
         textBox.clear();
         textBox.sendKeys(NAMESESSION);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
-        joinButtonC.submit();
+        joinButtonC.click();
 
         try{
             WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
@@ -326,12 +326,11 @@ class OpenViduVueTest extends Module{
         try{
             WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
             int repeat = 0;
-            WebElement ParticipantName = null;
-            String ParticipantNameText = null;
+            String ParticipantNameText = "";
             waitC.until(ExpectedConditions.visibilityOfElementLocated(By.id(idSelfCamera)));
             while(repeat <= 5){
                 try{
-                    ParticipantName = driverChrome.findElement(By.xpath(XpathParticipant));
+                    WebElement ParticipantName = driverChrome.findElement(By.xpath(XpathParticipant));
                     ParticipantNameText = ParticipantName.getText();
                     break;
                 }catch(StaleElementReferenceException exc){
