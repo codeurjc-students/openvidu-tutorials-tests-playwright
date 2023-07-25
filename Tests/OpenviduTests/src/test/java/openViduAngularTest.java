@@ -19,6 +19,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 
+import Reporter.ExtentManager;
+
 /**
  * Test with Java.
  * Test for the openvidu angular 
@@ -31,6 +33,7 @@ class OpenViduAngularTest extends Module{
 
     private ExtentTest test;
     public static ExtentReports extentReports;
+    static ExtentManager e = new ExtentManager();
 
     WebDriver driverChrome;
     WebDriver driverFirefox;
@@ -57,7 +60,7 @@ class OpenViduAngularTest extends Module{
 
     public OpenViduAngularTest() {
         if (extentReports == null){
-            extentReports = super.createExtentReports(reportLocation);
+            extentReports = e.createExtentReports(reportLocation);
         }
     }
 /**
@@ -100,9 +103,9 @@ class OpenViduAngularTest extends Module{
     void T001_JoinSession() throws IOException {
 
         TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
-        test = super.startTest(TESTNAME, "Join the session and verifies that the two browsers are inside the session", extentReports);
+        test = e.startTest(TESTNAME, "Join the session and verifies that the two browsers are inside the session", extentReports);
 
-        addStepWithoutCapture(test, "INFO", "Starting test " + TESTNAME);
+        e.addStepWithoutCapture(test, "INFO", "Starting test " + TESTNAME);
 
         // Configurate the session in chrome
         WebElement sessionC = driverChrome.findElement(By.id(idNameSession));
@@ -113,7 +116,7 @@ class OpenViduAngularTest extends Module{
         participantC.sendKeys("PARTICIPANTCHROME");
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
         joinButtonC.submit();
-        addStep(test, "INFO", driverChrome, "Session configurated in Chrome with session name: " + NAMESESSION);    
+        e.addStep(test, "INFO", driverChrome, "Session configurated in Chrome with session name: " + NAMESESSION);    
 
 
         //Configurate de session in firefox
@@ -125,27 +128,27 @@ class OpenViduAngularTest extends Module{
         participantF.sendKeys("PARTICIPANTFIREFOX");
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
         joinButtonF.submit();
-        addStep(test, "INFO", driverFirefox, "Session configurated in Firefox with session name: " + NAMESESSION);    
+        e.addStep(test, "INFO", driverFirefox, "Session configurated in Firefox with session name: " + NAMESESSION);    
 
         try{
             if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
-                addStep(test, "PASS", driverChrome, "The app is correctly inicializate in Chrome");    
+                e.addStep(test, "PASS", driverChrome, "The app is correctly inicializate in Chrome");    
 
             }else{
-                addStep(test, "FAIL", driverChrome, "The header is empty in Chrome");    
+                e.addStep(test, "FAIL", driverChrome, "The header is empty in Chrome");    
                 fail("General error");
 
             }
             if (!driverFirefox.findElements(By.id(idHeader)).isEmpty()){
-                addStep(test, "PASS", driverFirefox, "The app is correctly inicializate in Firefox");    
+                e.addStep(test, "PASS", driverFirefox, "The app is correctly inicializate in Firefox");    
 
             }else{
-                addStep(test, "FAIL", driverFirefox, "The header is empty in Firefox");    
+                e.addStep(test, "FAIL", driverFirefox, "The header is empty in Firefox");    
                 fail("General error");
 
             }
         }catch (NoSuchElementException n){
-            addStepWithoutCapture(test, "FAIL", "General error is occur");
+            e.addStepWithoutCapture(test, "FAIL", "General error is occur");
             fail("The app is not correctly inicializate");
         }
     }
@@ -161,9 +164,9 @@ class OpenViduAngularTest extends Module{
     void T002_LeaveSession() throws IOException {
 
         TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
-        test = super.startTest(TESTNAME, "Join the session and verifies that the two browsers are inside the session", extentReports);
+        test = e.startTest(TESTNAME, "Join the session and verifies that the two browsers are inside the session", extentReports);
 
-        addStepWithoutCapture(test, "INFO", "Starting test " + TESTNAME);
+        e.addStepWithoutCapture(test, "INFO", "Starting test " + TESTNAME);
 
         // Configurate the session in chrome
         WebElement sessionC = driverChrome.findElement(By.id(idNameSession));
@@ -203,25 +206,25 @@ class OpenViduAngularTest extends Module{
             assertNotEquals(currentTimeChrome, "NaN");
             assertNotEquals(currentTimeFirefox, "NaN");
 
-            addStep(test, "INFO", driverChrome, "Session configurated in Chrome with session name: " + NAMESESSION);    
-            addStep(test, "INFO", driverFirefox, "Session configurated in Firefox with session name: " + NAMESESSION);    
+            e.addStep(test, "INFO", driverChrome, "Session configurated in Chrome with session name: " + NAMESESSION);    
+            e.addStep(test, "INFO", driverFirefox, "Session configurated in Firefox with session name: " + NAMESESSION);    
             
             //Leave the session with chrome
             WebElement leaveButtonC = driverChrome.findElement(By.id(idLeaveButton));
             if (leaveButtonC.isDisplayed()){ 
                 leaveButtonC.click();
-                addStep(test, "INFO", driverChrome, "Leave button was click");    
+                e.addStep(test, "INFO", driverChrome, "Leave button was click");    
             }else{
-                addStep(test, "FAIL", driverChrome, "Leave button in chrome is not display");    
+                e.addStep(test, "FAIL", driverChrome, "Leave button in chrome is not display");    
                 fail("The app is not correctly leave");
             }
 
             joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
             if(joinButtonC.isDisplayed()){
-                addStep(test, "INFO", driverChrome, "The app leave the session correctly in Chrome");    
+                e.addStep(test, "INFO", driverChrome, "The app leave the session correctly in Chrome");    
                 
             }else{
-                addStep(test, "FAIL", driverChrome, "Join button in chrome is not display");    
+                e.addStep(test, "FAIL", driverChrome, "Join button in chrome is not display");    
                 fail("The app is not correctly leave");
             }
 
@@ -229,26 +232,26 @@ class OpenViduAngularTest extends Module{
             WebElement leaveButtonF = driverFirefox.findElement(By.id(idLeaveButton));
             if (leaveButtonF.isDisplayed()){ 
                 leaveButtonF.click();
-                addStep(test, "INFO", driverFirefox, "Leave button was click"); 
+                e.addStep(test, "INFO", driverFirefox, "Leave button was click"); 
             }else{
-                addStep(test, "FAIL", driverChrome, "Leave button in firefox is not display");    
+                e.addStep(test, "FAIL", driverChrome, "Leave button in firefox is not display");    
                 fail("The app is not correctly leave");
             }
 
             joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton));
             if(joinButtonF.isDisplayed()){
-                addStep(test, "INFO", driverChrome, "The app leave the session correctly in Firefox");    
+                e.addStep(test, "INFO", driverChrome, "The app leave the session correctly in Firefox");    
             
             }else{
-                addStep(test, "FAIL", driverChrome, "Join button in chrome is not display");    
+                e.addStep(test, "FAIL", driverChrome, "Join button in chrome is not display");    
                 fail("The app is not correctly leave");
             }
             
-             addStep(test, "PASS", driverChrome, "TEST: " + TESTNAME +" ok: Session correctly leave in both drivers");
+            e.addStep(test, "PASS", driverChrome, "TEST: " + TESTNAME +" ok: Session correctly leave in both drivers");
         
             }catch (NoSuchElementException n){
             
-                addStepWithoutCapture(test, "FAIL", "General error is occur");
+                e.addStepWithoutCapture(test, "FAIL", "General error is occur");
                 fail("The app is not correctly inicializate");
         }
     }
@@ -264,9 +267,9 @@ class OpenViduAngularTest extends Module{
     void T003_SessionHeader() throws IOException {
 
         TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
-        test = super.startTest(TESTNAME, "Join the session and verifies that the two browsers are inside the session", extentReports);
+        test = e.startTest(TESTNAME, "Join the session and verifies that the two browsers are inside the session", extentReports);
 
-        addStepWithoutCapture(test, "INFO", "Starting test " + TESTNAME);
+        e.addStepWithoutCapture(test, "INFO", "Starting test " + TESTNAME);
 
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.id(idNameSession));
@@ -282,20 +285,20 @@ class OpenViduAngularTest extends Module{
             if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
                 
                 if (NAMESESSION.equals(driverChrome.findElement(By.id(idHeader)).getText())){
-                    addStep(test, "INFO", driverChrome, "The header text is correct: " + NAMESESSION);
+                    e.addStep(test, "INFO", driverChrome, "The header text is correct: " + NAMESESSION);
                 }else{
-                    addStep(test, "FAIL", driverChrome, "The header it should be: " + NAMESESSION + "but is: " + driverChrome.findElement(By.id(idHeader)).getText());
+                    e.addStep(test, "FAIL", driverChrome, "The header it should be: " + NAMESESSION + "but is: " + driverChrome.findElement(By.id(idHeader)).getText());
                     fail("Test fail");
                 }
             }else{
-                addStep(test, "FAIL", driverChrome, "The header it should be: " + NAMESESSION + "but is blank");
+                e.addStep(test, "FAIL", driverChrome, "The header it should be: " + NAMESESSION + "but is blank");
                 fail("Test fail");
             }
-            addStep(test, "PASS", driverChrome, "TEST: " + TESTNAME +" ok: Session name is: " + NAMESESSION);
+            e.addStep(test, "PASS", driverChrome, "TEST: " + TESTNAME +" ok: Session name is: " + NAMESESSION);
                 
         }catch (NoSuchElementException n){
     
-            addStepWithoutCapture(test, "FAIL", "General error is occur");
+            e.addStepWithoutCapture(test, "FAIL", "General error is occur");
             fail("The app is not correctly inicializate");
         }
     }
@@ -311,9 +314,9 @@ class OpenViduAngularTest extends Module{
     void T004_ParticipantName() throws IOException {
 
         TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
-        test = super.startTest(TESTNAME, "Join the session and verifies that the two browsers are inside the session", extentReports);
+        test = e.startTest(TESTNAME, "Join the session and verifies that the two browsers are inside the session", extentReports);
 
-        addStepWithoutCapture(test, "INFO", "Starting test " + TESTNAME);
+        e.addStepWithoutCapture(test, "INFO", "Starting test " + TESTNAME);
 
         // Configurate the session in chrome
         WebElement nameTextBox = driverChrome.findElement(By.id(idNameParticipant));
@@ -327,13 +330,13 @@ class OpenViduAngularTest extends Module{
             waitC.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathParticipant)));
 
             if (NAMEPARTICIPANT.equals(driverChrome.findElement(By.xpath(xpathParticipant)).getText())){
-                addStep(test, "PASS", driverChrome, "TEST: " + TESTNAME +" ok: Participant name is: " + NAMEPARTICIPANT);
+                e.addStep(test, "PASS", driverChrome, "TEST: " + TESTNAME +" ok: Participant name is: " + NAMEPARTICIPANT);
             }else{
-                addStep(test, "FAIL", driverChrome, "Participant name is: " + driverChrome.findElement(By.xpath(xpathParticipant)).getText() + " but should be: " + NAMEPARTICIPANT);
+                e.addStep(test, "FAIL", driverChrome, "Participant name is: " + driverChrome.findElement(By.xpath(xpathParticipant)).getText() + " but should be: " + NAMEPARTICIPANT);
             }
             
         }catch (NoSuchElementException n){
-            addStepWithoutCapture(test, "FAIL", "General error is occur");
+            e.addStepWithoutCapture(test, "FAIL", "General error is occur");
             fail("The app is not correctly inicializate");
         }
     }
@@ -357,7 +360,7 @@ class OpenViduAngularTest extends Module{
      */
     @AfterAll
     public static void tearDown() {
-        extentReports.flush();
+        e.tearDownExtent(extentReports);
     }
 
 }
