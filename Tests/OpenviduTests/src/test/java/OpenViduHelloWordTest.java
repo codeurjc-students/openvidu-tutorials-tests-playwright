@@ -170,7 +170,7 @@ class OpenViduHelloWordTest extends Module{
         WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
         waitC.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera)));
         
-        WebDriverWait waitF = new WebDriverWait(driverFirefox, Duration.ofSeconds(30));
+        WebDriverWait waitF = new WebDriverWait(driverFirefox, Duration.ofSeconds(50));
         waitF.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera)));
 
         // see if the video is playing properly

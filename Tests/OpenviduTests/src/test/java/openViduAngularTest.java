@@ -235,6 +235,7 @@ class OpenViduAngularTest extends Module{
                 fail("The app is not correctly leave");
             }
 
+            joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton));
             if(joinButtonF.isDisplayed()){
                 addStep(test, "INFO", driverChrome, "The app leave the session correctly in Firefox");    
             
