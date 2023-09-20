@@ -15,11 +15,12 @@ jobs:
       run: |
           echo DOCKER
           docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0 &
+          sleep 15
           echo server application 
           cd openvidu-basic-node
           sudo npm install
           sudo node index.js &
-          sleep 2
+          sleep 15
           echo client application tutorial 
           cd ..
           cd openvidu-react
