@@ -22,6 +22,7 @@ jobs:
           sudo n latest
           sudo apt-get update
           sudo apt-get upgrade openssl
+          npx update-browserslist-db@latest
           sudo npm install
           sudo node index.js &
           sleep 15
