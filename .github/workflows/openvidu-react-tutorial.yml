@@ -18,6 +18,10 @@ jobs:
           sleep 15
           echo server application 
           cd openvidu-basic-node
+          sudo npm install -g n
+          sudo n latest
+          sudo apt-get update
+          sudo apt-get upgrade openssl
           sudo npm install
           sudo node index.js &
           sleep 15
