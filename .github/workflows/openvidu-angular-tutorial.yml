@@ -1,7 +1,7 @@
 name: openvidu-angular-tutorial-test 
 
 on: 
-  push:
+
   workflow_dispatch:
 
 jobs:
