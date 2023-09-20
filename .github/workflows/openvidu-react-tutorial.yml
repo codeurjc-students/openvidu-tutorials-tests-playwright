@@ -23,9 +23,10 @@ jobs:
           sudo apt-get update
           sudo apt-get upgrade openssl
           npx update-browserslist-db@latest
+          sleep 5
           sudo npm install
           sudo node index.js &
-          sleep 15
+          
           echo client application tutorial 
           cd ..
           cd openvidu-react
