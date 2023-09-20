@@ -1,7 +1,6 @@
 name: openvidu-js-tutorial-test 
 
 on: 
-  push:
   workflow_dispatch:
 
 jobs:
