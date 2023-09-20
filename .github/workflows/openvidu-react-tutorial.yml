@@ -19,6 +19,7 @@ jobs:
           cd openvidu-basic-node
           sudo npm install
           sudo node index.js &
+          sleep 2
           echo client application tutorial 
           cd ..
           cd openvidu-react
