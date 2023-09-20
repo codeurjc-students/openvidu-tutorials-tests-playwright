@@ -11,19 +11,19 @@ jobs:
   steps:
     - name: Check out the repo
       uses: actions/checkout@v3
-    - name: Setup Node.js environment
-      uses: actions/setup-node@v3.8.1
     - name: Run the build process with Docker
       run: |
-          sudo docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0 &
-          npx update-browserslist-db@latest
+          echo DOCKER
+          docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0 &
+          echo server application 
           cd openvidu-basic-node
           sudo npm install
           sudo node index.js &
+          echo client application tutorial 
           cd ..
           cd openvidu-react
-          npm install
-          npm start
+          sudo npm install
+          sudo npm start
     - uses: actions/setup-node@v3
       with:
         node-version: 16
