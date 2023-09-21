@@ -24,6 +24,7 @@ jobs:
 
     - name: Ejecutar la aplicación del servidor
       run: |
+        cd openvidu-basic-node
         npm install
         node index.js
 
