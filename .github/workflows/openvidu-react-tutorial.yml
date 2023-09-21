@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - main # Cambia 'main' al nombre de tu rama principal si es diferente
+      - feature-tests
 
 jobs:
   build:
