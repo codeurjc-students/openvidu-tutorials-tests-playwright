@@ -1,52 +1,46 @@
-name: openvidu-react-tutorial-test 
+name: CI
 
-on: 
+on:
   push:
-  workflow_dispatch:
+    branches:
+      - main # Cambia 'main' al nombre de tu rama principal si es diferente
 
 jobs:
- OpenVidu_deployment:
-  name:  Run OpenVidu deployment
-  runs-on: ubuntu-latest
-  steps:
-    - name: Check out the repo
-      uses: actions/checkout@v3
-    - name: Run the build process with Docker
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v2
+
+    - name: Configurar Docker
       run: |
-          echo DOCKER
-          docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0 &
-          sleep 15
-          echo server application 
-          cd openvidu-basic-node
-          sudo npm install -g n
-          sudo n latest
-          sudo apt-get update
-          sudo apt-get upgrade openssl
-          npx update-browserslist-db@latest
-          sleep 5
-          sudo npm install
-          sudo node index.js &
-          
-          echo client application tutorial 
-          cd ..
-          cd openvidu-react
-          sudo npm install
-          sudo npm start
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 16
-    - name: Install dependencies
-      run: npm ci
-    - uses: browser-actions/setup-chrome@v1
-    - name: Install Playwright Browsers
-      run: npx playwright install 
-    - name: Runin Test
+        sudo apt-get update
+        sudo apt-get -y install docker.io
+        sudo systemctl start docker
+        sudo systemctl enable docker
+
+    - name: Levantar OpenVidu
       run: |
-         cd tests
-         npx playwright test openvidu-js-web-tutorial.spec.js
-    - uses: actions/upload-artifact@v3
-      if: always()
+        docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0
+
+    - name: Clonar el repositorio de OpenVidu
+      run: |
+        git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.27.0
+        cd openvidu-basic-node
+
+    - name: Ejecutar la aplicación del servidor
+      run: |
+        npm install
+        node index.js
+
+    - name: Configurar Node.js
+      uses: actions/setup-node@v2
       with:
-        name: tests
-        path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/tests
-        retention-days: 30
+        node-version: 14
+
+    - name: Levantar la aplicación cliente
+      run: |
+        cd ../openvidu-react
+        npm install
+        npm start
