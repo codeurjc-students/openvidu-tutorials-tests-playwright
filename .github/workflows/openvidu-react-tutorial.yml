@@ -15,7 +15,7 @@ jobs:
 
     - name: Levantar OpenVidu
       run: |
-        docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0
+        docker run -d -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0
 
     - name: Clonar el repositorio de OpenVidu
       run: |
