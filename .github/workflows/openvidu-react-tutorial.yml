@@ -33,4 +33,17 @@ jobs:
       run: |
         cd openvidu-tutorials/openvidu-react
         npm install
-        npm start
+        npm start &
+  
+    - name: Install dependencies
+      run: npm ci
+      
+    - uses: browser-actions/setup-chrome@v1
+    
+    - name: Install Playwright Browsers
+      run: npx playwright install 
+      
+    - name: Runin Test
+      run: |
+         cd tests
+         npx playwright test openvidu-hello-world-test.spec.js
