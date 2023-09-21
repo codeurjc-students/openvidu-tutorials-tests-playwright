@@ -369,23 +369,23 @@ class OpenViduAngularTest extends Module{
         }
     }
 
-    /**
-    * AfterEach.
-    *
-    * @author Andrea Acuña
-    * Description: close both drivers correctly after every single test
-    */
+/**
+* AfterEach.
+*
+* @author Andrea Acuña
+* Description: close both drivers correctly after every single test
+*/
     @AfterEach
     void quit() {
         super.quitTwoBrowsers(driverChrome, driverFirefox);
     }
 
-    /**
-     * AfterAll.
-     *
-     * @author Andrea Acuña
-     * Description: Close and generate the report after execution of all tests
-     */
+/**
+* AfterAll.
+*
+* @author Andrea Acuña
+* Description: Close and generate the report after execution of all tests
+*/
     @AfterAll
     public static void tearDown() {
         e.tearDownExtent(extentReports);

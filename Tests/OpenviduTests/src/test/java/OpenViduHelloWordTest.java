@@ -3,7 +3,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -20,9 +19,9 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 
 import Reporter.ExtentManager;
+import io.netty.handler.timeout.TimeoutException;
 
 /**
- * Test with Java.
  * Test for the hello word for open vidu 
  * @author Andrea Acuña
  */
@@ -59,10 +58,13 @@ class OpenViduHelloWordTest extends Module{
     }
 
 /**
- * BeforeEach.
+ * BeforeEach
  *
  * @author Andrea Acuña
- * Description: Execute before every single test. Configure the camera an set de url in each browser
+ * Description: Execute before every single test. 
+ *              Configure the camera 
+ *              Set de url in each browser
+ *              Read the variables from excel file
  */
     @BeforeEach
     void setup() {
@@ -74,7 +76,7 @@ class OpenViduHelloWordTest extends Module{
         driverFirefox.get(URL);
 
         NAMESESSION = readVariablesFromExcel(testLocation, "OpenViduHelloWordTest", "NAMESESSION");
-        TESTNAME = readVariablesFromExcel(testLocation, "OpenViduHelloWordTest", "TESTNAME");
+        //TESTNAME = readVariablesFromExcel(testLocation, "OpenViduHelloWordTest", "TestName");
         XpathJoinButton = readVariablesFromExcel(testLocation, "OpenViduHelloWordTest", "XpathJoinButton");
         xpathLeaveButton = readVariablesFromExcel(testLocation, "OpenViduHelloWordTest", "xpathLeaveButton");
         xpathOtherCamera = readVariablesFromExcel(testLocation, "OpenViduHelloWordTest", "xpathOtherCamera");
@@ -85,14 +87,13 @@ class OpenViduHelloWordTest extends Module{
     }
 
 /**
- * Test with Java.
+ * Test with Java -> T001_JoinSession
  *
  * @author Andrea Acuña
- * Description: Join the session and verificate that the two browsers are inside the session
- * @throws IOException
+ * Description: Join the session and verification that both browsers are inside the session
  */
     @Test
-    void T001_JoinSession() throws IOException {
+    void T001_JoinSession(){
         
         TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
         test = e.startTest(TESTNAME, "Join the session and verifies that the two browsers are inside the session", extentReports);
@@ -133,22 +134,28 @@ class OpenViduHelloWordTest extends Module{
                 fail("General error");
 
             }
-        }catch (NoSuchElementException n){
+        }catch (TimeoutException n){
             
-            e.addStepWithoutCapture(test, "FAIL", "General error is occur");
-            fail("The app is not correctly inicializate");
+            e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + n.getMessage());
+            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + n.getMessage());
+            fail("The app is not correctly inicializate. There are a TimeoutException: " + n.getMessage());
+
+        }catch (Exception ex) {
+            
+            e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + ex.getMessage());
+            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + ex.getMessage());
+            fail("An unexpected exception occurred: " + ex.getMessage());
         }
     }
 
 /**
- * Test with Java.
+ * Test with Java -> T002_LeaveSession
  *
  * @author Andrea Acuña
- * Description: Leave the session, verficate that the video is playing property and leave the session
- * @throws IOException
+ * Description: verification that the video is playing property and both browsers leaves the session correctly
  */
     @Test
-    void T002_LeaveSession() throws IOException{
+    void T002_LeaveSession(){
 
         TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
         test = e.startTest(TESTNAME, "Join the session, verifies that the video is playing property and leave the session", extentReports);
@@ -160,15 +167,16 @@ class OpenViduHelloWordTest extends Module{
         textBox.clear();
         textBox.sendKeys(NAMESESSION);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
-        joinButtonC.submit();
+        joinButtonC.click();
 
         //Configurate de session in firefox
         WebElement textBoxF = driverFirefox.findElement(By.id(idNameSession));
         textBoxF.clear();
         textBoxF.sendKeys(NAMESESSION);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
-        joinButtonF.submit();
+        joinButtonF.click();
 
+        try{
         // see if the video is playing properly, moreover synchronize both videos
         WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
         waitC.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera)));
@@ -186,8 +194,8 @@ class OpenViduHelloWordTest extends Module{
                 currentTimeChrome = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
                 break;
             }catch(StaleElementReferenceException exc){
-                e.addStepWithoutCapture(test, "FAIL", "General error is occur: " + exc.getMessage());
-                fail("The app is not correctly inicializate");
+                e.addStepWithoutCapture(test, "FAIL", "Error while get currentTime in chrome: " + exc.getMessage());
+                fail("Error while get currentTime in chrome: " + exc.getMessage());
             }
             repeat++;
         }
@@ -197,13 +205,11 @@ class OpenViduHelloWordTest extends Module{
                 currentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
                 break;
             }catch(StaleElementReferenceException exc){
-                e.addStepWithoutCapture(test, "FAIL", "General error is occur: " + exc.getMessage());
-                fail("The app is not correctly inicializate");
+                e.addStepWithoutCapture(test, "FAIL", "Error while get currentTime in firefox: " + exc.getMessage());
+                fail("Error while get currentTime in firefox: " + exc.getMessage());
             }
             repeat++;
         } 
-           
-        try{
             if (Float.parseFloat(currentTimeChrome) > 0 && Float.parseFloat(currentTimeFirefox) > 0){
                 
                 e.addStep(test, "INFO", driverChrome, "Session configurated in Chrome with session name: " + NAMESESSION);    
@@ -232,14 +238,14 @@ class OpenViduHelloWordTest extends Module{
                     e.addStep(test, "INFO", driverFirefox, "Leave button was click"); 
                 }else{
                     e.addStep(test, "FAIL", driverFirefox, "Leave button in firefox is not display");    
-                    fail("The app is not correctly leave");
+                    fail("Leave button in firefox is not display");
                 }
 
                 if(joinButtonF.isDisplayed()){
                     e.addStep(test, "INFO", driverFirefox, "The app leave the session correctly in Firefox");    
                 }else{
                     e.addStep(test, "FAIL", driverFirefox, "Join button in chrome is not display");    
-                    fail("The app is not correctly leave");
+                    fail("Join button in chrome is not display");
                 }
 
             }else{
@@ -249,20 +255,26 @@ class OpenViduHelloWordTest extends Module{
 
             e.addStep(test, "PASS", driverChrome, "TEST: " + TESTNAME +" ok: Session correctly leave in both drivers");
 
-        }catch (NoSuchElementException n){
+        }catch (TimeoutException n){
             
-            e.addStepWithoutCapture(test, "FAIL", "General error is occur");
-            fail("The app is not correctly inicializate");
+            e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + n.getMessage());
+            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + n.getMessage());
+            fail("The app is not correctly inicializate. There are a TimeoutException: " + n.getMessage());
+
+        }catch (Exception ex) {
+            
+            e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + ex.getMessage());
+            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + ex.getMessage());
+            fail("An unexpected exception occurred: " + ex.getMessage());
         }
     }
 
 
 /**
- * Test with Java.
+ * Test with Java -> T003_SessionHeader
  *
  * @author Andrea Acuña
- * Description: Joins the session and verifies that the session name is correct
- * @throws IOException
+ * Description: Joins the session and verifies that the session name is the expected
  */
     @Test
     void T003_SessionHeader() throws IOException {
@@ -296,31 +308,38 @@ class OpenViduHelloWordTest extends Module{
             }
             e.addStep(test, "PASS", driverChrome, "TEST: " + TESTNAME +" ok: Session name is: " + NAMESESSION);
                 
-        }catch (NoSuchElementException n){
+        }catch (TimeoutException n){
+            
+            e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + n.getMessage());
+            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + n.getMessage());
+            fail("The app is not correctly inicializate. There are a TimeoutException: " + n.getMessage());
 
-            e.addStepWithoutCapture(test, "FAIL", "General error is occur");
-            fail("The app is not correctly inicializate");
+        }catch (Exception ex) {
+            
+            e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + ex.getMessage());
+            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + ex.getMessage());
+            fail("An unexpected exception occurred: " + ex.getMessage());
         }
     }
 
     
 /**
- * AfterEach.
- *
- * @author Andrea Acuña
- * Description: close both drivers
- */
+* AfterEach.
+*
+* @author Andrea Acuña
+* Description: close both drivers correctly after every single test
+*/
     @AfterEach
     void quit(){
         super.quitTwoBrowsers(driverChrome, driverFirefox);
     }
 
 /**
- * AfterAll.
- *
- * @author Andrea Acuña
- * Description: Close and generate the report
- */
+* AfterAll.
+*
+* @author Andrea Acuña
+* Description: Close and generate the report after execution of all tests
+*/
     @AfterAll
     public static void tearDown() {
         e.tearDownExtent(extentReports);
