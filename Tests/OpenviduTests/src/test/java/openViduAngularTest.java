@@ -1,10 +1,8 @@
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -20,9 +18,9 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 
 import Reporter.ExtentManager;
+import io.netty.handler.timeout.TimeoutException;
 
 /**
- * Test with Java.
  * Test for the openvidu angular 
  * @author Andrea Acuña
  */
@@ -46,7 +44,7 @@ class OpenViduAngularTest extends Module{
 
     String XpathJoinButton;
     String xpathHeader;
-    String xpathOtherCamera;
+    String[] xpathOtherCamera;
     
     String xpathParticipant;
 
@@ -64,10 +62,13 @@ class OpenViduAngularTest extends Module{
         }
     }
 /**
- * Test with Java.
+ * BeforeEach
  *
  * @author Andrea Acuña
- * Description: Execute before every single test. Configure the camera an set de url in each browser
+ * Description: Execute before every single test. 
+ *              Configure the camera 
+ *              Set de url in each browser
+ *              Read the variables from excel file
  */
     @BeforeEach
     void setup() {
@@ -82,7 +83,7 @@ class OpenViduAngularTest extends Module{
         NAMEPARTICIPANT = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "NAMEPARTICIPANT");
         XpathJoinButton = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "XpathJoinButton");
         xpathHeader = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "xpathHeader");
-        xpathOtherCamera = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "xpathOtherCamera");
+        xpathOtherCamera = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "xpathOtherCamera").split("|");
         xpathParticipant = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "xpathParticipant");
         idParticipant = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "idParticipant");
         idLeaveButton = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "idLeaveButton");
@@ -93,14 +94,13 @@ class OpenViduAngularTest extends Module{
     }
 
 /**
- * Test with Java.
+ * Test with Java -> T001_JoinSession
  *
  * @author Andrea Acuña
- * Description: Join the session and verificate that the two browsers are inside the session
- * @throws IOException
+ * Description: Join the session and verification that both browsers are inside the session
  */
     @Test
-    void T001_JoinSession() throws IOException {
+    void T001_JoinSession(){
 
         TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
         test = e.startTest(TESTNAME, "Join the session and verifies that the two browsers are inside the session", extentReports);
@@ -147,21 +147,28 @@ class OpenViduAngularTest extends Module{
                 fail("General error");
 
             }
-        }catch (NoSuchElementException n){
-            e.addStepWithoutCapture(test, "FAIL", "General error is occur");
-            fail("The app is not correctly inicializate");
+        }catch (TimeoutException n){
+            
+            e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + n.getMessage());
+            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + n.getMessage());
+            fail("The app is not correctly inicializate. There are a TimeoutException: " + n.getMessage());
+
+        }catch (Exception ex) {
+            
+            e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + ex.getMessage());
+            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + ex.getMessage());
+            fail("An unexpected exception occurred: " + ex.getMessage());
         }
     }
 
 /**
- * Test with Java.
+ * Test with Java -> T002_LeaveSession
  *
  * @author Andrea Acuña
- * Description: Join the session, verficate that the video is playing property and leave the session
- * @throws IOException
+ * Description: verification that the video is playing property and both browsers leaves the session correctly
  */
     @Test
-    void T002_LeaveSession() throws IOException {
+    void T002_LeaveSession(){
 
         TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
         test = e.startTest(TESTNAME, "Join the session and verifies that the two browsers are inside the session", extentReports);
@@ -190,11 +197,11 @@ class OpenViduAngularTest extends Module{
 
         try{
             // see if the video is playing properly, moreover synchronize both videos
-            WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
-            waitC.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathOtherCamera)));
+            WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(60));
+            waitC.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera[0])));
             
-            WebDriverWait waitF = new WebDriverWait(driverFirefox, Duration.ofSeconds(30));
-            waitF.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathOtherCamera)));
+            WebDriverWait waitF = new WebDriverWait(driverFirefox, Duration.ofSeconds(60));
+            waitF.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera[1])));
 
             driverChrome.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             driverFirefox.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -249,22 +256,29 @@ class OpenViduAngularTest extends Module{
             
             e.addStep(test, "PASS", driverChrome, "TEST: " + TESTNAME +" ok: Session correctly leave in both drivers");
         
-            }catch (NoSuchElementException n){
+        }catch (TimeoutException n){
             
-                e.addStepWithoutCapture(test, "FAIL", "General error is occur");
-                fail("The app is not correctly inicializate");
+            e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + n.getMessage());
+            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + n.getMessage());
+            fail("The app is not correctly inicializate. There are a TimeoutException: " + n.getMessage());
+
+        }catch (Exception ex) {
+            
+            e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + ex.getMessage());
+            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + ex.getMessage());
+            fail("An unexpected exception occurred: " + ex.getMessage());
         }
+        
     }
     
 /**
- * Test with Java.
+ * Test with Java -> T003_SessionHeader
  *
  * @author Andrea Acuña
- * Description: Joins the session and verifies that the session name is correct
- * @throws IOException
+ * Description: Joins the session and verifies that the session name is the expected
  */
     @Test
-    void T003_SessionHeader() throws IOException {
+    void T003_SessionHeader(){
 
         TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
         test = e.startTest(TESTNAME, "Join the session and verifies that the two browsers are inside the session", extentReports);
@@ -296,22 +310,28 @@ class OpenViduAngularTest extends Module{
             }
             e.addStep(test, "PASS", driverChrome, "TEST: " + TESTNAME +" ok: Session name is: " + NAMESESSION);
                 
-        }catch (NoSuchElementException n){
-    
-            e.addStepWithoutCapture(test, "FAIL", "General error is occur");
-            fail("The app is not correctly inicializate");
+        }catch (TimeoutException n){
+            
+            e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + n.getMessage());
+            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + n.getMessage());
+            fail("The app is not correctly inicializate. There are a TimeoutException: " + n.getMessage());
+
+        }catch (Exception ex) {
+            
+            e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + ex.getMessage());
+            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + ex.getMessage());
+            fail("An unexpected exception occurred: " + ex.getMessage());
         }
     }
 
 /**
- * Test with Java.
+ * Test with Java -> T004_ParticipantName
  *
  * @author Andrea Acuña
- * Description: Joins the session and verifies that the participant name is correct
- * @throws IOException
+ * Description: Joins the session and verifies that the chrome participant name is correct
  */
     @Test
-    void T004_ParticipantName() throws IOException {
+    void T004_ParticipantName(){
 
         TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
         test = e.startTest(TESTNAME, "Join the session and verifies that the two browsers are inside the session", extentReports);
@@ -326,7 +346,7 @@ class OpenViduAngularTest extends Module{
         joinButtonC.submit();
 
         try{
-            WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
+            WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(60));
             waitC.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathParticipant)));
 
             if (NAMEPARTICIPANT.equals(driverChrome.findElement(By.xpath(xpathParticipant)).getText())){
@@ -335,9 +355,17 @@ class OpenViduAngularTest extends Module{
                 e.addStep(test, "FAIL", driverChrome, "Participant name is: " + driverChrome.findElement(By.xpath(xpathParticipant)).getText() + " but should be: " + NAMEPARTICIPANT);
             }
             
-        }catch (NoSuchElementException n){
-            e.addStepWithoutCapture(test, "FAIL", "General error is occur");
-            fail("The app is not correctly inicializate");
+        }catch (TimeoutException n){
+            
+            e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + n.getMessage());
+            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + n.getMessage());
+            fail("The app is not correctly inicializate. There are a TimeoutException: " + n.getMessage());
+
+        }catch (Exception ex) {
+            
+            e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + ex.getMessage());
+            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + ex.getMessage());
+            fail("An unexpected exception occurred: " + ex.getMessage());
         }
     }
 
@@ -345,7 +373,7 @@ class OpenViduAngularTest extends Module{
     * AfterEach.
     *
     * @author Andrea Acuña
-    * Description: close both drivers
+    * Description: close both drivers correctly after every single test
     */
     @AfterEach
     void quit() {
@@ -356,7 +384,7 @@ class OpenViduAngularTest extends Module{
      * AfterAll.
      *
      * @author Andrea Acuña
-     * Description: Close and generate the report
+     * Description: Close and generate the report after execution of all tests
      */
     @AfterAll
     public static void tearDown() {

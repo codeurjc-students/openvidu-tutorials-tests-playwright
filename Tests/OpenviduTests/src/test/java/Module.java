@@ -1,33 +1,29 @@
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.testng.TestNG;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 
-public class Module extends TestNG{
+public class Module{
 
     /**
-     * method.
+     * public method.
      *
      * @author Andrea Acuña
-     * Description: set up two webDrivers with headless mode
-     * Return: List with 2 browsers configurated
+     * Description: set up two webDrivers (One in Chrome. One in Firefox) with headless mode
+     * Parameters: None
+     * Return: List with 2 browsers configurated. In the first position is Chrome and in the second position is Firefox
      */
     public List<WebDriver> setUpTwoBrowsers(){
 
@@ -36,7 +32,8 @@ public class Module extends TestNG{
 
         List<WebDriver> browsers = new ArrayList<WebDriver>();
 
-        WebDriverManager.chromedriver().setup();
+        //WebDriverManager.chromedriver().setup();
+        WebDriverManager.chromedriver().clearDriverCache().setup();
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless", "--disable-gpu", "--ignore-certificate-errors","--disable-extensions","--no-sandbox","--disable-dev-shm-usage");
@@ -46,7 +43,8 @@ public class Module extends TestNG{
         driverChrome = new ChromeDriver(options);
         browsers.add(driverChrome);
 
-        WebDriverManager.firefoxdriver().setup();
+        //WebDriverManager.firefoxdriver().setup();
+        WebDriverManager.firefoxdriver().clearDriverCache().setup();
 
         FirefoxOptions optionsF = new FirefoxOptions();
         optionsF.setHeadless(true);
@@ -59,34 +57,13 @@ public class Module extends TestNG{
     }
 
     /**
-    * method.
-    *
-    * @author Andrea Acuña
-    * Description: take a screenshot to create an evidence.
-    * Parameters: 
-    *          - url1: the relative or absolute path to a evidence file of the chrome photo
-    *          - url2: the relative or absolute path to a evidence file of the firefox photo
-    */
-    public void takePhoto(String url1, String url2, WebDriver c, WebDriver f) throws IOException{
-        try {
-            if(url1 != ""){
-                File scrFileC = ((TakesScreenshot)c).getScreenshotAs(OutputType.FILE);
-                FileUtils.copyFile(scrFileC, new File(url1));
-            }
-            if(url2 != ""){
-                File scrFileF = ((TakesScreenshot)f).getScreenshotAs(OutputType.FILE);
-                FileUtils.copyFile(scrFileF, new File(url2));
-            }          
-        } catch (Exception e) {
-            System.out.println("an error has occurred with the screenshot. Please preview the url");
-        }
-    }
-
-    /**
-     * method.
+     * public method.
      *
      * @author Andrea Acuña
      * Description: close both drivers passed by parameter
+     * Parameters: driverChrome: driver of chrome
+     *             driverFirefox: driver of firefox
+     * Return: None
      */
     public void quitTwoBrowsers(WebDriver driverChrome, WebDriver driverFirefox) {
         if (driverChrome != null){
@@ -97,13 +74,15 @@ public class Module extends TestNG{
         }
     }
 
-
-
     /**
-     * method.
+     * public static method.
      *
      * @author Andrea Acuña
      * Description: open the excel file and read the value specified
+     * Parameters: filePath: path where the excel that will be accessed is hosted
+     *             testName: Name of the test that is using the method
+     *             ColValue: name of the col in the excel
+     * Return: Value of the intersection between testName (Row) and ColValue (Col)
      */
     public static String readVariablesFromExcel(String filePath, String testName, String ColValue) {
 
