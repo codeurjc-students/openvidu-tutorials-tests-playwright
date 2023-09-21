@@ -17,14 +17,10 @@ jobs:
       run: |
         docker run -d -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0
 
-    - name: Clonar el repositorio de OpenVidu
-      run: |
-        git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.27.0
-        cd openvidu-basic-node
-
     - name: Ejecutar la aplicación del servidor
       run: |
-        cd openvidu-basic-node
+        git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.27.0
+        cd openvidu-tutorials/openvidu-basic-node
         npm install
         node index.js &
 
@@ -35,6 +31,6 @@ jobs:
 
     - name: Levantar la aplicación cliente
       run: |
-        cd ../openvidu-react
+        cd openvidu-tutorials/openvidu-react
         npm install
         npm start
