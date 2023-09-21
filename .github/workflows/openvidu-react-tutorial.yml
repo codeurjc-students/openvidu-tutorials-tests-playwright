@@ -13,13 +13,6 @@ jobs:
     - name: Checkout código
       uses: actions/checkout@v2
 
-    - name: Configurar Docker
-      run: |
-        sudo apt-get update
-        sudo apt-get -y install docker.io
-        sudo systemctl start docker
-        sudo systemctl enable docker
-
     - name: Levantar OpenVidu
       run: |
         docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0
