@@ -18,7 +18,7 @@ const browser = await chromium.launch({ headless: true , deviceScaleFactor: 1,
 
    await page1.click('#join input[type="submit"]');
    await page1.waitForSelector('#session', { visible: true });
-
+   await page1.waitForTimeout(5000);
    //const page2 = await context.newPage();
 
    //await page2.goto('http://localhost:3000');
