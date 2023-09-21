@@ -27,9 +27,7 @@ const browser = await chromium.launch({ headless: true , deviceScaleFactor: 1,
    await page2.waitForSelector('#session', { visible: true });
    await page2.waitForTimeout(5000); 
    
-   await page2.screenshot({ path: 'page2.png' });
-   
-   await page1.screenshot({ path: 'page1.png' });
+   await page2.screenshot({ path: 'pr.png' });
    
    // Buscar los elementos HTML que contienen los streams de video
    const videoElements = await page2.$$('video');
