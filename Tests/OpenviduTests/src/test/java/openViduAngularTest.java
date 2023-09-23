@@ -51,7 +51,7 @@ class OpenViduAngularTest extends Module{
 
     String XpathJoinButton;
     String xpathHeader;
-    String[] xpathOtherCamera;
+    String xpathOtherCamera;
     
     String xpathParticipant;
 
@@ -90,7 +90,7 @@ class OpenViduAngularTest extends Module{
         NAMEPARTICIPANT = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "NAMEPARTICIPANT");
         XpathJoinButton = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "XpathJoinButton");
         xpathHeader = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "xpathHeader");
-        xpathOtherCamera = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "xpathOtherCamera").split("|");
+        xpathOtherCamera = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "xpathOtherCamera");
         xpathParticipant = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "xpathParticipant");
         idParticipant = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "idParticipant");
         idLeaveButton = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "idLeaveButton");
@@ -204,11 +204,11 @@ class OpenViduAngularTest extends Module{
 
         try{
             // see if the video is playing properly, moreover synchronize both videos
-            WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
-            waitC.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera[0])));
+            WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(60));
+            waitC.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera)));
             
-            WebDriverWait waitF = new WebDriverWait(driverFirefox, Duration.ofSeconds(30));
-            waitF.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera[1])));
+            WebDriverWait waitF = new WebDriverWait(driverFirefox, Duration.ofSeconds(60));
+            waitF.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera)));
 
             driverChrome.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             driverFirefox.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -232,8 +232,8 @@ class OpenViduAngularTest extends Module{
             waitC.until(ExpectedConditions.visibilityOfElementLocated(By.id(idSelfCamera)));
             waitF.until(ExpectedConditions.visibilityOfElementLocated(By.id(idSelfCamera)));
 
-            String OtherCurrentTimeChrome = driverChrome.findElement(By.xpath(xpathOtherCamera[0])).getAttribute("readyState");
-            String OtherCurrentTimeFirefox = driverFirefox.findElement(By.xpath(xpathOtherCamera[1])).getAttribute("readyState");
+            String OtherCurrentTimeChrome = driverChrome.findElement(By.xpath(xpathOtherCamera)).getAttribute("readyState");
+            String OtherCurrentTimeFirefox = driverFirefox.findElement(By.xpath(xpathOtherCamera)).getAttribute("readyState");
 
             if (Integer.parseInt(OtherCurrentTimeChrome) >= 3 && Integer.parseInt(OtherCurrentTimeChrome) < readyStateValues.length) {
                 e.addStep(test, "INFO", driverChrome, "Other video is correctly playing in Chrome: " + readyStateValues[Integer.parseInt(OtherCurrentTimeChrome)]);    
