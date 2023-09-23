@@ -76,8 +76,7 @@ class OpenViduHelloWordTest extends Module{
         driverFirefox.get(URL);
 
         NAMESESSION = readVariablesFromExcel(testLocation, "OpenViduHelloWordTest", "NAMESESSION");
-        //TESTNAME = readVariablesFromExcel(testLocation, "OpenViduHelloWordTest", "TestName");
-        XpathJoinButton = readVariablesFromExcel(testLocation, "OpenViduHelloWordTest", "XpathJoinButton");
+       XpathJoinButton = readVariablesFromExcel(testLocation, "OpenViduHelloWordTest", "XpathJoinButton");
         xpathLeaveButton = readVariablesFromExcel(testLocation, "OpenViduHelloWordTest", "xpathLeaveButton");
         xpathOtherCamera = readVariablesFromExcel(testLocation, "OpenViduHelloWordTest", "xpathOtherCamera");
         idHeader = readVariablesFromExcel(testLocation, "OpenViduHelloWordTest", "idHeader");
