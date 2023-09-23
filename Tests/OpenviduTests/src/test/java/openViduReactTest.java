@@ -3,7 +3,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -19,9 +18,9 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 
 import Reporter.ExtentManager;
+import io.netty.handler.timeout.TimeoutException;
 
 /**
- * Test with Java.
  * Test for the openvidu angular 
  * @author Andrea Acuña
  */
@@ -62,12 +61,15 @@ class OpenViduReactTest extends Module{
     }
 
 
-    /**
-     * Test with Java.
-     *
-     * @author Andrea Acuña
-     * Description: Execute before every single test. Configure the camera an set de url in each browser
-     */
+/**
+ * BeforeEach
+ *
+ * @author Andrea Acuña
+ * Description: Execute before every single test. 
+ *              Configure the camera 
+ *              Set de url in each browser
+ *              Read the variables from excel file
+ */
     @BeforeEach
     void setup() {
         URL = readVariablesFromExcel(testLocation, "OpenViduReactTest", "URL");
@@ -91,13 +93,12 @@ class OpenViduReactTest extends Module{
         idNameParticipant = readVariablesFromExcel(testLocation, "OpenViduReactTest", "idNameParticipant");
     }
 
-    /**
-     * Test with Java.
-     *
-     * @author Andrea Acuña
-     * Description: Join the session and verificate that the two browsers are inside the session
-     * @throws IOException
-     */
+ /**
+ * Test with Java -> T001_JoinSession
+ *
+ * @author Andrea Acuña
+ * Description: Join the session and verification that both browsers are inside the session
+ */
     @Test
     void T001_JoinSession() throws IOException {
 
@@ -143,19 +144,26 @@ class OpenViduReactTest extends Module{
                 fail("General error");
 
             }
-        }catch (NoSuchElementException n){
-            e.addStepWithoutCapture(test, "FAIL", "General error is occur");
-            fail("The app is not correctly inicializate");
+        }catch (TimeoutException n){
+            
+            e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + n.getMessage());
+            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + n.getMessage());
+            fail("The app is not correctly inicializate. There are a TimeoutException: " + n.getMessage());
+
+        }catch (Exception ex) {
+            
+            e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + ex.getMessage());
+            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + ex.getMessage());
+            fail("An unexpected exception occurred: " + ex.getMessage());
         }
     }
 
-    /**
-     * Test with Java.
-     *
-     * @author Andrea Acuña
-     * Description: Join the session, verficate that the video is playing property and leave the session
-     * @throws IOException
-     */
+/**
+ * Test with Java -> T002_LeaveSession
+ *
+ * @author Andrea Acuña
+ * Description: verification that the video is playing property and both browsers leaves the session correctly
+ */
     @Test
     void T002_LeaveSession() throws IOException {
 
@@ -187,74 +195,96 @@ class OpenViduReactTest extends Module{
         try{
             // see if the video is playing properly, moreover synchronize both videos
             WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
+            waitC.until(ExpectedConditions.visibilityOfElementLocated(By.id(idSelfCamera)));
             waitC.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera)));
             
             WebDriverWait waitF = new WebDriverWait(driverFirefox, Duration.ofSeconds(30));
+            waitF.until(ExpectedConditions.visibilityOfElementLocated(By.id(idSelfCamera)));
             waitF.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera)));
 
-            String currentTimeChrome = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
-            String currentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
+            String SelfCurrentTimeChrome = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
+            String SelfCurrentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
+
+            String OtherCurrentTimeChrome = driverChrome.findElement(By.xpath(xpathOtherCamera)).getAttribute("currentTime");
+            String OtherCurrentTimeFirefox = driverFirefox.findElement(By.xpath(xpathOtherCamera)).getAttribute("currentTime");
           
-            if (Float.parseFloat(currentTimeChrome) > 0 && Float.parseFloat(currentTimeFirefox) > 0){
+            if (Float.parseFloat(SelfCurrentTimeChrome) > 0 && Float.parseFloat(SelfCurrentTimeFirefox) > 0){
+                if (Float.parseFloat(OtherCurrentTimeChrome) > 0 && Float.parseFloat(OtherCurrentTimeFirefox) > 0){
+                    e.addStep(test, "INFO", driverChrome, "Videos playing ok in Chrome: Self video is: " + SelfCurrentTimeChrome + " Seconds and Other video is: " + OtherCurrentTimeChrome + " Seconds");    
+                    e.addStep(test, "INFO", driverFirefox, "Videos playing ok in Firefox: Self video is: " + SelfCurrentTimeFirefox + " Seconds and Other video is: " + OtherCurrentTimeFirefox + " Seconds"); 
+                    
+                    WebElement leaveButtonC = driverChrome.findElement(By.id(idLeaveButton));
+                    if (leaveButtonC.isDisplayed()){ 
+                        leaveButtonC.click();
+                        e.addStep(test, "INFO", driverChrome, "Leave button was click in Chrome");    
+                    }else{
+                        e.addStep(test, "FAIL", driverChrome, "Leave button in chrome is not display");    
+                        fail("The app is not correctly leave");
+                    }
+                    
+                    WebElement titleC = driverChrome.findElement(By.id(idMainTitle));
+                    if(titleC.isDisplayed()){
+                        e.addStep(test, "INFO", driverChrome, "Session correctly leave in Chrome");    
+                    }else{
+                        e.addStep(test, "FAIL", driverChrome, "Session is not leave in Chrome");    
+                        fail("Session is not leave in Chrome");
+                    }
 
-                e.addStep(test, "INFO", driverChrome, "Session configurated in Chrome with session name: " + NAMESESSION);    
-                e.addStep(test, "INFO", driverFirefox, "Session configurated in Firefox with session name: " + NAMESESSION); 
-                
-                WebElement leaveButtonC = driverChrome.findElement(By.id(idLeaveButton));
-                if (leaveButtonC.isDisplayed()){ 
-                    leaveButtonC.click();
-                    e.addStep(test, "INFO", driverChrome, "Leave button was click in Chrome");    
-                }else{
-                    e.addStep(test, "FAIL", driverChrome, "Leave button in chrome is not display");    
-                    fail("The app is not correctly leave");
+                    //Leave the session with Firefox
+
+                    WebElement leaveButtonF = driverFirefox.findElement(By.id(idLeaveButton));
+                    if (leaveButtonF.isDisplayed()){ 
+                        leaveButtonF.click();
+                        e.addStep(test, "INFO", driverFirefox, "Leave button was click i Firefox");    
+                    }else{
+                        e.addStep(test, "FAIL", driverFirefox, "Leave button in Firefox is not display");    
+                        fail("The app is not correctly leave");
+                    }
+
+                    WebElement titleF = driverFirefox.findElement(By.id(idMainTitle));
+                    if(titleF.isDisplayed()){
+                        e.addStep(test, "INFO", driverFirefox, "Session correctly leave in Firefox");    
+                    }else{
+                        e.addStep(test, "FAIL", driverFirefox, "Session is not leave in Firefox");    
+                        fail("Session is not leave in Chrome");
+                    }
+                }else{ 
+                    if (Float.parseFloat(OtherCurrentTimeChrome) > 0){
+                        e.addStep(test, "FAIL", driverFirefox, "Other Video is not playing in Firefox");
+                    }else{
+                        e.addStep(test, "FAIL", driverChrome, "Other Video is not playing in Chrome");
+                    }
+                    fail("Self Video is not playing in app");
                 }
-                
-                WebElement titleC = driverChrome.findElement(By.id(idMainTitle));
-                if(titleC.isDisplayed()){
-                    e.addStep(test, "INFO", driverChrome, "Session correctly leave in Chrome");    
-                }else{
-                    e.addStep(test, "FAIL", driverChrome, "Session is not leave in Chrome");    
-                    fail("Session is not leave in Chrome");
-                }
-
-                //Leave the session with Firefox
-
-                WebElement leaveButtonF = driverFirefox.findElement(By.id(idLeaveButton));
-                if (leaveButtonF.isDisplayed()){ 
-                    leaveButtonF.click();
-                    e.addStep(test, "INFO", driverFirefox, "Leave button was click i Firefox");    
-                }else{
-                    e.addStep(test, "FAIL", driverFirefox, "Leave button in Firefox is not display");    
-                    fail("The app is not correctly leave");
-                }
-
-                WebElement titleF = driverFirefox.findElement(By.id(idMainTitle));
-                if(titleF.isDisplayed()){
-                    e.addStep(test, "INFO", driverFirefox, "Session correctly leave in Firefox");    
-                }else{
-                    e.addStep(test, "FAIL", driverFirefox, "Session is not leave in Firefox");    
-                    fail("Session is not leave in Chrome");
-                }
-
             } else {
-                e.addStepWithoutCapture(test, "FAIL", "Video is not playing");
-                fail("Video is not playing in app");
+                if (Float.parseFloat(SelfCurrentTimeChrome) > 0){
+                    e.addStep(test, "FAIL", driverFirefox, "Self Video is not playing in Firefox");
+                }else{
+                    e.addStep(test, "FAIL", driverChrome, "Self Video is not playing in Chrome");
+                }
+                fail("Self Video is not playing in app");
             }
+        }catch (TimeoutException n){
+            
+            e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + n.getMessage());
+            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + n.getMessage());
+            fail("The app is not correctly inicializate. There are a TimeoutException: " + n.getMessage());
 
-         }catch (NoSuchElementException n){
-            e.addStepWithoutCapture(test, "FAIL", "General error is occur");
-            fail("The app is not correctly inicializate");
+        }catch (Exception ex) {
+            
+            e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + ex.getMessage());
+            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + ex.getMessage());
+            fail("An unexpected exception occurred: " + ex.getMessage());
         }
 
     }
 
-    /**
-     * Test with Java.
-     *
-     * @author Andrea Acuña
-     * Description: Joins the session and verifies that the session name is correct
-     * @throws IOException
-     */
+/**
+ * Test with Java -> T003_SessionHeader
+ *
+ * @author Andrea Acuña
+ * Description: Joins the session and verifies that the session name is the expected
+ */
     @Test
     void T003_SessionHeader() throws IOException {
 
@@ -288,20 +318,26 @@ class OpenViduReactTest extends Module{
             }
             e.addStep(test, "PASS", driverChrome, "TEST: " + TESTNAME +" ok: Session name is: " + NAMESESSION);
                 
-        }catch (NoSuchElementException n){
+        }catch (TimeoutException n){
+            
+            e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + n.getMessage());
+            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + n.getMessage());
+            fail("The app is not correctly inicializate. There are a TimeoutException: " + n.getMessage());
 
-            e.addStepWithoutCapture(test, "FAIL", "General error is occur");
-            fail("The app is not correctly inicializate");
+        }catch (Exception ex) {
+            
+            e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + ex.getMessage());
+            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + ex.getMessage());
+            fail("An unexpected exception occurred: " + ex.getMessage());
         }
     }
 
-    /**
-     * Test with Java.
-     *
-     * @author Andrea Acuña
-     * Description: Joins the session and verifies that the participant name is correct
-     * @throws IOException
-     */
+/**
+ * Test with Java -> T004_ParticipantName
+ *
+ * @author Andrea Acuña
+ * Description: Joins the session and verifies that the chrome participant name is correct
+ */
     @Test
     void T004_ParticipantName() throws IOException {
         TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
@@ -326,31 +362,37 @@ class OpenViduReactTest extends Module{
                 e.addStep(test, "FAIL", driverChrome, "Participant name is: " + driverChrome.findElement(By.xpath(xpathParticipant)).getText() + " but should be: " + NAMEPARTICIPANT);
             }
             
-        }catch (NoSuchElementException n){
-            e.addStepWithoutCapture(test, "FAIL", "General error is occur");
-            fail("The app is not correctly inicializate");
+        }catch (TimeoutException n){
+            
+            e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + n.getMessage());
+            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + n.getMessage());
+            fail("The app is not correctly inicializate. There are a TimeoutException: " + n.getMessage());
+
+        }catch (Exception ex) {
+            
+            e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + ex.getMessage());
+            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + ex.getMessage());
+            fail("An unexpected exception occurred: " + ex.getMessage());
         }
     }
 
-// ME GUSTARÍA HACER UN TEST PARA EL BOTÓN "SWITCH CAMERA"
-
-    /**
-    * AfterEach.
-    *
-    * @author Andrea Acuña
-    * Description: close both drivers
-    */
+/**
+* AfterEach.
+*
+* @author Andrea Acuña
+* Description: close both drivers correctly after every single test
+*/
     @AfterEach
     void quit() {
         super.quitTwoBrowsers(driverChrome, driverFirefox);
     }
 
-    /**
-     * AfterAll.
-     *
-     * @author Andrea Acuña
-     * Description: Close and generate the report
-     */
+/**
+* AfterAll.
+*
+* @author Andrea Acuña
+* Description: Close and generate the report after execution of all tests
+*/
     @AfterAll
     public static void tearDown() {
         e.tearDownExtent(extentReports);

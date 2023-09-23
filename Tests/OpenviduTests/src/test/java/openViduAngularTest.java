@@ -1,4 +1,3 @@
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.time.Duration;
@@ -28,6 +27,14 @@ class OpenViduAngularTest extends Module{
 
     String testLocation = "test-input/Parameters.xlsx";
     String reportLocation = "OpenViduAngularTestReport.html";
+
+    String[] readyStateValues = {
+        "HAVE_NOTHING",
+        "HAVE_METADATA",
+        "HAVE_CURRENT_DATA",
+        "HAVE_FUTURE_DATA",
+        "HAVE_ENOUGH_DATA"
+    };
 
     private ExtentTest test;
     public static ExtentReports extentReports;
@@ -197,25 +204,48 @@ class OpenViduAngularTest extends Module{
 
         try{
             // see if the video is playing properly, moreover synchronize both videos
-            WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(60));
+            WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
             waitC.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera[0])));
             
-            WebDriverWait waitF = new WebDriverWait(driverFirefox, Duration.ofSeconds(60));
+            WebDriverWait waitF = new WebDriverWait(driverFirefox, Duration.ofSeconds(30));
             waitF.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera[1])));
 
             driverChrome.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             driverFirefox.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
             // see if the video is playing properly
-            String currentTimeChrome= driverChrome.findElement(By.id(idSelfCamera)).getAttribute("duration");
-            String currentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("duration");
-              
-            assertNotEquals(currentTimeChrome, "NaN");
-            assertNotEquals(currentTimeFirefox, "NaN");
+            String SelfCurrentTimeChrome = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("readyState");
+            String SelfCurrentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("readyState");
 
-            e.addStep(test, "INFO", driverChrome, "Session configurated in Chrome with session name: " + NAMESESSION);    
-            e.addStep(test, "INFO", driverFirefox, "Session configurated in Firefox with session name: " + NAMESESSION);    
+            if (Integer.parseInt(SelfCurrentTimeChrome) >= 3 && Integer.parseInt(SelfCurrentTimeChrome) < readyStateValues.length) {
+                e.addStep(test, "INFO", driverChrome, "Self video is correctly playing in Chrome: " + readyStateValues[Integer.parseInt(SelfCurrentTimeChrome)]);    
+            } else {
+                e.addStep(test, "FAIL", driverChrome, "Self video is NOT correctly playing in Chrome: " + readyStateValues[Integer.parseInt(SelfCurrentTimeChrome)]);    
+            }
+
+            if (Integer.parseInt(SelfCurrentTimeFirefox) >= 3 && Integer.parseInt(SelfCurrentTimeFirefox) < readyStateValues.length) {
+                e.addStep(test, "INFO", driverFirefox, "Self video is correctly playing in Firefox: " + readyStateValues[Integer.parseInt(SelfCurrentTimeFirefox)]);    
+             } else {
+                e.addStep(test, "FAIL", driverFirefox, "Self video is NOT correctly playing in Firefox: " + readyStateValues[Integer.parseInt(SelfCurrentTimeFirefox)]);    
+            }
             
+            waitC.until(ExpectedConditions.visibilityOfElementLocated(By.id(idSelfCamera)));
+            waitF.until(ExpectedConditions.visibilityOfElementLocated(By.id(idSelfCamera)));
+
+            String OtherCurrentTimeChrome = driverChrome.findElement(By.xpath(xpathOtherCamera[0])).getAttribute("readyState");
+            String OtherCurrentTimeFirefox = driverFirefox.findElement(By.xpath(xpathOtherCamera[1])).getAttribute("readyState");
+
+            if (Integer.parseInt(OtherCurrentTimeChrome) >= 3 && Integer.parseInt(OtherCurrentTimeChrome) < readyStateValues.length) {
+                e.addStep(test, "INFO", driverChrome, "Other video is correctly playing in Chrome: " + readyStateValues[Integer.parseInt(OtherCurrentTimeChrome)]);    
+            } else {
+                e.addStep(test, "FAIL", driverChrome, "Other video is NOT correctly playing in Chrome: " + readyStateValues[Integer.parseInt(SelfCurrentTimeChrome)]);    
+            }
+
+            if (Integer.parseInt(OtherCurrentTimeFirefox) >= 3 && Integer.parseInt(OtherCurrentTimeFirefox) < readyStateValues.length) {
+                e.addStep(test, "INFO", driverFirefox, "Other video is correctly playing in Firefox: " + readyStateValues[Integer.parseInt(OtherCurrentTimeFirefox)]);    
+             } else {
+                e.addStep(test, "FAIL", driverFirefox, "Other video is NOT correctly playing in Firefox: " + readyStateValues[Integer.parseInt(OtherCurrentTimeFirefox)]);    
+            }
             //Leave the session with chrome
             WebElement leaveButtonC = driverChrome.findElement(By.id(idLeaveButton));
             if (leaveButtonC.isDisplayed()){ 
