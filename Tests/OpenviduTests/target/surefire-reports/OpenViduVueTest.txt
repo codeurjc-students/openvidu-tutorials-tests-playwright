@@ -1,0 +1,14 @@
+-------------------------------------------------------------------------------
+Test set: OpenViduVueTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 83.73 s <<< FAILURE! - in OpenViduVueTest
+T002_LeaveSession  Time elapsed: 48.127 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+An unexpected exception occurred: Expected condition failed: waiting for visibility of element located by By.xpath: /html/body/div/div/div[3]/div[2]/video (tried for 30 second(s) with 500 milliseconds interval)
+Build info: version: '4.6.0', revision: '79f1c02ae20'
+System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.2'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 117.0.5938.88, chrome: {chromedriverVersion: 117.0.5938.92 (67649b10b92b..., userDataDir: C:\Users\Usuario\AppData\Lo...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:64788}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: WINDOWS, proxy: Proxy(), se:cdp: ws://localhost:64788/devtoo..., se:cdpVersion: 117.0.5938.88, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: b663f0297063cf8d179a381eca026e7d
+	at OpenViduVueTest.T002_LeaveSession(OpenViduVueTest.java:288)
+

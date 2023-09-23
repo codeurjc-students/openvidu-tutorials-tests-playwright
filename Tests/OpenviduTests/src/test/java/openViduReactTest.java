@@ -1,6 +1,5 @@
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 
@@ -100,7 +99,7 @@ class OpenViduReactTest extends Module{
  * Description: Join the session and verification that both browsers are inside the session
  */
     @Test
-    void T001_JoinSession() throws IOException {
+    void T001_JoinSession(){
 
         TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
         test = e.startTest(TESTNAME, "Join the session and verifies that the two browsers are inside the session", extentReports);
@@ -165,7 +164,7 @@ class OpenViduReactTest extends Module{
  * Description: verification that the video is playing property and both browsers leaves the session correctly
  */
     @Test
-    void T002_LeaveSession() throws IOException {
+    void T002_LeaveSession(){
 
         TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
         test = e.startTest(TESTNAME, "Join the session and verifies that the two browsers are inside the session", extentReports);
@@ -286,7 +285,7 @@ class OpenViduReactTest extends Module{
  * Description: Joins the session and verifies that the session name is the expected
  */
     @Test
-    void T003_SessionHeader() throws IOException {
+    void T003_SessionHeader(){
 
         TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
         test = e.startTest(TESTNAME, "Joins the session and verifies that the session name is correct", extentReports);
@@ -339,7 +338,7 @@ class OpenViduReactTest extends Module{
  * Description: Joins the session and verifies that the chrome participant name is correct
  */
     @Test
-    void T004_ParticipantName() throws IOException {
+    void T004_ParticipantName(){
         TESTNAME = new Throwable().getStackTrace()[0].getMethodName();
         test = e.startTest(TESTNAME, "Join the session and verifies that the two browsers are inside the session", extentReports);
 
@@ -365,13 +364,11 @@ class OpenViduReactTest extends Module{
         }catch (TimeoutException n){
             
             e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + n.getMessage());
-            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + n.getMessage());
             fail("The app is not correctly inicializate. There are a TimeoutException: " + n.getMessage());
 
         }catch (Exception ex) {
             
             e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + ex.getMessage());
-            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + ex.getMessage());
             fail("An unexpected exception occurred: " + ex.getMessage());
         }
     }

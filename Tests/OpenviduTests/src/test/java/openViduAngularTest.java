@@ -388,13 +388,11 @@ class OpenViduAngularTest extends Module{
         }catch (TimeoutException n){
             
             e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + n.getMessage());
-            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + n.getMessage());
             fail("The app is not correctly inicializate. There are a TimeoutException: " + n.getMessage());
 
         }catch (Exception ex) {
             
             e.addStep(test, "FAIL", driverChrome, "Error in chrome: " + ex.getMessage());
-            e.addStep(test, "FAIL", driverFirefox, "Error in firefox: " + ex.getMessage());
             fail("An unexpected exception occurred: " + ex.getMessage());
         }
     }
