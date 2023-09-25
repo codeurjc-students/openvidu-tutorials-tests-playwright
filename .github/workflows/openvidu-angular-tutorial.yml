@@ -36,7 +36,7 @@ jobs:
       run: |
         cd openvidu-tutorials/openvidu-angular
         npm install
-        ng serve
+        ng serve &
   
     - name: Install dependencies
       run: npm ci
