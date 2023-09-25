@@ -14,15 +14,15 @@ const browser = await chromium.launch({ headless: true , deviceScaleFactor: 1,
    });
 
    const page1 = await context.newPage();
-   await page1.goto('http://localhost:3000');
-
+   await page1.goto('http://localhost:3000'
+   await page1.fill('#userName', 'Page1'););
    await page1.click('#join input[type="submit"]');
    await page1.waitForSelector('#session', { visible: true });
 
    const page2 = await context.newPage();
 
    await page2.goto('http://localhost:3000');
-   //await page2.fill('#sessionId', 'SessionS');
+   await page2.fill('#userName', 'Page2');
    await page2.click('#join input[type="submit"]');
    await page2.waitForSelector('#session', { visible: true });
    await page2.waitForTimeout(5000); 
