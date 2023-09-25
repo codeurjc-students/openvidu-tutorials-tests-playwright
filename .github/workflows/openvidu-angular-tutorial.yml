@@ -1,9 +1,7 @@
 name: openvidu-angular-tutorial
 
 on:
-  push:
-    branches:
-      - feature-tests
+  workflow_dispatch: {}
 
 jobs:
   build:
