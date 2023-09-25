@@ -14,20 +14,21 @@ const browser = await chromium.launch({ headless: true , deviceScaleFactor: 1,
    });
 
    const page1 = await context.newPage();
-   await page1.goto('http://127.0.0.1:4200');
-
+   await page1.goto('http://localhost:4200');
+   await page1.fill('#userName', 'User1');
    await page1.click('#join input[type="submit"]');
    await page1.waitForSelector('#session', { visible: true });
 
    const page2 = await context.newPage();
 
-   await page2.goto('http://127.0.0.1:4200');
-   //await page2.fill('#sessionId', 'SessionS');
+   await page2.goto('http://localhost:4200');
+   await page2.fill('#userName', 'User2');
    await page2.click('#join input[type="submit"]');
    await page2.waitForSelector('#session', { visible: true });
    await page2.waitForTimeout(5000); 
    
-   await page2.screenshot({ path: 'pr.png' });
+   await page1.screenshot({ path: 'page1.png' });
+   await page2.screenshot({ path: 'page2.png' });
    
    // Buscar los elementos HTML que contienen los streams de video
    const videoElements = await page2.$$('video');
