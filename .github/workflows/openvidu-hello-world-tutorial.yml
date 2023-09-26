@@ -32,7 +32,7 @@ jobs:
     - name: Levantar la aplicación cliente
       run: |
           npm install --location=global http-server
-          sudo http-server openvidu-hello-world/web &
+          sudo http-server openvidu-tutorials/openvidu-hello-world/web &
 
     - name: Install dependencies
       run: npm ci
