@@ -40,7 +40,7 @@ jobs:
     - name: Runin Test
       run: |
          cd tests
-         npx playwright test openvidu-js-web-test.spec.js
+         npx playwright test openvidu-js-web-tutorial.spec.js
          
     - uses: actions/upload-artifact@v3
       if: always()
