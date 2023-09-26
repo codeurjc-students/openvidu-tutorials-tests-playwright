@@ -2,32 +2,46 @@ name: openvidu-Hello-World-tutorial-test
 
 on: 
   workflow_dispatch: {}
+  push:
   
 
 jobs:
- OpenVidu_deployment:
-  name:  Run OpenVidu deployment
-  runs-on: ubuntu-latest
-  steps:
-    - name: Check out the repo
-      uses: actions/checkout@v3
-    - name: Run the build process with Docker
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v2
+
+    - name: Levantar OpenVidu
       run: |
-          sudo docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0 &
-          cd openvidu-basic-node
-          sudo npm install
-          sudo node index.js &
-          cd ..
+        docker run -d -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0
+
+    - name: Ejecutar la aplicación del servidor
+      run: |
+        git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.27.0
+        cd openvidu-tutorials/openvidu-basic-node
+        npm install
+        node index.js &
+
+    - name: Configurar Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14
+        
+    - name: Levantar la aplicación cliente
+      run: |
           npm install --location=global http-server
           sudo http-server openvidu-hello-world/web &
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 16
+
     - name: Install dependencies
       run: npm ci
+      
     - uses: browser-actions/setup-chrome@v1
+    
     - name: Install Playwright Browsers
       run: npx playwright install 
+      
     - name: Runin Test
       run: |
          cd tests
