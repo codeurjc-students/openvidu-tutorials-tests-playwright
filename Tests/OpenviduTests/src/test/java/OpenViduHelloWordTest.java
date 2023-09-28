@@ -40,7 +40,7 @@ class OpenViduHelloWordTest extends Module{
 
     String URL;
 
-    String NAMESESSION;
+    String nameSession;
     String TESTNAME;
 
     String XpathJoinButton;
@@ -75,8 +75,8 @@ class OpenViduHelloWordTest extends Module{
         driverChrome.get(URL); 
         driverFirefox.get(URL);
 
-        NAMESESSION = readVariablesFromExcel(testLocation, "OpenViduHelloWordTest", "NAMESESSION");
-       XpathJoinButton = readVariablesFromExcel(testLocation, "OpenViduHelloWordTest", "XpathJoinButton");
+        nameSession = readVariablesFromExcel(testLocation, "OpenViduHelloWordTest", "NAMESESSION");
+        XpathJoinButton = readVariablesFromExcel(testLocation, "OpenViduHelloWordTest", "XpathJoinButton");
         xpathLeaveButton = readVariablesFromExcel(testLocation, "OpenViduHelloWordTest", "xpathLeaveButton");
         xpathOtherCamera = readVariablesFromExcel(testLocation, "OpenViduHelloWordTest", "xpathOtherCamera");
         idHeader = readVariablesFromExcel(testLocation, "OpenViduHelloWordTest", "idHeader");
@@ -102,18 +102,18 @@ class OpenViduHelloWordTest extends Module{
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.id(idNameSession));
         textBox.clear();
-        textBox.sendKeys(NAMESESSION);
+        textBox.sendKeys(nameSession);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
         joinButtonC.submit();
-        e.addStep(test, "INFO", driverChrome, "Session configurated in Chrome with session name: " + NAMESESSION); 
+        e.addStep(test, "INFO", driverChrome, "Session configurated in Chrome with session name: " + nameSession); 
 
         //Configurate de session in firefox
         WebElement textBoxF = driverFirefox.findElement(By.id(idNameSession));
         textBoxF.clear();
-        textBoxF.sendKeys(NAMESESSION);
+        textBoxF.sendKeys(nameSession);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
         joinButtonF.submit();
-        e.addStep(test, "INFO", driverFirefox, "Session configurated in Firefox with session name: " + NAMESESSION);
+        e.addStep(test, "INFO", driverFirefox, "Session configurated in Firefox with session name: " + nameSession);
 
         try{
             if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
@@ -164,14 +164,14 @@ class OpenViduHelloWordTest extends Module{
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.id(idNameSession));
         textBox.clear();
-        textBox.sendKeys(NAMESESSION);
+        textBox.sendKeys(nameSession);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
         joinButtonC.click();
 
         //Configurate de session in firefox
         WebElement textBoxF = driverFirefox.findElement(By.id(idNameSession));
         textBoxF.clear();
-        textBoxF.sendKeys(NAMESESSION);
+        textBoxF.sendKeys(nameSession);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
         joinButtonF.click();
 
@@ -211,8 +211,8 @@ class OpenViduHelloWordTest extends Module{
         } 
             if (Float.parseFloat(currentTimeChrome) > 0 && Float.parseFloat(currentTimeFirefox) > 0){
                 
-                e.addStep(test, "INFO", driverChrome, "Session configurated in Chrome with session name: " + NAMESESSION);    
-                e.addStep(test, "INFO", driverFirefox, "Session configurated in Firefox with session name: " + NAMESESSION);    
+                e.addStep(test, "INFO", driverChrome, "Session configurated in Chrome with session name: " + nameSession);    
+                e.addStep(test, "INFO", driverFirefox, "Session configurated in Firefox with session name: " + nameSession);    
          
                 WebElement leaveButtonC = driverChrome.findElement(By.xpath(xpathLeaveButton));
                 if (leaveButtonC.isDisplayed()){ 
@@ -285,7 +285,7 @@ class OpenViduHelloWordTest extends Module{
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.id(idNameSession));
         textBox.clear();
-        textBox.sendKeys(NAMESESSION);
+        textBox.sendKeys(nameSession);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
         joinButtonC.submit();
 
@@ -295,17 +295,17 @@ class OpenViduHelloWordTest extends Module{
 
             if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
                 
-                if (NAMESESSION.equals(driverChrome.findElement(By.id(idHeader)).getText())){
-                    e.addStep(test, "INFO", driverChrome, "The header text is correct: " + NAMESESSION);
+                if (nameSession.equals(driverChrome.findElement(By.id(idHeader)).getText())){
+                    e.addStep(test, "INFO", driverChrome, "The header text is correct: " + nameSession);
                 }else{
-                    e.addStep(test, "FAIL", driverChrome, "The header it should be: " + NAMESESSION + "but is: " + driverChrome.findElement(By.id(idHeader)).getText());
+                    e.addStep(test, "FAIL", driverChrome, "The header it should be: " + nameSession + "but is: " + driverChrome.findElement(By.id(idHeader)).getText());
                     fail("Test fail");
                 }
             }else{
-                e.addStep(test, "FAIL", driverChrome, "The header it should be: " + NAMESESSION + "but is blank");
+                e.addStep(test, "FAIL", driverChrome, "The header it should be: " + nameSession + "but is blank");
                 fail("Test fail");
             }
-            e.addStep(test, "PASS", driverChrome, "TEST: " + TESTNAME +" ok: Session name is: " + NAMESESSION);
+            e.addStep(test, "PASS", driverChrome, "TEST: " + TESTNAME +" ok: Session name is: " + nameSession);
                 
         }catch (TimeoutException n){
             

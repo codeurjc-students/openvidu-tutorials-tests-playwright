@@ -87,7 +87,7 @@ public class Module{
     public static String readVariablesFromExcel(String filePath, String testName, String ColValue) {
 
         try (FileInputStream fileInputStream = new FileInputStream(filePath);
-         Workbook workbook = WorkbookFactory.create(fileInputStream)) {
+        Workbook workbook = WorkbookFactory.create(fileInputStream)) {
         org.apache.poi.ss.usermodel.Sheet sheet = workbook.getSheetAt(0);
 
         int testNameColumnIndex = 0;

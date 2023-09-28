@@ -45,8 +45,8 @@ class OpenViduAngularTest extends Module{
 
     String URL;
 
-    String NAMESESSION;
-    String NAMEPARTICIPANT;
+    String nameSession;
+    String nameParticipant;
     String TESTNAME;
 
     String XpathJoinButton;
@@ -86,8 +86,8 @@ class OpenViduAngularTest extends Module{
         driverChrome.get(URL); 
         driverFirefox.get(URL);
 
-        NAMESESSION = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "NAMESESSION");
-        NAMEPARTICIPANT = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "NAMEPARTICIPANT");
+        nameSession = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "NAMESESSION");
+        nameParticipant = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "NAMEPARTICIPANT");
         XpathJoinButton = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "XpathJoinButton");
         xpathHeader = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "xpathHeader");
         xpathOtherCamera = readVariablesFromExcel(testLocation, "OpenViduAngularTest", "xpathOtherCamera");
@@ -117,25 +117,25 @@ class OpenViduAngularTest extends Module{
         // Configurate the session in chrome
         WebElement sessionC = driverChrome.findElement(By.id(idNameSession));
         sessionC.clear();
-        sessionC.sendKeys(NAMESESSION);
+        sessionC.sendKeys(nameSession);
         WebElement participantC = driverChrome.findElement(By.id(idParticipant));
         participantC.clear();
         participantC.sendKeys("PARTICIPANTCHROME");
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
         joinButtonC.submit();
-        e.addStep(test, "INFO", driverChrome, "Session configurated in Chrome with session name: " + NAMESESSION);    
+        e.addStep(test, "INFO", driverChrome, "Session configurated in Chrome with session name: " + nameSession);    
 
 
         //Configurate de session in firefox
         WebElement textBoxF = driverFirefox.findElement(By.id(idNameSession));
         textBoxF.clear();
-        textBoxF.sendKeys(NAMESESSION);
+        textBoxF.sendKeys(nameSession);
         WebElement participantF = driverFirefox.findElement(By.id(idParticipant));
         participantF.clear();
         participantF.sendKeys("PARTICIPANTFIREFOX");
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
         joinButtonF.submit();
-        e.addStep(test, "INFO", driverFirefox, "Session configurated in Firefox with session name: " + NAMESESSION);    
+        e.addStep(test, "INFO", driverFirefox, "Session configurated in Firefox with session name: " + nameSession);    
 
         try{
             if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
@@ -185,7 +185,7 @@ class OpenViduAngularTest extends Module{
         // Configurate the session in chrome
         WebElement sessionC = driverChrome.findElement(By.id(idNameSession));
         sessionC.clear();
-        sessionC.sendKeys(NAMESESSION);
+        sessionC.sendKeys(nameSession);
         WebElement participantC = driverChrome.findElement(By.id(idParticipant));
         participantC.clear();
         participantC.sendKeys("PARTICIPANTCHROME");
@@ -195,7 +195,7 @@ class OpenViduAngularTest extends Module{
         //Configurate de session in firefox
         WebElement textBoxF = driverFirefox.findElement(By.id(idNameSession));
         textBoxF.clear();
-        textBoxF.sendKeys(NAMESESSION);
+        textBoxF.sendKeys(nameSession);
         WebElement participantF = driverFirefox.findElement(By.id(idParticipant));
         participantF.clear();
         participantF.sendKeys("PARTICIPANTFIREFOX");
@@ -318,7 +318,7 @@ class OpenViduAngularTest extends Module{
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.id(idNameSession));
         textBox.clear();
-        textBox.sendKeys(NAMESESSION);
+        textBox.sendKeys(nameSession);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
         joinButtonC.submit();
 
@@ -328,17 +328,17 @@ class OpenViduAngularTest extends Module{
     
             if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
                 
-                if (NAMESESSION.equals(driverChrome.findElement(By.id(idHeader)).getText())){
-                    e.addStep(test, "INFO", driverChrome, "The header text is correct: " + NAMESESSION);
+                if (nameSession.equals(driverChrome.findElement(By.id(idHeader)).getText())){
+                    e.addStep(test, "INFO", driverChrome, "The header text is correct: " + nameSession);
                 }else{
-                    e.addStep(test, "FAIL", driverChrome, "The header it should be: " + NAMESESSION + "but is: " + driverChrome.findElement(By.id(idHeader)).getText());
+                    e.addStep(test, "FAIL", driverChrome, "The header it should be: " + nameSession + "but is: " + driverChrome.findElement(By.id(idHeader)).getText());
                     fail("Test fail");
                 }
             }else{
-                e.addStep(test, "FAIL", driverChrome, "The header it should be: " + NAMESESSION + "but is blank");
+                e.addStep(test, "FAIL", driverChrome, "The header it should be: " + nameSession + "but is blank");
                 fail("Test fail");
             }
-            e.addStep(test, "PASS", driverChrome, "TEST: " + TESTNAME +" ok: Session name is: " + NAMESESSION);
+            e.addStep(test, "PASS", driverChrome, "TEST: " + TESTNAME +" ok: Session name is: " + nameSession);
                 
         }catch (TimeoutException n){
             
@@ -371,7 +371,7 @@ class OpenViduAngularTest extends Module{
         // Configurate the session in chrome
         WebElement nameTextBox = driverChrome.findElement(By.id(idNameParticipant));
         nameTextBox.clear();
-        nameTextBox.sendKeys(NAMEPARTICIPANT);
+        nameTextBox.sendKeys(nameParticipant);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
         joinButtonC.submit();
 
@@ -379,10 +379,10 @@ class OpenViduAngularTest extends Module{
             WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(60));
             waitC.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathParticipant)));
 
-            if (NAMEPARTICIPANT.equals(driverChrome.findElement(By.xpath(xpathParticipant)).getText())){
-                e.addStep(test, "PASS", driverChrome, "TEST: " + TESTNAME +" ok: Participant name is: " + NAMEPARTICIPANT);
+            if (nameParticipant.equals(driverChrome.findElement(By.xpath(xpathParticipant)).getText())){
+                e.addStep(test, "PASS", driverChrome, "TEST: " + TESTNAME +" ok: Participant name is: " + nameParticipant);
             }else{
-                e.addStep(test, "FAIL", driverChrome, "Participant name is: " + driverChrome.findElement(By.xpath(xpathParticipant)).getText() + " but should be: " + NAMEPARTICIPANT);
+                e.addStep(test, "FAIL", driverChrome, "Participant name is: " + driverChrome.findElement(By.xpath(xpathParticipant)).getText() + " but should be: " + nameParticipant);
             }
             
         }catch (TimeoutException n){

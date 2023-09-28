@@ -46,7 +46,7 @@ class OpenViduJsTest extends Module{
 
     String URL;
 
-    String NAMESESSION;
+    String nameSession;
     String TESTNAME;
 
     String XpathJoinButton;
@@ -81,7 +81,7 @@ class OpenViduJsTest extends Module{
         driverChrome.get(URL); 
         driverFirefox.get(URL);
 
-        NAMESESSION = readVariablesFromExcel(testLocation, "OpenViduJsTest", "NAMESESSION");
+        nameSession = readVariablesFromExcel(testLocation, "OpenViduJsTest", "NAMESESSION");
         XpathJoinButton = readVariablesFromExcel(testLocation, "OpenViduJsTest", "XpathJoinButton");
         idLeaveButton = readVariablesFromExcel(testLocation, "OpenViduJsTest", "idLeaveButton");
         xpathOtherCamera = readVariablesFromExcel(testLocation, "OpenViduJsTest", "xpathOtherCamera");
@@ -107,18 +107,18 @@ class OpenViduJsTest extends Module{
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.id(idNameSession));
         textBox.clear();
-        textBox.sendKeys(NAMESESSION);
+        textBox.sendKeys(nameSession);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
         joinButtonC.submit();
-        e.addStep(test, "INFO", driverChrome, "Session configurated in Chrome with session name: " + NAMESESSION);    
+        e.addStep(test, "INFO", driverChrome, "Session configurated in Chrome with session name: " + nameSession);    
 
         //Configurate de session in firefox
         WebElement textBoxF = driverFirefox.findElement(By.id(idNameSession));
         textBoxF.clear();
-        textBoxF.sendKeys(NAMESESSION);
+        textBoxF.sendKeys(nameSession);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
         joinButtonF.submit();
-        e.addStep(test, "INFO", driverFirefox, "Session configurated in Firefox with session name: " + NAMESESSION);    
+        e.addStep(test, "INFO", driverFirefox, "Session configurated in Firefox with session name: " + nameSession);    
 
         try{
             if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
@@ -170,14 +170,14 @@ class OpenViduJsTest extends Module{
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.id(idNameSession));
         textBox.clear();
-        textBox.sendKeys(NAMESESSION);
+        textBox.sendKeys(nameSession);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
         joinButtonC.click();
         
         //Configurate de session in firefox
         WebElement textBoxF = driverFirefox.findElement(By.id(idNameSession));
         textBoxF.clear();
-        textBoxF.sendKeys(NAMESESSION);
+        textBoxF.sendKeys(nameSession);
         WebElement joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton)); 
         joinButtonF.click();
         
@@ -295,7 +295,7 @@ class OpenViduJsTest extends Module{
         // Configurate the session in chrome
         WebElement textBox = driverChrome.findElement(By.id(idNameSession));
         textBox.clear();
-        textBox.sendKeys(NAMESESSION);
+        textBox.sendKeys(nameSession);
         WebElement joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
         joinButtonC.submit();
 
@@ -305,17 +305,17 @@ class OpenViduJsTest extends Module{
 
             if (!driverChrome.findElements(By.id(idHeader)).isEmpty()){
                 
-                if (NAMESESSION.equals(driverChrome.findElement(By.id(idHeader)).getText())){
-                    e.addStep(test, "INFO", driverChrome, "The header text is correct: " + NAMESESSION);
+                if (nameSession.equals(driverChrome.findElement(By.id(idHeader)).getText())){
+                    e.addStep(test, "INFO", driverChrome, "The header text is correct: " + nameSession);
                 }else{
-                    e.addStep(test, "FAIL", driverChrome, "The header it should be: " + NAMESESSION + "but is: " + driverChrome.findElement(By.id(idHeader)).getText());
+                    e.addStep(test, "FAIL", driverChrome, "The header it should be: " + nameSession + "but is: " + driverChrome.findElement(By.id(idHeader)).getText());
                     fail("Test fail");
                 }
             }else{
-                e.addStep(test, "FAIL", driverChrome, "The header it should be: " + NAMESESSION + "but is blank");
+                e.addStep(test, "FAIL", driverChrome, "The header it should be: " + nameSession + "but is blank");
                 fail("Test fail");
             }
-            e.addStep(test, "PASS", driverChrome, "TEST: " + TESTNAME +" ok: Session name is: " + NAMESESSION);
+            e.addStep(test, "PASS", driverChrome, "TEST: " + TESTNAME +" ok: Session name is: " + nameSession);
                 
         }catch (TimeoutException n){
             
