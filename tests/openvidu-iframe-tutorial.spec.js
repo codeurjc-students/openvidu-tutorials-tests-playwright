@@ -12,9 +12,13 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
   const context = await browser.newContext({
     permissions: ['camera', 'microphone'],
   });
-
+  
+  await page.goto('http://localhost:8081/');
+  
+  await page2.goto('http://localhost:8081/');
+  
   try {
-    await page.goto('http://localhost:8081/');
+    
     let iframeHandle = await page.waitForSelector('iframe.openvidu-iframe');
     let frame = await iframeHandle.contentFrame();
 
@@ -24,7 +28,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
 
     const page2 = await context.newPage();
 
-    await page2.goto('http://localhost:8081/');
+   
     iframeHandle = await page2.waitForSelector('iframe.openvidu-iframe');
     frame = await iframeHandle.contentFrame();
 
@@ -45,7 +49,8 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await Promise.all([page2.close()]);
   } catch (error) {
     // Si hay un error, toma una captura de pantalla
-    await page1.screenshot({ path: 'error.png' });
+    await page1.screenshot({ path: 'error-page1.png' });
+    await page2.screenshot({ path: 'error-page2.png' });
     throw error; // Lanzar el error nuevamente para que la prueba falle
   } finally {
     await browser.close();
