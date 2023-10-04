@@ -28,6 +28,7 @@ jobs:
       run: |
           npm install --location=global http-server
           sudo http-server openvidu-tutorials/openvidu-hello-world/web &
+          sleep 5
           sudo http-server openvidu-tutorials/openvidu-iframe/web &
 
     - name: Install dependencies
