@@ -14,7 +14,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
   });
   
 
-  const page = await context.newPage();
+  page = await context.newPage();
   const page2 = await context.newPage();
   
   
