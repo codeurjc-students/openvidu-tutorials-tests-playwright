@@ -13,12 +13,13 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     permissions: ['camera', 'microphone'],
   });
   
-  await page.goto('http://localhost:8081/');
+
+  const page = await context.newPage();
+  const page2 = await context.newPage();
   
-  await page2.goto('http://localhost:8081/');
   
   try {
-    
+    await page.goto('http://localhost:8081/');
     let iframeHandle = await page.waitForSelector('iframe.openvidu-iframe');
     let frame = await iframeHandle.contentFrame();
 
@@ -26,9 +27,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await frame.click('input[type="submit"]');
     await frame.waitForSelector('#session', { visible: true });
 
-    const page2 = await context.newPage();
-
-   
+    await page2.goto('http://localhost:8081/');
     iframeHandle = await page2.waitForSelector('iframe.openvidu-iframe');
     frame = await iframeHandle.contentFrame();
 
