@@ -18,7 +18,6 @@ const browser = await chromium.launch({ headless: true , deviceScaleFactor: 1, /
  
    // Haz clic en el botón "JOIN" dentro del iframe
    await frame.click('input[type="submit"]');
-   await frame.waitForSelector('#session', { visible: true });
 
    const page2 = await context.newPage();
 
@@ -29,7 +28,6 @@ const browser = await chromium.launch({ headless: true , deviceScaleFactor: 1, /
  
    // Haz clic en el botón "JOIN" dentro del iframe
    await frame.click('input[type="submit"]');
-   await frame.waitForSelector('#session', { visible: true });
    await frame.waitForTimeout(5000); 
    
    await page2.screenshot({ path: 'pr.png' });
