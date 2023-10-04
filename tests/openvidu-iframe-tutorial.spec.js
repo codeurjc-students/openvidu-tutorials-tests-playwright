@@ -12,7 +12,7 @@ const browser = await chromium.launch({ headless: true , deviceScaleFactor: 1, /
 
    const page1 = await context.newPage();
    await page1.goto('http://localhost:8081/');
-
+   ;
    let iframeHandle = await page1.waitForSelector('iframe.openvidu-iframe');
    let frame = await iframeHandle.contentFrame();
  
