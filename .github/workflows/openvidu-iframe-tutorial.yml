@@ -40,7 +40,7 @@ jobs:
       
     - name: Runin Test
       run: |
-         cd test      
+         cd tests      
          npx playwright test tests/openvidu-iframe-tutorial.spec.js
          
     - uses: actions/upload-artifact@v3
