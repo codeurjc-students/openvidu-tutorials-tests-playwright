@@ -13,21 +13,28 @@ const browser = await chromium.launch({ headless: true , deviceScaleFactor: 1, /
    const page1 = await context.newPage();
    await page1.goto('http://localhost:8081/');
 
-   await page1.click('#join input[type="submit"]');
-   await page1.waitForSelector('#session', { visible: true });
+   let iframeHandle = await page1.waitForSelector('iframe.openvidu-iframe');
+   let frame = await iframeHandle.contentFrame();
+ 
+   // Haz clic en el botón "JOIN" dentro del iframe
+   await frame.click('input[type="submit"]');
+   await frame.waitForSelector('#session', { visible: true });
 
    const page2 = await context.newPage();
 
    await page2.goto('http://localhost:8081/');
-   //await page2.fill('#sessionId', 'SessionS');
-   await page2.click('#join input[type="submit"]');
-   await page2.waitForSelector('#session', { visible: true });
-   await page2.waitForTimeout(5000); 
+   iframeHandle = await page2.waitForSelector('iframe.openvidu-iframe');
+   frame = await iframeHandle.contentFrame();
+ 
+   // Haz clic en el botón "JOIN" dentro del iframe
+   await frame.click('input[type="submit"]');
+   await frame.waitForSelector('#session', { visible: true });
+   await frame.waitForTimeout(5000); 
    
    await page2.screenshot({ path: 'pr.png' });
    
    // Buscar los elementos HTML que contienen los streams de video
-   const videoElements = await page2.$$('video');
+   const videoElements = await frame.$$('video');
 
    // Comprobar que hay exactamente dos elementos encontrados
    expect(videoElements.length).toEqual(2);
