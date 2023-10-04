@@ -49,7 +49,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await Promise.all([page2.close()]);
   } catch (error) {
     // Si hay un error, toma una captura de pantalla
-    await page1.screenshot({ path: 'error-page1.png' });
+    await page.screenshot({ path: 'error-page1.png' });
     await page2.screenshot({ path: 'error-page2.png' });
     throw error; // Lanzar el error nuevamente para que la prueba falle
   } finally {
