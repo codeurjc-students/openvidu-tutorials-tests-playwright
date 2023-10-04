@@ -23,6 +23,7 @@ const browser = await chromium.launch({ headless: true , deviceScaleFactor: 1, /
    const page2 = await context.newPage();
 
    await page2.goto('http://localhost:8081/');
+   await page2.screenshot({ path: 'pr.png' });
    iframeHandle = await page2.waitForSelector('iframe.openvidu-iframe');
    frame = await iframeHandle.contentFrame();
  
