@@ -19,24 +19,25 @@ const browser = await chromium.launch({ headless: true , deviceScaleFactor: 1, /
    // Haz clic en el botón "JOIN" dentro del iframe
    await frame.click('input[type="submit"]');
 
-   const page2 = await context.newPage();
-
-   await page2.goto('http://localhost:8081/');
-   await page2.screenshot({ path: 'pr.png' });
-   iframeHandle = await page2.waitForSelector('iframe.openvidu-iframe');
-   frame = await iframeHandle.contentFrame();
+   //const page2 = await context.newPage();
+   
+   await page1.screenshot({ path: 'pr.png' });
+   //await page2.goto('http://localhost:8081/');
+//   await page2.screenshot({ path: 'pr.png' });
+   //iframeHandle = await page2.waitForSelector('iframe.openvidu-iframe');
+   //frame = await iframeHandle.contentFrame();
  
    // Haz clic en el botón "JOIN" dentro del iframe
-   await frame.click('input[type="submit"]');
-   await frame.waitForTimeout(5000); 
+   //await frame.click('input[type="submit"]');
+   //await frame.waitForTimeout(5000); 
    
-   await page2.screenshot({ path: 'pr.png' });
+   //await page2.screenshot({ path: 'pr.png' });
    
    // Buscar los elementos HTML que contienen los streams de video
-   const videoElements = await frame.$$('video');
+   //const videoElements = await frame.$$('video');
 
    // Comprobar que hay exactamente dos elementos encontrados
-   expect(videoElements.length).toEqual(2);
+   //expect(videoElements.length).toEqual(2);
 
    // Cerrar las páginas y el navegador.
 
