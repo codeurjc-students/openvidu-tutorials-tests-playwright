@@ -1,8 +1,9 @@
-name: openvidu-angular-tutorial
+name: openvidu-iframe-tutorial
 
 on:
   workflow_dispatch: {}
-
+  push:
+  
 jobs:
   build:
     runs-on: ubuntu-latest
