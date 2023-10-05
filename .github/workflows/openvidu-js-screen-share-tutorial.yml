@@ -2,7 +2,7 @@ name: openvidu-iframe-tutorial
 
 on: 
   workflow_dispatch: {}
-  push:
+  
   
 
 jobs:
@@ -45,6 +45,6 @@ jobs:
     - uses: actions/upload-artifact@v3
       if: always()
       with:
-        name: tests
-        path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/tests/screenshot/
+        name: results
+        path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/tests/results/
         retention-days: 30
