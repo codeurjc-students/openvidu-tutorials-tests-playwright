@@ -27,8 +27,6 @@ jobs:
     - name: Levantar la aplicación cliente
       run: |
           npm install --location=global http-server
-          sudo http-server openvidu-tutorials/openvidu-hello-world/web &
-          sleep 10 
           sudo http-server openvidu-tutorials/openvidu-js-screen-share/web &
 
     - name: Install dependencies
