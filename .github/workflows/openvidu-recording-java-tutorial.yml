@@ -35,7 +35,7 @@ jobs:
         touch results/logs/mvn_package_exec.txt
         git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.28.0
         cd openvidu-tutorials/openvidu-recording-java
-        mvn package exec:java >> results/logs/mvn_package_exec.txt &
+        mvn package exec:java > results/logs/mvn_package_exec.txt &
         
     - name: Install dependencies
       run: npm ci
