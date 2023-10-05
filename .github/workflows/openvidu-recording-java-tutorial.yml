@@ -32,9 +32,10 @@ jobs:
 
     - name: Ejecutar la aplicación del servidor
       run: |
+        touch results/logs/mvn_package_exec.txt
         git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.28.0
         cd openvidu-tutorials/openvidu-recording-java
-        touch results/logs/mvn_package_exec.txt
+        
         mvn package exec:java >> results/logs/mvn_package_exec.txt &
         
     - name: Install dependencies
@@ -53,6 +54,6 @@ jobs:
     - uses: actions/upload-artifact@v3
       if: always()
       with:
-        name: tests
+        name: results
         path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/results/
         retention-days: 30
