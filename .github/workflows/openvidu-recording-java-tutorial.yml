@@ -1,0 +1,64 @@
+name: openvidu-recording-java-tutorial 
+
+on: 
+  workflow_dispatch: {}
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v2
+
+    - name: Levantar OpenVidu
+      run: |
+        docker run -p 4443:4443 --rm \
+        -e OPENVIDU_SECRET=MY_SECRET \
+        -e OPENVIDU_RECORDING=true \
+        -e OPENVIDU_RECORDING_PATH=/opt/openvidu/recordings \
+        -v /var/run/docker.sock:/var/run/docker.sock \
+        -v /opt/openvidu/recordings:/opt/openvidu/recordings \
+        openvidu/openvidu-dev:2.28.0
+    
+    - name: Set up Java
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11' # Puedes cambiar la versión de Java según tus necesidades
+
+    - name: Set up Maven
+      run: |
+        wget https://apache.osuosl.org/maven/maven-3/3.8.4/binaries/apache-maven-3.8.4-bin.tar.gz
+        tar xzvf apache-maven-3.8.4-bin.tar.gz
+        sudo mv apache-maven-3.8.4 /usr/local/apache-maven
+        export M2_HOME=/usr/local/apache-maven
+        export MAVEN_HOME=/usr/local/apache-maven
+        export PATH=${M2_HOME}/bin:${PATH}
+      shell: bash
+
+    - name: Ejecutar la aplicación del servidor
+      run: |
+        git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.28.0
+        cd openvidu-tutorials/openvidu-recording-java
+        mvn package exec:java >> tests/results/logs/mvn_package_exec.txt &
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - uses: browser-actions/setup-chrome@v1
+    
+    - name: Install Playwright Browsers
+      run: npx playwright install 
+      
+    - name: Runin Test
+      run: |
+         cd tests      
+         npx playwright test tests/openvidu-recording-java-tutorial.spec.js
+         
+    - uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: tests
+        path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/tests/results/
+        retention-days: 30
