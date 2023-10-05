@@ -26,6 +26,7 @@ jobs:
     - name: Set up Java
       uses: actions/setup-java@v2
       with:
+        distribution: 'temurin'
         java-version: '11' # Puedes cambiar la versión de Java según tus necesidades
 
     - name: Set up Maven
