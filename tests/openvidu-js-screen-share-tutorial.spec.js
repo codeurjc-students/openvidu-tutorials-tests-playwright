@@ -12,26 +12,27 @@ const browser = await chromium.launch({ headless: true , deviceScaleFactor: 1, /
 
    const page1 = await context.newPage();
    await page1.goto('http://127.0.0.1:8080');
-
+   await page1.fill('#userName', 'Page1');
    await page1.click('#join input[type="submit"]');
    await page1.waitForSelector('#session', { visible: true });
 
    const page2 = await context.newPage();
 
    await page2.goto('http://127.0.0.1:8080');
-   //await page2.fill('#sessionId', 'SessionS');
+   await page2.fill('#userName', 'Page2');
    await page2.click('#join input[type="submit"]');
    await page2.waitForSelector('#buttonScreenShare', { state: 'visible' });
    await page2.click('#buttonScreenShare');
    await page2.waitForTimeout(5000); 
-   
-   await page2.screenshot({ path: 'pr.png' });
+
+   await page1.screenshot({ path: 'tests/screenshot/page1.png' });
+   await page2.screenshot({ path: 'tests/screenshot/page2.png' });
    
    // Buscar los elementos HTML que contienen los streams de video
    const videoElements = await page2.$$('video');
 
    // Comprobar que hay exactamente dos elementos encontrados
-   expect(videoElements.length).toEqual(2);
+   expect(videoElements.length).toEqual(4);
 
    // Cerrar las páginas y el navegador.
 
