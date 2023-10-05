@@ -20,7 +20,7 @@ jobs:
         -e OPENVIDU_RECORDING_PATH=/opt/openvidu/recordings \
         -v /var/run/docker.sock:/var/run/docker.sock \
         -v /opt/openvidu/recordings:/opt/openvidu/recordings \
-        openvidu/openvidu-dev:2.28.0 &
+        openvidu/openvidu-dev:2.28.0 >> results/logs/docker_log.txt &
         sleep 10
     
     - name: Set up Java
@@ -34,7 +34,7 @@ jobs:
       run: |
         git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.28.0
         cd openvidu-tutorials/openvidu-recording-java
-        mvn package exec:java >> tests/results/logs/mvn_package_exec.txt &
+        mvn package exec:java >> results/logs/mvn_package_exec.txt &
         
     - name: Install dependencies
       run: npm ci
@@ -53,5 +53,5 @@ jobs:
       if: always()
       with:
         name: tests
-        path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/tests/results/
+        path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/results/
         retention-days: 30
