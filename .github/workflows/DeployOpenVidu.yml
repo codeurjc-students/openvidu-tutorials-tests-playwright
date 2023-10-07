@@ -34,10 +34,10 @@ jobs:
     - name: Execute tests
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduHelloWordTest"
       working-directory: ./Tests/OpenviduTests
-    - name: Upload TestNG report
+    - name: Upload Extent report
       uses: actions/upload-artifact@v2
       with:
-        name: TestNG report
+        name: Extent report
         path: ./Tests/OpenviduTests/test-output/OpenViduHelloWordTestTestReport.html
       if: always()
 
@@ -67,10 +67,10 @@ jobs:
     - name: Execute tests
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduAngularTest"
       working-directory: ./Tests/OpenviduTests
-    - name: Upload TestNG report
+    - name: Upload Extent report
       uses: actions/upload-artifact@v2
       with:
-        name: TestNG report
+        name: Extent report
         path: ./Tests/OpenviduTests/test-output/OpenViduAngularTestReport.html
       if: always()
 
@@ -101,10 +101,10 @@ jobs:
     - name: Execute tests
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduJsTest"
       working-directory: ./Tests/OpenviduTests
-    - name: Upload TestNG report
-      uses: actions/upload-artifact@v2
+    - name: Upload Extent report
+      uses: actions/upload-artifact@v3
       with:
-        name: TestNG report
+        name: Extent report
         path: ./Tests/OpenviduTests/test-output/OpenViduJsTestTestReport.html
       if: always()
 
@@ -134,10 +134,10 @@ jobs:
     - name: Execute tests
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduReactTest"
       working-directory: ./Tests/OpenviduTests
-    - name: Upload TestNG report
+    - name: Upload Extent report
       uses: actions/upload-artifact@v2
       with:
-        name: TestNG report
+        name: Extent report
         path: ./Tests/OpenviduTests/test-output/OpenViduReactTestTestReport.html
       if: always()
 
@@ -167,10 +167,10 @@ jobs:
     - name: Execute tests
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduVueTest"
       working-directory: ./Tests/OpenviduTests
-    - name: Upload TestNG report
+    - name: Upload Extent report
       uses: actions/upload-artifact@v2
       with:
-        name: TestNG report
+        name: Extent report
         path: ./Tests/OpenviduTests/test-output/OpenViduVueTestTestReport.html
       if: always()
       
