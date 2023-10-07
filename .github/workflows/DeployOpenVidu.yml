@@ -35,7 +35,7 @@ jobs:
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduHelloWordTest"
       working-directory: ./Tests/OpenviduTests
     - name: Upload Extent report
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: Extent report
         path: ./Tests/OpenviduTests/test-output/OpenViduHelloWordTestTestReport.html
@@ -68,7 +68,7 @@ jobs:
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduAngularTest"
       working-directory: ./Tests/OpenviduTests
     - name: Upload Extent report
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: Extent report
         path: ./Tests/OpenviduTests/test-output/OpenViduAngularTestReport.html
@@ -135,7 +135,7 @@ jobs:
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduReactTest"
       working-directory: ./Tests/OpenviduTests
     - name: Upload Extent report
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: Extent report
         path: ./Tests/OpenviduTests/test-output/OpenViduReactTestTestReport.html
@@ -168,7 +168,7 @@ jobs:
       run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduVueTest"
       working-directory: ./Tests/OpenviduTests
     - name: Upload Extent report
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: Extent report
         path: ./Tests/OpenviduTests/test-output/OpenViduVueTestTestReport.html
