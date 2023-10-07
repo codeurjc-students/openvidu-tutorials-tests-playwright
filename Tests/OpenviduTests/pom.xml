@@ -12,19 +12,11 @@
 
 
   <properties>
-        <slf4j.version>2.0.3</slf4j.version>
-        <logback.version>1.4.4</logback.version>
-
         <junit.version>5.9.0</junit.version>
         <assertj.version>3.23.1</assertj.version>
         <selenium.version>4.6.0</selenium.version>
-        <phantomjsdriver.version>1.5.0</phantomjsdriver.version>
-        <wdm.version>5.3.1</wdm.version>
-        <testng-version>7.7.1</testng-version>
-        <appium-java-client.version>8.2.0</appium-java-client.version>
         <extentreports-version>5.0.8</extentreports-version>
-
-        <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
+        <bonigarcia-version>5.5.3</bonigarcia-version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -43,11 +35,6 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <version>2.21.0</version>
-            <configuration>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>TestNG.xml</suiteXmlFile>
-                    </suiteXmlFiles>
-            </configuration>
             <dependencies>
                 <dependency>
                     <groupId>org.junit.platform</groupId>
@@ -87,7 +74,6 @@
             <artifactId>selenium-remote-driver</artifactId>
             <version>${selenium.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -122,14 +108,9 @@
             <version>${extentreports-version}</version>
         </dependency>
         <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>${testng-version}</version>
-        </dependency>
-        <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>5.5.3</version>
+            <version>${bonigarcia-version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
