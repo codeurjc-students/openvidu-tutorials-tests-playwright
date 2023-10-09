@@ -20,7 +20,7 @@ jobs:
         -e OPENVIDU_RECORDING_PATH=/opt/openvidu/recordings \
         -v /var/run/docker.sock:/var/run/docker.sock \
         -v /opt/openvidu/recordings:/opt/openvidu/recordings \
-        openvidu/openvidu-dev:2.28.0 >> results/logs/docker_log.txt &
+        openvidu/openvidu-dev:2.28.0 >> results/logs/docker_log.txt 2>&1 &
         sleep 10
     
     - name: Set up Java
@@ -35,7 +35,7 @@ jobs:
         git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.28.0
         cd openvidu-tutorials/openvidu-recording-java
         pwd
-        mvn package exec:java >> ../../results/logs/mvnpackage_log.txt &
+        mvn package exec:java >> ../../results/logs/mvnpackage_log.txt 2>&1 &
         sleep 10
         
     - name: Install dependencies
