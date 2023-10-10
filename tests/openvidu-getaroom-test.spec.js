@@ -40,6 +40,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     
   } catch (error) {
     // En caso de error o timeout, tomar una captura de pantalla
+    console.error('Se ha producido un timeout. La página no se cargó a tiempo.');
     await page1.screenshot({ path: 'results/screenshots/error_page1_screenshot.png' });
     await page2.screenshot({ path: 'results/screenshots/error_page2_screenshot.png' });
     throw error; // Lanzar el error nuevamente para que la prueba falle
