@@ -1,4 +1,4 @@
-name: openvidu-Hello-World-tutorial-test 
+name: openvidu-getaoom-tutorial-test 
 
 on: 
   workflow_dispatch: {}
