@@ -11,11 +11,11 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
   const context = await browser.newContext({
     permissions: ['camera', 'microphone'],
   });
-
+  try {
   const page1 = await context.newPage();
   await page1.goto('http://127.0.0.1:8080');
 
-  try {
+
     // Espera a que el botón esté presente en la página
     await page1.waitForSelector('button.btn-success', { timeout: 10000 }); // Aumentamos el tiempo límite a 10 segundos
 

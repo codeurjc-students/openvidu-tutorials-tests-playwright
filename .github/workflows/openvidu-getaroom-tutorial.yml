@@ -19,6 +19,7 @@ jobs:
     - name: Ejecutar la aplicación del servidor
       run: |
         git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.28.0
+        touch results/logs/nodeindex_log.txt
         cd openvidu-tutorials/openvidu-basic-node
         npm install
         node index.js >> results/logs/nodeindex_log.txt 2>&1 &
