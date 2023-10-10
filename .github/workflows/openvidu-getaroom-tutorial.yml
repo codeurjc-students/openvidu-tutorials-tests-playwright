@@ -19,15 +19,15 @@ jobs:
     - name: Ejecutar la aplicación del servidor
       run: |
         touch results/logs/nodeindex_log.txt
-        cd openvidu-tutorials/openvidu-basic-node
+        cd openvidu-basic-node
         npm install
-        node index.js &
+        node index.js >> ../results/logs/nodeindex_log.txt 2>&1 & &
         
     - name: Levantar la aplicación cliente
       run: |
           npm install --location=global http-server
           touch results/logs/httpserver_log.txt
-          sudo http-server openvidu-tutorials/openvidu-getaroom/web &
+          sudo http-server openvidu-getaroom/web  >> ../results/logs/http_server_log.txt 2>&1 &
 
     - name: Install dependencies
       run: npm ci
