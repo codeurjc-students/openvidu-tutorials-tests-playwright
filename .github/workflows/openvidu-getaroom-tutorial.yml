@@ -21,7 +21,7 @@ jobs:
         touch results/logs/nodeindex_log.txt
         cd openvidu-basic-node
         npm install
-        node index.js >> ../results/logs/nodeindex_log.txt 2>&1 & &
+        node index.js >> ../results/logs/nodeindex_log.txt 2>&1 & 
         
     - name: Levantar la aplicación cliente
       run: |
