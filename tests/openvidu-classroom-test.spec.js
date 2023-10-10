@@ -25,7 +25,6 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     //await page2.fill('#sessionId', 'SessionS');
     await page2.click('#join-btn');
     await page2.waitForSelector('#session', { visible: true });
-    await page2.click('#buttonStartRecording');
     await page2.waitForTimeout(5000); 
    
 

@@ -1,0 +1,51 @@
+name: openvidu-Hello-World-tutorial-test 
+
+on: 
+  workflow_dispatch: {}
+  push:
+  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v2
+
+    - name: Levantar OpenVidu
+      run: |
+        docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.28.0
+
+    - name: Ejecutar la aplicación del servidor
+      run: |
+        git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.28.0
+        cd openvidu-tutorials/openvidu-basic-node
+        npm install
+        node index.js &
+        
+    - name: Levantar la aplicación cliente
+      run: |
+          npm install --location=global http-server
+          sudo http-server openvidu-tutorials/openvidu-getaroom/web &
+
+    - name: Install dependencies
+      run: npm ci
+      
+    - uses: browser-actions/setup-chrome@v1
+    
+    - name: Install Playwright Browsers
+      run: npx playwright install 
+      
+    - name: Runin Test
+      run: |
+         cd tests
+         npx playwright test openvidu-getaroom-test.spec.js
+         
+    - uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: tests
+        path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/tests
+        retention-days: 30
+
