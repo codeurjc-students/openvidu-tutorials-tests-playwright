@@ -1,14 +1,13 @@
-name: openvidu-getaoom-tutorial-test 
+name: openvidu-getaroom-tutorial-test 
 
 on: 
   workflow_dispatch: {}
   push:
   
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     steps:
     - name: Checkout código
       uses: actions/checkout@v2
