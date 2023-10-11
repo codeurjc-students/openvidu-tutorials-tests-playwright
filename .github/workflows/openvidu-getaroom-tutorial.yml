@@ -14,7 +14,8 @@ jobs:
 
     - name: Levantar OpenVidu
       run: |
-        docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.28.0 &> results/logs/docker_log.txt &
+        docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.28.0 > results/logs/docker_log.txt 2>&1 &
+        sleep 10
 
     - name: Ejecutar la aplicación del servidor
       run: |
@@ -22,12 +23,14 @@ jobs:
         cd openvidu-basic-node
         npm install
         node index.js > ../results/logs/nodeindex_log.txt 2>&1 &
+        sleep 5
         
     - name: Levantar la aplicación cliente
       run: |
           npm install --location=global http-server
           touch results/logs/httpserver_log.txt
           http-server openvidu-getaroom/web > results/logs/http_server_log.txt 2>&1 &
+          sleep 5
 
     - name: Install dependencies
       run: npm ci
