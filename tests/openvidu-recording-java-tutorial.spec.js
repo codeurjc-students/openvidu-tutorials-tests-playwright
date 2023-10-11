@@ -29,10 +29,11 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page2.click('#join-btn');
     await page2.waitForSelector('#session', { visible: true });
     await page2.click('#buttonStartRecording');
+    await page2.screenshot({ path: '../results/screenshots/page2_startrecording_screenshot.png' });
     await page2.waitForTimeout(5000); 
     await page2.click('#buttonStopRecording');
     await page2.click('#buttonGetRecording');
-    await page2.screenshot({ path: '../results/screenshots/page2_screenshot.png' });
+    await page2.screenshot({ path: '../results/screenshots/page2_stoprecording_screenshot.png' });
 
     // Buscar los elementos HTML que contienen los streams de video
     const videoElements = await page2.$$('video');
