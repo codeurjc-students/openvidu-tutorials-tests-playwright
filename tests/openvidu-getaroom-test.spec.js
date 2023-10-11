@@ -17,7 +17,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
   
   try {
     
-    await page1.goto('http://127.0.0.1:8090');
+    await page1.goto('http://127.0.0.1:8080');
 
     // Espera a que el botón esté presente en la página
     await page1.waitForSelector('button.btn-success', { timeout: 10000 }); // Aumentamos el tiempo límite a 10 segundos
