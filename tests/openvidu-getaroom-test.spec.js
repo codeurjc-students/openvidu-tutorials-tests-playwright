@@ -25,7 +25,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     // Hace clic en el botón con el atributo onclick
     await page1.click('button.btn-success');
     await page1.waitForSelector('#session', { visible: true });
-    await page2.waitForTimeout(5000);
+    await page1.waitForTimeout(5000);
     const inputValue = await page1.$eval('input#copy-input', (input) => input.value);
 
     await page1.screenshot({ path: '../results/screenshots/page1_screenshot.png' });
