@@ -15,7 +15,7 @@ jobs:
     - name: Levantar OpenVidu
       run: |
         mkdir -p results/logs/recordings
-        chrmod -r 777 results/logs/recordings
+        chmod 777 results/logs/recordings
         docker run -q -p 4443:4443 --rm \
         -e OPENVIDU_SECRET=MY_SECRET \
         -e OPENVIDU_RECORDING=true \
