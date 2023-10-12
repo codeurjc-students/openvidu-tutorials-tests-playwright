@@ -43,7 +43,7 @@ jobs:
     - uses: browser-actions/setup-chrome@v1
     
     - name: Install Playwright Browsers
-      run: npx playwright install 
+      run: npx playwright install --channel=chrome
       
     - name: Runin Test
       run: |
