@@ -13,7 +13,10 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
   });
 
   const page1 = await context.newPage();
-  const page2 = await context.newPage();
+  
+  const context2 = await browser.newContext({ incognito: true });
+  
+  const page2 = await context2.newPage();
 
   try {
     await page1.goto('https://localhost:5000');
