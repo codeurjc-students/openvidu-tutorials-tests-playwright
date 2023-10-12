@@ -37,8 +37,8 @@ jobs:
 
     - name: Ejecutar la aplicación del servidor
       run: |
-        cd openvidu-tutorials/openvidu-recording-java
-        mvn package exec:java > ../../results/logs/mvnpackage_log.txt 2>&1 &
+        cd openvidu-recording-java
+        mvn package exec:java > ../results/logs/mvnpackage_log.txt 2>&1 &
         sleep 5
         
     - name: Install dependencies
