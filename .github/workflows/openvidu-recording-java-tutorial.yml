@@ -14,8 +14,6 @@ jobs:
 
     - name: Levantar OpenVidu
       run: |
-        sudo mkdir -p /opt/openvidu/recordings
-        sudo sudo chmod -R 777 /opt/openvidu/recordings
         docker run -p 4443:4443 --rm \
         -e OPENVIDU_SECRET=MY_SECRET \
         -e OPENVIDU_RECORDING=true \
