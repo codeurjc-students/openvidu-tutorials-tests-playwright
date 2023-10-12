@@ -12,6 +12,11 @@ jobs:
     - name: Checkout código
       uses: actions/checkout@v2
 
+    - name: Crear directorio recording
+      run: |
+        sudo mkdir -p /opt/openvidu/recordings
+        sudo chmod 777 /opt/openvidu/recordings
+
     - name: Levantar OpenVidu
       run: |
         docker run -q -p 4443:4443 --rm \
@@ -32,7 +37,6 @@ jobs:
 
     - name: Ejecutar la aplicación del servidor
       run: |
-        git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.28.0
         cd openvidu-tutorials/openvidu-recording-java
         mvn package exec:java > ../../results/logs/mvnpackage_log.txt 2>&1 &
         sleep 5
