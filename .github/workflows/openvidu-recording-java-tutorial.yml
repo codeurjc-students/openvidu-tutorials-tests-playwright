@@ -21,7 +21,7 @@ jobs:
         -e OPENVIDU_RECORDING=true \
         -e OPENVIDU_RECORDING_PATH=results/logs/recordings \
         -v /var/run/docker.sock:/var/run/docker.sock \
-        -v results/logs/recordings:results/logs/recordings \
+        -v /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/results/logs/recordings:/home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/results/logs/recordings \
         openvidu/openvidu-dev:2.28.0 > results/logs/docker_log.txt 2>&1 &
         sleep 5
     
