@@ -23,7 +23,7 @@ jobs:
         -v /var/run/docker.sock:/var/run/docker.sock \
         -v /opt/openvidu/recordings:/opt/openvidu/recordings \
         openvidu/openvidu-dev:2.28.0 > results/logs/docker_log.txt 2>&1 &
-        sleep 5
+        sleep 10
     
     
     - name: Set up Java
