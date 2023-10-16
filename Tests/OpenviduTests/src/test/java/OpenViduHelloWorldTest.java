@@ -26,7 +26,7 @@ import io.netty.handler.timeout.TimeoutException;
  * @author Andrea Acuña
  */
 
-class OpenViduHelloWordTest extends Module{
+class OpenViduHelloWorldTest extends Module{
 
     String testLocation = "test-input/Parameters.xlsx";
     String reportLocation = "OpenViduHelloWordTestTestReport.html";
@@ -51,7 +51,7 @@ class OpenViduHelloWordTest extends Module{
     String idNameSession;
     String idSelfCamera;
 
-    public OpenViduHelloWordTest() {
+    public OpenViduHelloWorldTest() {
         if (extentReports == null){
             extentReports = e.createExtentReports(reportLocation);
         }

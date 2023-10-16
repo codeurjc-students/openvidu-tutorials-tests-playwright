@@ -32,7 +32,7 @@ jobs:
         http-server openvidu-hello-world/web &
       working-directory: .
     - name: Execute tests
-      run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduHelloWordTest"
+      run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduHelloWorldTest"
       working-directory: ./Tests/OpenviduTests
     - name: Upload Extent report
       uses: actions/upload-artifact@v3
