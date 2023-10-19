@@ -13,14 +13,16 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
   });
 
   const page1 = await context.newPage();
-  const page2 = await context.newPage();
+  
+  const context2 = await browser.newContext({ incognito: true });
+  
+  const page2 = await context2.newPage();
 
   try {
     await page1.goto('https://localhost:5000');
 
     await page1.click('#join-btn');
     await page1.waitForSelector('#session', { visible: true });
-    await page1.waitForTimeout(5000);
     await page1.screenshot({ path: '../results/screenshots/page1_screenshot.png' });
 
     await page2.goto('https://localhost:5000');
@@ -29,9 +31,12 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page2.click('#join-btn');
     await page2.waitForSelector('#session', { visible: true });
     await page2.click('#buttonStartRecording');
+    await page2.click('#buttonGetRecording');
     await page2.waitForTimeout(5000); 
-
-    await page2.screenshot({ path: '../results/screenshots/page2_screenshot.png' });
+    await page2.screenshot({ path: '../results/screenshots/page2_startrecording_screenshot.png' });
+    await page2.click('#buttonStopRecording');
+    await page2.click('#buttonGetRecording');
+    await page2.screenshot({ path: '../results/screenshots/page2_stoprecording_screenshot.png' });
 
     // Buscar los elementos HTML que contienen los streams de video
     const videoElements = await page2.$$('video');
