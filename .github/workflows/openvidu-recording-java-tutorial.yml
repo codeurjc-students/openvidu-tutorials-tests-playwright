@@ -14,7 +14,7 @@ jobs:
 
     - name: Levantar OpenVidu
       run: |
-        docker run -d -p 4443:4443 --rm \
+        docker run -p 4443:4443 --rm \
         -e OPENVIDU_SECRET=MY_SECRET \
         -e OPENVIDU_RECORDING=true \
         -e OPENVIDU_RECORDING_PATH=/opt/openvidu/recordings \
