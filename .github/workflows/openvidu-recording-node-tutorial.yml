@@ -23,8 +23,7 @@ jobs:
         openvidu/openvidu-dev:2.28.0 > results/logs/docker_log.txt 2>&1 &
         sleep 10
     
-    - name: Setup Node.js environment
-      uses: actions/setup-node@v3.8.1
+    - uses: actions/setup-node@v3
 
     - name: Ejecutar la aplicación del servidor
       run: |
