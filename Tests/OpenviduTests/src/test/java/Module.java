@@ -18,21 +18,20 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class Module{
 
     /**
-     * public method.
+     * protected method.
      *
      * @author Andrea Acuña
      * Description: set up two webDrivers (One in Chrome. One in Firefox) with headless mode
      * Parameters: None
      * Return: List with 2 browsers configurated. In the first position is Chrome and in the second position is Firefox
      */
-    public List<WebDriver> setUpTwoBrowsers(){
+    protected List<WebDriver> setUpTwoBrowsers(){
 
         WebDriver driverChrome;
         WebDriver driverFirefox;
 
         List<WebDriver> browsers = new ArrayList<WebDriver>();
 
-        //WebDriverManager.chromedriver().setup();
         WebDriverManager.chromedriver().clearDriverCache().setup();
 
         ChromeOptions options = new ChromeOptions();
@@ -43,7 +42,6 @@ public class Module{
         driverChrome = new ChromeDriver(options);
         browsers.add(driverChrome);
 
-        //WebDriverManager.firefoxdriver().setup();
         WebDriverManager.firefoxdriver().clearDriverCache().setup();
 
         FirefoxOptions optionsF = new FirefoxOptions();
@@ -57,7 +55,7 @@ public class Module{
     }
 
     /**
-     * public method.
+     * protected method.
      *
      * @author Andrea Acuña
      * Description: close both drivers passed by parameter
@@ -65,7 +63,7 @@ public class Module{
      *             driverFirefox: driver of firefox
      * Return: None
      */
-    public void quitTwoBrowsers(WebDriver driverChrome, WebDriver driverFirefox) {
+    protected void quitTwoBrowsers(WebDriver driverChrome, WebDriver driverFirefox) {
         if (driverChrome != null){
             driverChrome.quit();
         }
@@ -75,7 +73,7 @@ public class Module{
     }
 
     /**
-     * public static method.
+     * protected static method.
      *
      * @author Andrea Acuña
      * Description: open the excel file and read the value specified
@@ -84,7 +82,7 @@ public class Module{
      *             ColValue: name of the col in the excel
      * Return: Value of the intersection between testName (Row) and ColValue (Col)
      */
-    public static String readVariablesFromExcel(String filePath, String testName, String ColValue) {
+    protected static String readVariablesFromExcel(String filePath, String testName, String ColValue) {
 
         try (FileInputStream fileInputStream = new FileInputStream(filePath);
         Workbook workbook = WorkbookFactory.create(fileInputStream)) {
