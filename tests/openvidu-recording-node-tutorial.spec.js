@@ -25,7 +25,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page1.waitForSelector('#session', { visible: true });
     await page1.screenshot({ path: '../results/screenshots/page1_screenshot.png' });
 
-    await page2.goto('https://localhost:5000');
+    await page2.goto('http://localhost:5000');
                       
 
     await page2.click('#join-btn');
