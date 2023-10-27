@@ -210,9 +210,6 @@ class OpenViduAngularTest extends Module{
             WebDriverWait waitF = new WebDriverWait(driverFirefox, Duration.ofSeconds(60));
             waitF.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera)));
 
-            driverChrome.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-            driverFirefox.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
             // see if the video is playing properly
             String SelfCurrentTimeChrome = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("readyState");
             String SelfCurrentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("readyState");
@@ -256,6 +253,7 @@ class OpenViduAngularTest extends Module{
                 fail("The app is not correctly leave");
             }
 
+            waitC.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(XpathJoinButton)));
             joinButtonC = driverChrome.findElement(By.xpath(XpathJoinButton)); 
             if(joinButtonC.isDisplayed()){
                 e.addStep(test, "INFO", driverChrome, "The app leave the session correctly in Chrome");    
@@ -266,6 +264,7 @@ class OpenViduAngularTest extends Module{
             }
 
             //Leave the session with Firefox
+            waitF.until(ExpectedConditions.visibilityOfElementLocated(By.id(idLeaveButton)));
             WebElement leaveButtonF = driverFirefox.findElement(By.id(idLeaveButton));
             if (leaveButtonF.isDisplayed()){ 
                 leaveButtonF.click();
