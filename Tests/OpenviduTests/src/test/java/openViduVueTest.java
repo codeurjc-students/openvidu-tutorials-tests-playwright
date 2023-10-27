@@ -194,7 +194,6 @@ class OpenViduVueTest extends Module{
         while(repeat <= 5){
             try{
                 joinButtonF = driverFirefox.findElement(By.xpath(XpathJoinButton));
-                //waitC.until(ExpectedConditions.stalenessOf(joinButtonF));
                 joinButtonF.click();
                 break;
             }catch(StaleElementReferenceException exc){

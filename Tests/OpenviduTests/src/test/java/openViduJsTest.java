@@ -184,13 +184,10 @@ class OpenViduJsTest extends Module{
         try{
             // see if the video is playing properly, moreover synchronize both videos
             WebDriverWait waitC = new WebDriverWait(driverChrome, Duration.ofSeconds(30));
-            waitC.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera)));
+            waitC.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(idSelfCamera)));
             
             WebDriverWait waitF = new WebDriverWait(driverFirefox, Duration.ofSeconds(30));
-            waitF.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera)));
-
-            driverChrome.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-            driverFirefox.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            waitF.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(idSelfCamera)));
 
             // see if the video is playing properly
             String SelfCurrentTimeChrome = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("readyState");
@@ -208,8 +205,8 @@ class OpenViduJsTest extends Module{
                 e.addStep(test, "FAIL", driverFirefox, "Self video is NOT correctly playing in Firefox: " + readyStateValues[Integer.parseInt(SelfCurrentTimeFirefox)]);    
             }
             
-            waitC.until(ExpectedConditions.visibilityOfElementLocated(By.id(idSelfCamera)));
-            waitF.until(ExpectedConditions.visibilityOfElementLocated(By.id(idSelfCamera)));
+            waitC.until(ExpectedConditions.visibilityOfElementLocated(By.id(xpathOtherCamera)));
+            waitF.until(ExpectedConditions.visibilityOfElementLocated(By.id(xpathOtherCamera)));
 
             String OtherCurrentTimeChrome = driverChrome.findElement(By.xpath(xpathOtherCamera)).getAttribute("readyState");
             String OtherCurrentTimeFirefox = driverFirefox.findElement(By.xpath(xpathOtherCamera)).getAttribute("readyState");
@@ -235,7 +232,7 @@ class OpenViduJsTest extends Module{
                 e.addStep(test, "FAIL", driverChrome, "Leave button in chrome is not display");    
                 fail("The app is not correctly leave");
             }
-
+            waitC.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(XpathJoinButton)));
             if(joinButtonC.isDisplayed()){
                 e.addStep(test, "INFO", driverChrome, "The app leave the session correctly in Chrome");    
                 
@@ -254,6 +251,7 @@ class OpenViduJsTest extends Module{
                 fail("The app is not correctly leave");
             }
 
+            waitF.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(XpathJoinButton)));
             if(joinButtonF.isDisplayed()){
                 e.addStep(test, "INFO", driverFirefox, "The app leave the session correctly in Firefox");    
             
