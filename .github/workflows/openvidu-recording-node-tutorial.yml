@@ -54,6 +54,14 @@ jobs:
       run: |
         cd /opt/openvidu/recordings
         sudo zip -r /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/results/recordings.zip .
+        
+    - name: Comprimir en un zip el resultado
+      run: |
+       cd /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/results/
+       sudo zip -r /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/results.zip .
+       rm /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/results/*
+       mv /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/results.zip /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/results/
+       
     - uses: actions/upload-artifact@v3
       if: always()
       with:
