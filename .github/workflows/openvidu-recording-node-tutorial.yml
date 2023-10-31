@@ -27,8 +27,7 @@ jobs:
 
     - name: Ejecutar la aplicación del servidor
       run: |
-        git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.28.0
-        cd openvidu-tutorials/openvidu-recording-node
+        cd openvidu-recording-node
         npm install
         node server.js http://localhost:4443 MY_SECRET > ../../results/logs/node_server_log.txt 2>&1 &
         sleep 10
@@ -45,6 +44,9 @@ jobs:
       run: |
          cd tests      
          npx playwright test tests/openvidu-recording-node-tutorial.spec.js
+    - name: Copy recordings
+      run: |
+        cp -r /openvidu/api/recordings/ /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/results/
          
     - uses: actions/upload-artifact@v3
       if: always()
