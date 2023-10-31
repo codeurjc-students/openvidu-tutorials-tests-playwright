@@ -9,9 +9,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout código
-      uses: actions/checkout@v2
-
+    - name: Checkout
+      uses: actions/checkout@v4.1.1
+      
+    - name: Crear directorio recording
+      run: |
+        sudo mkdir -p /opt/openvidu/recordings
+        sudo chmod -R a+rwx /opt/openvidu/recordings
+        
     - name: Levantar OpenVidu
       run: |
         docker run -q -p 4443:4443 --rm \
@@ -21,7 +26,7 @@ jobs:
         -v /var/run/docker.sock:/var/run/docker.sock \
         -v /opt/openvidu/recordings:/opt/openvidu/recordings \
         openvidu/openvidu-dev:2.28.0 > results/logs/docker.log 2>&1 &
-        sleep 5
+        sleep 10
     
     - name: Set up Java
       uses: actions/setup-java@v2
@@ -34,7 +39,7 @@ jobs:
       run: 
         cd openvidu-recording-java
         mvn package exec:java > ../../results/logs/mvnpackage.log 2>&1 &
-        sleep 5
+        sleep 10
         
     - name: Install dependencies
       run: npm ci
