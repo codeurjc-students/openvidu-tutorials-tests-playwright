@@ -12,6 +12,11 @@ jobs:
     - name: Checkout código
       uses: actions/checkout@v2
 
+    - name: Crear directorio recording
+      run: |
+        sudo mkdir -p /opt/openvidu/recordings
+        sudo chmod -R a+rwx /opt/openvidu/recordings
+        
     - name: Levantar OpenVidu
       run: |
         docker run -p 4443:4443 --rm \
@@ -47,7 +52,7 @@ jobs:
          npx playwright test tests/openvidu-recording-node-tutorial.spec.js
     - name: Copy recordings
       run: |
-        sudo ls -r opt/openvidu/recordings/ 
+        sudo ls  opt/openvidu/recordings/ 
 
     - uses: actions/upload-artifact@v3
       if: always()
