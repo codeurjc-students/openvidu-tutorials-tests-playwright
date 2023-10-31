@@ -31,9 +31,8 @@ jobs:
   
 
     - name: Ejecutar la aplicación del servidor
-      run: |
-        git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.28.0
-        cd openvidu-tutorials/openvidu-recording-java
+      run: 
+        cd openvidu-recording-java
         mvn package exec:java > ../../results/logs/mvnpackage_log.txt 2>&1 &
         sleep 5
         
