@@ -27,7 +27,8 @@ jobs:
 
     - name: Ejecutar la aplicación del servidor
       run: |
-        cd openvidu-recording-node
+        git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.28.0
+        cd openvidu-tutorials/openvidu-recording-node
         npm install
         node server.js http://localhost:4443 MY_SECRET > ../../results/logs/node_server_log.txt 2>&1 &
         sleep 10
