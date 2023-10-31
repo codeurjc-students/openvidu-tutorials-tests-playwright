@@ -47,7 +47,8 @@ jobs:
          npx playwright test tests/openvidu-recording-node-tutorial.spec.js
     - name: Copy recordings
       run: |
-        ls -la /openvidu/api/recordings/
+        cp -r opt/openvidu/recordings/ /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/results/
+
     - uses: actions/upload-artifact@v3
       if: always()
       with:
