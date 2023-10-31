@@ -31,7 +31,7 @@ jobs:
         cd openvidu-tutorials/openvidu-recording-node
         npm install
         node server.js http://localhost:4443 MY_SECRET > ../../results/logs/node_server_log.txt 2>&1 &
-        sleep 10
+        sleep 5
         
     - name: Install dependencies
       run: npm ci
@@ -47,7 +47,7 @@ jobs:
          npx playwright test tests/openvidu-recording-node-tutorial.spec.js
     - name: Copy recordings
       run: |
-        cp -r /openvidu/api/recordings/ /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/results/
+        sudo cp -r /openvidu/api/recordings/ /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/results/
          
     - uses: actions/upload-artifact@v3
       if: always()
