@@ -209,11 +209,25 @@ class OpenViduVueTest extends Module{
             waitF.until(ExpectedConditions.visibilityOfElementLocated(By.id(idSelfCamera)));
             waitF.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathOtherCamera)));
 
-            String SelfCurrentTimeChrome = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
-            String SelfCurrentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
+            int attempts = 0;
+            String SelfCurrentTimeChrome = "0";
+            String SelfCurrentTimeFirefox = "0";
 
-            String OtherCurrentTimeChrome = driverChrome.findElement(By.xpath(xpathOtherCamera)).getAttribute("currentTime");
-            String OtherCurrentTimeFirefox = driverFirefox.findElement(By.xpath(xpathOtherCamera)).getAttribute("currentTime");
+            while (attempts < 50 || ((Float.parseFloat(SelfCurrentTimeChrome) == 0) && (Float.parseFloat(SelfCurrentTimeFirefox) == 0))){
+                SelfCurrentTimeChrome = driverChrome.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
+                SelfCurrentTimeFirefox = driverFirefox.findElement(By.id(idSelfCamera)).getAttribute("currentTime");
+                attempts ++;
+            }
+
+            attempts = 0;
+            String OtherCurrentTimeChrome = "0";
+            String OtherCurrentTimeFirefox = "0";
+            
+            while (attempts < 50 || ((Float.parseFloat(OtherCurrentTimeChrome) == 0) && (Float.parseFloat(OtherCurrentTimeFirefox) == 0))){
+                OtherCurrentTimeChrome = driverChrome.findElement(By.xpath(xpathOtherCamera)).getAttribute("currentTime");
+                OtherCurrentTimeFirefox = driverFirefox.findElement(By.xpath(xpathOtherCamera)).getAttribute("currentTime");
+                attempts ++;
+            }
 
             if (Float.parseFloat(SelfCurrentTimeChrome) > 0 && Float.parseFloat(SelfCurrentTimeFirefox) > 0){
                 if (Float.parseFloat(OtherCurrentTimeChrome) > 0 && Float.parseFloat(OtherCurrentTimeFirefox) > 0){        
