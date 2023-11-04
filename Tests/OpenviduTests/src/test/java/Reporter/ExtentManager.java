@@ -134,17 +134,4 @@ public class ExtentManager {
     public void tearDownExtent(ExtentReports extentReports){
         extentReports.flush();
     }
-
-
-       /**
-    public void getResult(ITestResult result, ExtentTest test) {
-        if (result.getStatus() == ITestResult.FAILURE) {
-            test.log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " - Test Case Failed", ExtentColor.RED));
-            test.fail(result.getThrowable());
-        } else if (result.getStatus() == ITestResult.SKIP) {
-            test.log(Status.SKIP, MarkupHelper.createLabel(result.getName() + " - Test Case Skipped", ExtentColor.ORANGE));
-        } else {
-            test.log(Status.PASS, MarkupHelper.createLabel(result.getName() + " - Test Case Passed", ExtentColor.GREEN));
-        }
-    }*/
 }

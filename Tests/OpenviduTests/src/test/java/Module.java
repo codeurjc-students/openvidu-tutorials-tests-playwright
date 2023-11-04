@@ -82,7 +82,7 @@ public class Module{
      *             ColValue: name of the col in the excel
      * Return: Value of the intersection between testName (Row) and ColValue (Col)
      */
-    protected static String readVariablesFromExcel(String filePath, String testName, String ColValue) {
+    protected static String readVariablesFromExcel(String filePath, String testName, String colValue) {
 
         try (FileInputStream fileInputStream = new FileInputStream(filePath);
         Workbook workbook = WorkbookFactory.create(fileInputStream)) {
@@ -96,14 +96,14 @@ public class Module{
 
         for (int i = 0; i < lastCellNum; i++) {
             org.apache.poi.ss.usermodel.Cell cell = firstRow.getCell(i);
-            if (cell.getStringCellValue().equals(ColValue)) {
+            if (cell.getStringCellValue().equals(colValue)) {
                 colValueColumnIndex = i;
                 break;
             }
         }
 
         if (colValueColumnIndex == -1) {
-            System.out.println("No se encontró la columna: " + ColValue + " en el archivo Excel.");
+            System.out.println("No se encontró la columna: " + colValue + " en el archivo Excel.");
             return null;
         }
 
