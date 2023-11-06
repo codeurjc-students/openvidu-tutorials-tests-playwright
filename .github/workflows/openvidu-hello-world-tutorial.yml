@@ -33,7 +33,7 @@ jobs:
       run: npm ci
     
     - name: Install chrome
-    - uses: browser-actions/setup-chrome@v1
+      uses: browser-actions/setup-chrome@v1
     
     - name: Install Playwright Browsers
       run: npx playwright install 
@@ -43,7 +43,6 @@ jobs:
          cd tests
          npx playwright test openvidu-hello-world-test.spec.js
     
-    - name: Save repository
     - uses: actions/upload-artifact@v3
       if: always()
       with:
