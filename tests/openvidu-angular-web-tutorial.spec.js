@@ -1,4 +1,4 @@
-// Test for Angular, React & Vue tutorials.
+// Test for Angular tutorials.
 const { test, expect, chromium } = require('@playwright/test');
 
 test('Checking for the presence of two active webcams in an OpenVidu session', async () => {
