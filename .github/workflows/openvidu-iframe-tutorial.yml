@@ -27,9 +27,9 @@ jobs:
     - name: Run the client application tutorial
       run: |
           npm install --location=global http-server
-          sudo http-server openvidu-tutorials/openvidu-hello-world/web > results/logs/http_server_helloworld.log 2>&1 &
+          sudo http-server openvidu-hello-world/web > results/logs/http_server_helloworld.log 2>&1 &
           sleep 10 
-          sudo http-server openvidu-tutorials/openvidu-iframe/web > results/logs/http_server_iframe.log 2>&1 &
+          sudo http-server openvidu-iframe/web > results/logs/http_server_iframe.log 2>&1 &
 
     - name: Install dependencies
       run: npm ci
