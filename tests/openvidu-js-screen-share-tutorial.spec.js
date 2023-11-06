@@ -29,7 +29,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page1.waitForTimeout(5000);
 
     // Capture a screenshot of page1 and save it to 'results/screenshot/page1.png'.
-    await page1.screenshot({ path: 'results/screenshot/page1.png' });
+    await page1.screenshot({ path: '../results/screenshot/page1.png' });
 
     // Navigate to the specified URL on page2.
     await page2.goto('http://127.0.0.1:8080');
@@ -42,7 +42,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page2.waitForTimeout(5000);
 
     // Capture a screenshot of page2 and save it to 'results/screenshot/page2.png'.
-    await page2.screenshot({ path: 'results/screenshot/page2.png' });
+    await page2.screenshot({ path: '../results/screenshot/page2.png' });
 
     // Find HTML elements within page2 that contain video streams.
     const videoElements = await page2.$$('video');
