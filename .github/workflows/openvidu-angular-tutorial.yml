@@ -2,6 +2,7 @@ name: openvidu-angular-tutorial
 
 on:
   workflow_dispatch: {}
+  push:
 
 jobs:
   build:
@@ -11,18 +12,18 @@ jobs:
     - name: Checkout código
       uses: actions/checkout@v2
 
-    - name: Levantar OpenVidu
+    - name: Run OpenVidu deployment
       run: |
-        docker run -d -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0
+        docker run -d -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0 > results/logs/docker.log 2>&1 &
+        sleep 10
 
-    - name: Ejecutar la aplicación del servidor
+    - name: Run server application sample 
+      working-directory: openvidu-basic-node
       run: |
-        git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.27.0
-        cd openvidu-tutorials/openvidu-basic-node
         npm install
-        node index.js &
+        node index.js > ../results/logs/node_index.log 2>&1 &
 
-    - name: Configurar Node.js
+    - name: Setup Node.js
       uses: actions/setup-node@v2
       with:
         node-version: 14
@@ -31,10 +32,10 @@ jobs:
       run: npm install -g @angular/cli
 
     - name: Levantar la aplicación cliente
+      working-directory: openvidu-angular
       run: |
-        cd openvidu-tutorials/openvidu-angular
         npm install
-        ng serve &
+        ng serve > ../results/logs/ng_server.log 2>&1 &
   
     - name: Install dependencies
       run: npm ci
@@ -50,8 +51,8 @@ jobs:
          npx playwright test openvidu-angular-web-tutorial.spec.js
 
     - uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: tests
-        path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/tests
-        retention-days: 30
+          if: always()
+          with:
+            name: results
+            path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/results/
+            retention-days: 30
