@@ -26,6 +26,8 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     let iframeHandle = await page1.waitForSelector('iframe.openvidu-iframe');
     let frame = await iframeHandle.contentFrame();
 
+    await page1.screenshot({ path: '../results/screenshots/page1_screensho.png' });
+
     // Click the "JOIN" button within the iframe and wait for the '#session' element to become visible.
     await frame.click('input[type="submit"]');
     await frame.waitForSelector('#session', { visible: true });
@@ -41,7 +43,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await frame.waitForTimeout(5000);
 
     // Capture a screenshot of page2 and save it to 'pr.png'.
-    await page2.screenshot({ path: 'pr.png' });
+    await page2.screenshot({ path: '../results/screenshots/page2_screensho.png' });
 
     // Find HTML elements within the frame that contain video streams.
     const videoElements = await frame.$$('video');
@@ -52,6 +54,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     // Close the pages and the browser.
     await Promise.all([page1.close(), page2.close()]);
     await browser.close();
+    
   } catch (error) {
     // In case of an error or timeout, capture screenshots.
     await page1.screenshot({ path: '../results/screenshots/error_page1_screenshot.png' });
