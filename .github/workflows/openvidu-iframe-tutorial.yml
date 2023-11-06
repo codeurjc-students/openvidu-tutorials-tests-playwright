@@ -1,51 +1,52 @@
-name: openvidu-iframe-tutorial
+name: openvidu-iframe-tutorial 
 
-on:
+on: 
   workflow_dispatch: {}
-  push:
+  
+  
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout código
-        uses: actions/checkout@v4.1.1
+    - name: Checkout código
+      uses: actions/checkout@v2
 
-      - name: Run OpenVidu deployment
-        run: |
-          docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0 > results/logs/docker.log 2>&1 &
-          sleep 10
+    - name: Levantar OpenVidu
+      run: |
+        docker run -d -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0
 
-      - name: Run server application sample
-        working-directory: openvidu-basic-node
-        run: |
-          npm install
-          node index.js > ../results/logs/node_index.log 2>&1 &
-
-      - name: Levantar la aplicación cliente
-        run: |
+    - name: Ejecutar la aplicación del servidor
+      run: |
+        git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.27.0
+        cd openvidu-tutorials/openvidu-basic-node
+        npm install
+        node index.js &
+        
+    - name: Levantar la aplicación cliente
+      run: |
           npm install --location=global http-server
-          sudo http-server openvidu-tutorials/openvidu-hello-world/web  > results/logs/http_server_hello_world.log 2>&1 &
+          sudo http-server openvidu-tutorials/openvidu-hello-world/web &
           sleep 10 
-          sudo http-server openvidu-tutorials/openvidu-iframe/web  > results/logs/http_server_iframe.log 2>&1 &
+          sudo http-server openvidu-tutorials/openvidu-iframe/web &
 
-      - name: Install dependencies
-        run: npm ci
-
-      - uses: browser-actions/setup-chrome@v1
-
-      - name: Install Playwright Browsers
-        run: npx playwright install
-
-      - name: Runin Test
-        run: |
-          cd tests      
-          npx playwright test tests/openvidu-iframe-tutorial.spec.js
-
-      - uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: results-iframe
-          path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/results/
-          retention-days: 30
+    - name: Install dependencies
+      run: npm ci
+      
+    - uses: browser-actions/setup-chrome@v1
+    
+    - name: Install Playwright Browsers
+      run: npx playwright install 
+      
+    - name: Runin Test
+      run: |
+         cd tests      
+         npx playwright test tests/openvidu-iframe-tutorial.spec.js
+         
+    - uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: tests
+        path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/tests
+        retention-days: 30
