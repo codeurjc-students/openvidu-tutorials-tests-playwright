@@ -23,9 +23,10 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page1.goto('http://127.0.0.1:8080');
     
 
-    // Interact with page1, such as clicking a button and waiting for a specific element to become visible.
+    // Interact with page1, such as clicking a button and waiting for a specific element to become visible, then wait for a timeout..
     await page1.click('#join input[type="submit"]');
     await page1.waitForSelector('#session', { visible: true });
+    await page2.waitForTimeout(5000);
 
     // Capture a screenshot of page1 and save it to a file.
     await page1.screenshot({ path: '../results/screenshots/page1_screenshot.png' });
