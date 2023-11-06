@@ -2,6 +2,7 @@ name: openvidu-iframe-tutorial
 
 on:
   workflow_dispatch: {}
+  push:
 
 jobs:
   build:
@@ -21,7 +22,6 @@ jobs:
         run: |
           npm install
           node index.js > ../results/logs/node_index.log 2>&1 &
-
 
       - name: Levantar la aplicación cliente
         run: |

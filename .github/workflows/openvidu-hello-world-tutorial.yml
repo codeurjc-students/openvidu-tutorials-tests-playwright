@@ -2,8 +2,8 @@ name: openvidu-Hello-World-tutorial-test
 
 on:
   workflow_dispatch: {}
-  push:
-  
+
+
 jobs:
   build:
     runs-on: ubuntu-latest
