@@ -2,7 +2,7 @@ name: openvidu-react
 
 on:
   workflow_dispatch: {}
-  push:
+   
 
 jobs:
   build:

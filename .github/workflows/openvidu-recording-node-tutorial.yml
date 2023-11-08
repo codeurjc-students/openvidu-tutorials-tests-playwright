@@ -34,7 +34,7 @@ jobs:
       working-directory: openvidu-recording-node
       run: |
         npm install
-        node server.js http://localhost:4443 MY_SECRET > ../results/logs/node_server.log 2>&1 &
+        node server.js > ../results/logs/node_server.log 2>&1 &
         sleep 10
         
     - name: Install dependencies

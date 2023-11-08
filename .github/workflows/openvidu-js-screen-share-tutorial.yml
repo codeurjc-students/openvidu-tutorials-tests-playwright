@@ -2,8 +2,8 @@ name: openvidu-js-screen-share-tutorial
 
 on: 
   workflow_dispatch: {}
-  push:
-  
+   
+
 jobs:
   build:
     runs-on: ubuntu-latest

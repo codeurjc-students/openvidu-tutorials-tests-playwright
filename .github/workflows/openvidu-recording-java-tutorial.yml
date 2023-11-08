@@ -2,7 +2,7 @@ name: openvidu-recording-java-tutorial
 
 on: 
   workflow_dispatch: {}
-  push:
+   
 
 jobs:
   build:
