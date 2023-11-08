@@ -29,12 +29,13 @@ jobs:
         sleep 10
     
     - uses: actions/setup-node@v3
-
-    - name: Run server application sample
-      working-directory: openvidu-recording-node
+    
+    - name: Ejecutar la aplicación del servidor
       run: |
+        git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.28.0
+        cd openvidu-tutorials/openvidu-recording-node
         npm install
-        node server.js > ../results/logs/node_server.log 2>&1 &
+        node server.js http://localhost:4443 MY_SECRET > ../../results/logs/node_server.log 2>&1 &
         sleep 10
         
     - name: Install dependencies
