@@ -2,22 +2,22 @@ name: openvidu-recording-node-tutorial
 
 on: 
   workflow_dispatch: {}
-
+  push:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout código
-      uses: actions/checkout@v2
+    - name: Checkout  
+      uses: actions/checkout@v4.1.1
 
     - name: Crear directorio recording
       run: |
         sudo mkdir -p /opt/openvidu/recordings
         sudo chmod -R a+rwx /opt/openvidu/recordings
         
-    - name: Levantar OpenVidu
+    - name:  Run OpenVidu deployment
       run: |
         docker run -p 4443:4443 --rm \
         -e OPENVIDU_SECRET=MY_SECRET \
@@ -30,12 +30,11 @@ jobs:
     
     - uses: actions/setup-node@v3
 
-    - name: Ejecutar la aplicación del servidor
+    - name: Run server application sample
+      working-directory: openvidu-recording-node
       run: |
-        git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.28.0
-        cd openvidu-tutorials/openvidu-recording-node
         npm install
-        node server.js http://localhost:4443 MY_SECRET > ../../results/logs/node_server.log 2>&1 &
+        node server.js http://localhost:4443 MY_SECRET > ../results/logs/node_server.log 2>&1 &
         sleep 10
         
     - name: Install dependencies
@@ -47,18 +46,18 @@ jobs:
       run: npx playwright install 
       
     - name: Runin Test
-      run: |
-         cd tests      
+      working-directory: tests
+      run: |   
          npx playwright test tests/openvidu-recording-node-tutorial.spec.js
          
     - name: Copy recordings
+      working-directory: /opt/openvidu/recordings
       run: |
-        cd /opt/openvidu/recordings
         sudo zip -r /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/results/recordings.zip .
   
     - uses: actions/upload-artifact@v3
       if: always()
       with:
-        name: results
+        name: results-recording-node
         path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/results/
         retention-days: 30

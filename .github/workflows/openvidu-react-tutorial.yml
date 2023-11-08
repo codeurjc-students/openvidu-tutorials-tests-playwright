@@ -3,12 +3,13 @@ name: openvidu-react
 on:
   workflow_dispatch: {}
   push:
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout código
+    - name: Checkout 
       uses: actions/checkout@v4.1.1
 
     - name: Run OpenVidu deployment
@@ -27,11 +28,11 @@ jobs:
       with:
         node-version: 14
 
-    - name: Levantar la aplicación cliente
+    - name: Run the client application tutorial
       working-directory: openvidu-react
       run: |
         npm install
-        npm start > results/logs/npm.log 2>&1 &
+        npm start > ../results/logs/npm.log 2>&1 &
   
     - name: Install dependencies
       run: npm ci

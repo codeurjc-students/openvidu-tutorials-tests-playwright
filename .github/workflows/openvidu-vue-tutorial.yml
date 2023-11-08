@@ -2,36 +2,37 @@ name: openvidu-vue-tutorial
 
 on:
   workflow_dispatch: {}
-
+  push:
+  
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout código
-      uses: actions/checkout@v2
+    - name: Checkout  
+      uses: actions/checkout@v4.1.1
 
-    - name: Levantar OpenVidu
+    - name: Run OpenVidu deployment
       run: |
-        docker run -d -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0
+        docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0 > results/logs/docker.log 2>&1 &
+        sleep 10
 
-    - name: Ejecutar la aplicación del servidor
+    - name: Run server application sample
+      working-directory: openvidu-basic-node
       run: |
-        git clone https://github.com/OpenVidu/openvidu-tutorials.git -b v2.27.0
-        cd openvidu-tutorials/openvidu-basic-node
         npm install
-        node index.js &
+        node index.js > ../results/logs/node_index.log 2>&1 &
 
     - name: Configurar Node.js
       uses: actions/setup-node@v2
       with:
         node-version: 14
 
-    - name: Levantar la aplicación cliente
+    - name: Run the client application tutorial
+      working-directory: openvidu-vue
       run: |
-       cd openvidu-tutorials/openvidu-vue
        npm install
-       npm run serve &
+       npm run serve > ../results/logs/npm.log 2>&1 &
   
     - name: Install dependencies
       run: npm ci
@@ -49,6 +50,6 @@ jobs:
     - uses: actions/upload-artifact@v3
       if: always()
       with:
-        name: tests
-        path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/tests
+        name: results-react
+        path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/results/
         retention-days: 30
