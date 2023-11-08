@@ -23,8 +23,9 @@ jobs:
           node index.js > ../results/logs/node_index.log 2>&1 &
       
       - name: Setup Node.js
-        uses: actions/setup-node@v4.0.0
-      
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
 
       - name: Install Angular CLI
         run: npm install -g @angular/cli
