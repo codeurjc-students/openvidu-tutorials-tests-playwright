@@ -13,3 +13,11 @@ openvidu-tutorials
 Visit [openvidu.io/tutorials](http://openvidu.io/tutorials)
 
 [OpenViduLogo]: https://secure.gravatar.com/avatar/5daba1d43042f2e4e85849733c8e5702?s=120
+
+# Hi everyone! :)
+
+My name is Andrea and now im currently cursing the last year of software engineering in the Rey Juan Carlos university in Madrid, Spain. I am also starting my professional life as a QA Test Analyst.
+
+### If you want to know something more about my progress or know something more about this project you can visit my blog!
+
+[Medium Andrea Blog](https://medium.com/@acupadron)

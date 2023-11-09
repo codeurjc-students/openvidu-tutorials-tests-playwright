@@ -1,0 +1,177 @@
+name: Deploy_OpenVidu
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  HelloWordTest:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Execute OpenVidu Dev container
+      run: docker run --detach=true -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.24.0
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    - name: Set up Node 16
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16' 
+    - name: Execute OpenVidu Tutorial Java Backend
+      run: mvn --no-transfer-progress --batch-mode spring-boot:run &
+      working-directory: ./openvidu-basic-java
+    - name: Execute http-server to serve static web
+      run: |
+        npm install --location=global http-server
+        http-server openvidu-hello-world/web &
+      working-directory: .
+    - name: Execute tests
+      run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduHelloWorldTest"
+      working-directory: ./Tests/OpenviduTests
+    - name: Upload Extent report
+      uses: actions/upload-artifact@v3
+      with:
+        name: Extent report
+        path: ./Tests/OpenviduTests/test-output/OpenViduHelloWordTestTestReport.html
+      if: always()
+
+  AngularTest:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Execute OpenVidu Dev container
+      run: docker run --detach=true -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.24.0
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    - name: Set up Node 16
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'    
+    - name: Execute OpenVidu Tutorial Java Backend
+      run: mvn --no-transfer-progress --batch-mode spring-boot:run &
+      working-directory: ./openvidu-basic-java
+    - name: Execute Angular app in dev mode (ng-serve)
+      run: |
+        npm install
+        npx ng serve &
+      working-directory: ./openvidu-angular
+    - name: Execute tests
+      run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduAngularTest"
+      working-directory: ./Tests/OpenviduTests
+    - name: Upload Extent report
+      uses: actions/upload-artifact@v3
+      with:
+        name: Extent report
+        path: ./Tests/OpenviduTests/test-output/OpenViduAngularTestReport.html
+      if: always()
+
+
+  javaScriptTest:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Execute OpenVidu Dev container
+      run: docker run --detach=true -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.24.0
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    - name: Set up Node 16
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16' 
+    - name: Execute OpenVidu Tutorial Java Backend
+      run: mvn --no-transfer-progress --batch-mode spring-boot:run &
+      working-directory: ./openvidu-basic-java
+    - name: Execute http-server to serve static web
+      run: |
+        npm install --location=global http-server
+        http-server openvidu-js/web &
+      working-directory: .
+    - name: Execute tests
+      run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduJsTest"
+      working-directory: ./Tests/OpenviduTests
+    - name: Upload Extent report
+      uses: actions/upload-artifact@v3
+      with:
+        name: Extent report
+        path: ./Tests/OpenviduTests/test-output/OpenViduJsTestTestReport.html
+      if: always()
+
+  ReactTest:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Execute OpenVidu Dev container
+      run: docker run --detach=true -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.24.0
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    - name: Set up Node 16
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16' 
+    - name: Execute OpenVidu Tutorial Java Backend
+      run: mvn --no-transfer-progress --batch-mode spring-boot:run &
+      working-directory: ./openvidu-basic-java
+    - name: Execute React app in dev mode
+      run: |
+        npm install
+        npm start &
+      working-directory: ./openvidu-react
+    - name: Execute tests
+      run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduReactTest"
+      working-directory: ./Tests/OpenviduTests
+    - name: Upload Extent report
+      uses: actions/upload-artifact@v3
+      with:
+        name: Extent report
+        path: ./Tests/OpenviduTests/test-output/OpenViduReactTestTestReport.html
+      if: always()
+
+  VueTest:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Execute OpenVidu Dev container
+      run: docker run --detach=true -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.24.0
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    - name: Set up Node 16
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+    - name: Execute OpenVidu Tutorial Java Backend
+      run: mvn --no-transfer-progress --batch-mode spring-boot:run &
+      working-directory: ./openvidu-basic-java
+    - name: Execute Vue app in dev mode
+      run: |
+        npm install --legacy-peer-deps
+        npm run serve &
+      working-directory: ./openvidu-vue
+    - name: Execute tests
+      run: mvn test --no-transfer-progress --batch-mode -Dtest="OpenViduVueTest"
+      working-directory: ./Tests/OpenviduTests
+    - name: Upload Extent report
+      uses: actions/upload-artifact@v3
+      with:
+        name: Extent report
+        path: ./Tests/OpenviduTests/test-output/OpenViduVueTestTestReport.html
+      if: always()
+      
+          
