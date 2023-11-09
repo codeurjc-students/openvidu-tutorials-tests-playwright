@@ -12,7 +12,7 @@ jobs:
     - name: Checkout  
       uses: actions/checkout@v4.1.1
 
-    - name: Crear directorio recording
+    - name: Create recording directory
       run: |
         sudo mkdir -p /opt/openvidu/recordings
         sudo chmod -R a+rwx /opt/openvidu/recordings
@@ -25,7 +25,7 @@ jobs:
         -e OPENVIDU_RECORDING_PATH=/opt/openvidu/recordings \
         -v /var/run/docker.sock:/var/run/docker.sock \
         -v /opt/openvidu/recordings:/opt/openvidu/recordings \
-        openvidu/openvidu-dev:2.28.0 > results/logs/docker.log 2>&1 &
+        openvidu/openvidu-dev:2.29.0 > results/logs/docker.log 2>&1 &
         sleep 10
     
     - uses: actions/setup-node@v3

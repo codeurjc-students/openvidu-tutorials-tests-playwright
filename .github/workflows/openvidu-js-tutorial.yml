@@ -2,6 +2,7 @@ name: openvidu-js-tutorial-test
 
 on: 
   workflow_dispatch: {}
+  push:
    
 
 jobs:
@@ -14,7 +15,7 @@ jobs:
 
     - name: Run OpenVidu deployment
       run: |
-        docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0 > results/logs/docker.log 2>&1 &
+        docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.29.0 > results/logs/docker.log 2>&1 &
         sleep 10
 
     - name: Run server application sample
