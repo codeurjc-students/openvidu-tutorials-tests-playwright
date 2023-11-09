@@ -25,15 +25,14 @@ jobs:
 
       - name: Setup Node.js
         uses: actions/setup-node@v4.0.0
-
-      - name: Install Angular CLI
-        run: npm install -g @angular/cli
+        with:
+          node-version: 16
 
       - name: Levantar la aplicación cliente
         working-directory: openvidu-angular
         run: |
           npm install
-          ng serve 
+          ng serve > ../results/logs/ng_server.log 2>&1 &
 
       - name: Install dependencies
         run: npm ci
