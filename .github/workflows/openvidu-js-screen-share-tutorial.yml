@@ -36,7 +36,10 @@ jobs:
     - uses: browser-actions/setup-chrome@v1
     
     - name: Install Playwright Browsers
-      run: npx playwright install 
+      run: npx playwright install
+
+    - name: Install playwright-test
+      run: npm install @playwright/test 
       
     - name: Runin Test
       run: |
