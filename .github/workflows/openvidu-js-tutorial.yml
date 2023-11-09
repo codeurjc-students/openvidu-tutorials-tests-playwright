@@ -2,7 +2,7 @@ name: openvidu-js-tutorial-test
 
 on: 
   workflow_dispatch: {}
-  push:
+   
    
 
 jobs:
@@ -36,7 +36,7 @@ jobs:
     
     - name: Install Playwright Browsers
       run: npx playwright install
-      
+
     - name: Install playwright-test
       run: npm install @playwright/test 
       

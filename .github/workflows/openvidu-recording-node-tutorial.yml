@@ -2,7 +2,7 @@ name: openvidu-recording-node-tutorial
 
 on: 
   workflow_dispatch: {}
-  push:
+   
 
 jobs:
   build:
@@ -44,7 +44,7 @@ jobs:
     
     - name: Install Playwright Browsers
       run: npx playwright install
-      
+
     - name: Install playwright-test
       run: npm install @playwright/test 
       
