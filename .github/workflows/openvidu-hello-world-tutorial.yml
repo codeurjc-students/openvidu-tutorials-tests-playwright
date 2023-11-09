@@ -1,0 +1,50 @@
+name: openvidu-Hello-World-tutorial-test
+
+on:
+  workflow_dispatch: {}
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 
+        uses: actions/checkout@v4.1.1
+
+      - name: Run OpenVidu deployment
+        run: |
+          docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0 > results/logs/docker.log 2>&1 &
+          sleep 10
+
+      - name: Run server application sample
+        working-directory: openvidu-basic-node
+        run: |
+          npm install
+          node index.js > ../results/logs/node_index.log 2>&1 &
+
+      - name: Run the client application tutorial
+        run: |
+          npm install --location=global http-server
+          sudo http-server openvidu-hello-world/web > results/logs/http_server.log 2>&1 &
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Install Playwright Browsers
+        run: npx playwright install
+
+      - name: Runin Test
+        working-directory: tests
+        run: |
+          npx playwright test openvidu-hello-world-test.spec.js
+
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: results-helloworld
+          path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/results/
+          retention-days: 30

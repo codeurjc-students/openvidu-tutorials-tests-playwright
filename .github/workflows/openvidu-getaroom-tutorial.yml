@@ -1,0 +1,50 @@
+name: openvidu-getaroom-tutorial-test
+
+on:
+  workflow_dispatch: {}
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4.1.1
+
+      - name: Run OpenVidu deployment
+        run: |
+          docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.28.0 > results/logs/docker_log.txt 2>&1 &
+          sleep 10
+
+      - name: Run server application sample
+        working-directory: openvidu-basic-node
+        run: |
+          npm install
+          node index.js > ../results/logs/nodeindex_log.txt 2>&1 &
+          sleep 5
+
+      - name: Run the client application tutorial
+        run: |
+          npm install --location=global http-server
+          http-server openvidu-getaroom/web > results/logs/http_server_log.txt 2>&1 &
+          sleep 5
+
+      - name: Install dependencies
+        run: npm ci
+
+      - uses: browser-actions/setup-chrome@v1
+
+      - name: Install Playwright Browsers
+        run: npx playwright install
+
+      - name: Runin Test
+        run: |
+          cd tests
+          npx playwright test openvidu-getaroom-test.spec.js
+
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: results-getaroom
+          path: /home/runner/work/openvidu-tutorials-tests-playwright/openvidu-tutorials-tests-playwright/results/
+          retention-days: 30
