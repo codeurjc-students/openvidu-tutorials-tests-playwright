@@ -51,7 +51,7 @@ jobs:
     - name: Runin Test
       working-directory: tests
       run: |   
-         npx playwright test tests/openvidu-recording-node-tutorial.spec.js
+         npx playwright test openvidu-recording-node-tutorial.spec.js
          
     - name: Copy recordings
       working-directory: /opt/openvidu/recordings
