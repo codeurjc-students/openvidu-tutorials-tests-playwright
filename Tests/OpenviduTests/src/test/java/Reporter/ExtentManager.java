@@ -134,5 +134,4 @@ public class ExtentManager {
     public void tearDownExtent(ExtentReports extentReports){
         extentReports.flush();
     }
-
 }
