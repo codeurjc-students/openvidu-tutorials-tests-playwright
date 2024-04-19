@@ -26,7 +26,7 @@ jobs:
 
       - name: Run the client application tutorial
         run: |
-          npm install --location=global http-server
+          sudo npm install --location=global http-server
           http-server openvidu-getaroom/web > results/logs/http_server_log.txt 2>&1 &
           sleep 5
 

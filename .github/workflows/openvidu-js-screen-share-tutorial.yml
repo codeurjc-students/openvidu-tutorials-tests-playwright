@@ -27,7 +27,7 @@ jobs:
         
     - name: Run the client application tutorial
       run: |
-        npm install --location=global http-server
+        sudo npm install --location=global http-server
         sudo http-server openvidu-js-screen-share/web > results/logs/http_server.log 2>&1 &
 
     - name: Install dependencies
