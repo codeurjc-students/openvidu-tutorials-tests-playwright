@@ -25,7 +25,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page1.click('button.btn.btn-lg.btn-success');
     // Espera a que un elemento específico se vuelva visible.
     await page1.waitForSelector('#session', { visible: true });
-    await page1.waitForTimeout(5000);ç
+    await page1.waitForTimeout(5000);
 
     // Encuentra los elementos de video en la página y verifica que haya exactamente dos de ellos.
     var videoElements = await page1.$$('video');
