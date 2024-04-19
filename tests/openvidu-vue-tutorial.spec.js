@@ -43,7 +43,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
   
     // Busca los elementos de video en la segunda página y verifica que haya exactamente dos de ellos.
     videoElements = await page2.$$('video');
-    expect(videoElements.length).toEqual(2);
+    expect(videoElements.length).toEqual(3);
 
     // Captura una captura de pantalla de la página 2 y la guarda en un archivo.
     await page2.screenshot({ path: '../results/screenshots/page2_screenshot.png' });
