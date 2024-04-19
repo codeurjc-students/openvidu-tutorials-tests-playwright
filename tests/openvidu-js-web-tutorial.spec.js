@@ -5,7 +5,7 @@ const { test, expect, chromium } = require('@playwright/test');
 test('Checking for the presence of two active webcams in an OpenVidu session', async () => {
   // Launch a headless Chromium browser with specific settings.
   const browser = await chromium.launch({
-    headless: false,
+    headless: true,
     deviceScaleFactor: 1, // Specify the page's scale factor
     userAgent: 'Chrome/88.0.4324.182', // Specify the user agent
     args: ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream"]

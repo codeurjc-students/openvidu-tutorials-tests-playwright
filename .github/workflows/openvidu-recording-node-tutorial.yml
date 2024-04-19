@@ -34,8 +34,8 @@ jobs:
     
       run: |
         cd openvidu-recording-node
-        npm install
-        node server.js http://localhost:4443 MY_SECRET > ../results/logs/node_server.log 2>&1 &
+        sudo npm install
+        sudo node server.js http://localhost:4443 MY_SECRET > ../results/logs/node_server.log 2>&1 &
         sleep 10
         
     - name: Install dependencies
