@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - uses: browser-actions/setup-chrome@v1
+       
 
       - name: Install Playwright Browsers
         run: npx playwright install
