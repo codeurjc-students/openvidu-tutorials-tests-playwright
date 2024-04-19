@@ -35,6 +35,10 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     // Get the value of the 'input#copy-input' element.
     const inputValue = await page1.$eval('input#copy-input', (input) => input.value);
 
+    var videoElements = await page1.$$('video');
+
+    expect(videoElements.length).toEqual(1);
+
     // Capture a screenshot of page1 and save it to a file.
     await page1.screenshot({ path: '../results/screenshots/page1_screenshot.png' });
     
@@ -50,7 +54,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page2.screenshot({ path: '../results/screenshots/page2_screenshot.png' });
 
     // Find HTML elements that contain video streams on page2.
-    const videoElements = await page2.$$('video');
+    videoElements = await page2.$$('video');
     
     // Check that there are exactly two elements found.
     expect(videoElements.length).toEqual(2);

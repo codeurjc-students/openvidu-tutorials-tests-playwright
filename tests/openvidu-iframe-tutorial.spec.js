@@ -27,11 +27,17 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     let iframeHandle = await page1.waitForSelector('iframe.openvidu-iframe');
     let frame = await iframeHandle.contentFrame();
 
-    await page1.screenshot({ path: '../results/screenshots/page1_screensho.png' });
+    
 
     // Click the "JOIN" button within the iframe and wait for the '#session' element to become visible.
     await frame.click('input[type="submit"]');
     await frame.waitForSelector('#session', { visible: true });
+
+    videoElements = await frame.$$('video');
+
+    expect(videoElements.length).toEqual(1);
+
+    await page1.screenshot({ path: '../results/screenshots/page1_screenshot.png' });
 
     // Navigate to the specified URL on page2.
     await page2.goto('http://localhost:8081/');
@@ -47,7 +53,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page2.screenshot({ path: '../results/screenshots/page2_screensho.png' });
 
     // Find HTML elements within the frame that contain video streams.
-    const videoElements = await frame.$$('video');
+    videoElements = await frame.$$('video');
 
     // Check that there are exactly two elements found.
     expect(videoElements.length).toEqual(2);

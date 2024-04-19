@@ -24,6 +24,11 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
 
     await page1.click('#join-btn');
     await page1.waitForSelector('#session', { visible: true });
+    
+    videoElements = await page1.$$('video');
+
+    expect(videoElements.length).toEqual(1);
+
     await page1.screenshot({ path: '../results/screenshots/page1_screenshot.png' });
 
     await page2.goto('https://localhost:5000');
@@ -40,7 +45,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page2.screenshot({ path: '../results/screenshots/page2_stoprecording_screenshot.png' });
 
     // Buscar los elementos HTML que contienen los streams de video
-    const videoElements = await page2.$$('video');
+    videoElements = await page2.$$('video');
 
     // Comprobar que hay exactamente dos elementos encontrados
     expect(videoElements.length).toEqual(2);

@@ -30,7 +30,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page1.waitForSelector('#session', { visible: true });
     await page1.waitForTimeout(5000);
 
-     // Find HTML elements within page2 that contain video streams.
+  
     var videoElements = await page1.$$('video');
 
     expect(videoElements.length).toEqual(2);
