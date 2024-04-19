@@ -25,7 +25,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page1.click('#join-btn');
     await page1.waitForSelector('#session', { visible: true });
     
-    videoElements = await page1.$$('video');
+    var videoElements = await page1.$$('video');
 
     expect(videoElements.length).toEqual(1);
 
