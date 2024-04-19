@@ -5,7 +5,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
   const browser = await chromium.launch({
     headless: true,
     deviceScaleFactor: 1, // Specify the page's scale factor
-    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36', // Specify the user agent
+    userAgent: 'Chrome/88.0.4324.182', // Specify the user agent
     args: ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream"]
   });
 
@@ -20,7 +20,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
 
   try {
     // Navigate to the specified URL on page1.
-    await page1.goto('http://127.0.0.1:8080');
+    await page1.goto('http://localhost:8080');
 
     // Fill in the '#userName' field with 'Page1', click the 'JOIN' button, and wait for the '#session' element to become visible.
     await page1.fill('#userName', 'Page1');
@@ -32,7 +32,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page1.screenshot({ path: '../results/screenshots/page1.png' });
 
     // Navigate to the specified URL on page2.
-    await page2.goto('http://127.0.0.1:8080');
+    await page2.goto('http://localhost:8080');
 
     // Fill in the '#userName' field with 'Page2', click the 'JOIN' button, wait for the '#buttonScreenShare' element to become visible, and click it.
     await page2.fill('#userName', 'Page2');

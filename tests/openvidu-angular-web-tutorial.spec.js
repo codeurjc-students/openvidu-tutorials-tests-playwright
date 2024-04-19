@@ -6,7 +6,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
   const browser = await chromium.launch({
     headless: true,
     deviceScaleFactor: 1,
-    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36',
+    userAgent: 'Chrome/88.0.4324.182',
     args: ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream"]
   });
 
@@ -20,6 +20,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
   const page2 = await context.newPage();
 
   try {
+    
     // Navigate to the specified URL on page1.
     await page1.goto('http://localhost:4200');
 

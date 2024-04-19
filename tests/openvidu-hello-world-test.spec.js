@@ -5,7 +5,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
   const browser = await chromium.launch({
     headless: true,
     deviceScaleFactor: 1,
-    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36', // Specify the user agent
+    userAgent: 'Chrome/88.0.4324.182', // Specify the user agent
     args: ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream"]
   });
 
@@ -20,7 +20,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
 
   try {
     // Navigate to a specific URL on page 1.
-    await page1.goto('http://127.0.0.1:8080');
+    await page1.goto('http://localhost:8080');
     
 
     // Interact with page1, such as clicking a button and waiting for a specific element to become visible, then wait for a timeout..
@@ -32,7 +32,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page1.screenshot({ path: '../results/screenshots/page1_screenshot.png' });
 
     // Navigate to a specific URL on page 1.
-    await page2.goto('http://127.0.0.1:8080');
+    await page2.goto('http://localhost:8080');
 
     // Interact with page2 and wait for a specific element to become visible, then wait for a timeout.
     await page2.click('#join input[type="submit"]');

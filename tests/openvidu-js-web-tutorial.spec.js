@@ -5,9 +5,9 @@ const { test, expect, chromium } = require('@playwright/test');
 test('Checking for the presence of two active webcams in an OpenVidu session', async () => {
   // Launch a headless Chromium browser with specific settings.
   const browser = await chromium.launch({
-    headless: true,
+    headless: false,
     deviceScaleFactor: 1, // Specify the page's scale factor
-    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36', // Specify the user agent
+    userAgent: 'Chrome/88.0.4324.182', // Specify the user agent
     args: ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream"]
   });
 
@@ -30,9 +30,16 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page1.waitForSelector('#session', { visible: true });
     await page1.waitForTimeout(5000);
 
+     // Find HTML elements within page2 that contain video streams.
+    var videoElements = await page1.$$('video');
+
+    expect(videoElements.length).toEqual(2);
+
     // Capture a screenshot of page1 and save it to a specific location.
     await page1.screenshot({ path: '../results/screenshots/page1.png' });
 
+    
+    
     // Navigate to a specific URL on page2.
     await page2.goto('http://localhost:8080');
     
@@ -46,7 +53,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page2.screenshot({ path: '../results/screenshots/page2.png' });
 
     // Find HTML elements within page2 that contain video streams.
-    const videoElements = await page2.$$('video');
+    videoElements = await page2.$$('video');
 
     // Check that there are exactly three elements found.
     expect(videoElements.length).toEqual(3);
