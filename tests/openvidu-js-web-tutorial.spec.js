@@ -25,7 +25,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page1.goto('http://localhost:8080');
     
     // Fill in the '#userName' field with 'Page1', click the 'JOIN' button, and wait for the '#session' element to become visible.
-    await page1.fill('#userName', 'Page1');
+    await page1.fill('#userName', 'User1');
     await page1.click('#join input[type="submit"]');
     await page1.waitForSelector('#session', { visible: true });
     await page1.waitForTimeout(5000);
@@ -44,7 +44,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page2.goto('http://localhost:8080');
     
     // Fill in the '#userName' field with 'Page2', click the 'JOIN' button, wait for the '#session' element to become visible, and wait for 5 seconds.
-    await page2.fill('#userName', 'Page2');
+    await page2.fill('#userName', 'User2');
     await page2.click('#join input[type="submit"]');
     await page2.waitForSelector('#session', { visible: true });
     await page2.waitForTimeout(5000);
