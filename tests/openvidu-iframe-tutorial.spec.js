@@ -27,7 +27,6 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     let iframeHandle = await page1.waitForSelector('iframe.openvidu-iframe');
     let frame = await iframeHandle.contentFrame();
 
-    
 
     // Click the "JOIN" button within the iframe and wait for the '#session' element to become visible.
     await frame.click('input[type="submit"]');

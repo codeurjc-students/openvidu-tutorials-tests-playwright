@@ -26,6 +26,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page1.waitForSelector('button.btn-success', { timeout: 10000 });
 
     // Click the button with the 'onclick' attribute.
+    
     await page1.click('button.btn-success');
     
     // Wait for the '#session' element to become visible and wait for 5 seconds.

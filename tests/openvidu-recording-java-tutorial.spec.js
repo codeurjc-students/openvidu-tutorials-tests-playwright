@@ -28,7 +28,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page1.goto('https://localhost:5000');
 
     // Perform actions on the first page.
-    await page1.click('#join-btn');
+    await page1.click('button.btn-success');
     await page1.waitForSelector('#session', { visible: true });
     
     // Find video elements on the first page and verify there is exactly one.
@@ -46,8 +46,8 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page2.waitForSelector('#session', { visible: true });
     await page2.click('#buttonStartRecording');
     await page2.click('#buttonGetRecording');
-    await page2.waitForTimeout(5000); 
     await page2.screenshot({ path: '../results/screenshots/page2_startrecording_screenshot.png' });
+    await page2.waitForTimeout(5000);
     await page2.click('#buttonStopRecording');
     await page2.click('#buttonGetRecording');
     await page2.screenshot({ path: '../results/screenshots/page2_stoprecording_screenshot.png' });
