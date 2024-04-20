@@ -42,18 +42,21 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page2.fill('#userName', 'User2');
     await page2.click('#join input[type="submit"]');
     await page2.waitForSelector('#buttonScreenShare', { state: 'visible' });
+    await page2.screenshot({ path: '../results/screenshots/pagebuttonshare.png' });
     await page2.click('#buttonScreenShare');
     await page2.waitForTimeout(5000);
 
-    // Capture a screenshot of page2 and save it to 'results/screenshot/page2.png'.
-    await page2.screenshot({ path: '../results/screenshots/page2.png' });
+  
 
     // Find HTML elements within page2 that contain video streams.
     videoElements = await page2.$$('video');
 
     // Check that there are exactly four elements found.
     expect(videoElements.length).toEqual(4);
-
+  
+    // Capture a screenshot of page2 and save it to 'results/screenshot/page2.png'.
+    await page2.screenshot({ path: '../results/screenshots/page2.png' });
+    
     // Close the pages and the browser.
     await Promise.all([page1.close(), page2.close()]);
     await browser.close();
