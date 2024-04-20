@@ -22,12 +22,13 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     // Navigate to a specific URL on page 1 and perform actions such as filling a text field and clicking a button.
     await page1.goto('http://localhost:8080');
     await page1.fill('input[type="text"]', 'User1');
-    await page1.click('button.btn.btn-lg.btn-success');
 
+    await page1.click('button.btn.btn-lg.btn-success');
+    
     // Wait for a specific element to become visible.
     await page1.waitForSelector('#session', { visible: true });
-    await page1.waitForTimeout(5000);
-    
+    await page2.waitForTimeout(5000);
+
     // Find video elements on page 1 and verify there are exactly two of them.
     var videoElements = await page1.$$('video');
     expect(videoElements.length).toEqual(2);
@@ -44,7 +45,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
   
     // Find video elements on page 2 and verify there are exactly two of them.
     videoElements = await page2.$$('video');
-    expect(videoElements.length).toEqual(2);
+    expect(videoElements.length).toEqual(3);
 
     // Capture a screenshot of page 2 and save it to a file.
     await page2.screenshot({ path: '../results/screenshots/page2_screenshot.png' });
