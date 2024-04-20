@@ -42,7 +42,6 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page2.fill('#userName', 'User2');
     await page2.click('#join input[type="submit"]');
     await page2.waitForSelector('#buttonScreenShare', { state: 'visible' });
-    await page2.screenshot({ path: '../results/screenshots/pagebuttonshare.png' });
     await page2.click('#buttonScreenShare');
     await page2.waitForTimeout(5000);
 
