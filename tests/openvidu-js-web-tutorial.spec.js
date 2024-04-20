@@ -27,7 +27,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     // Fill in the '#userName' field with 'Page1', click the 'JOIN' button, and wait for the '#session' element to become visible.
     await page1.fill('#userName', 'User1');
 
-    await page1.click('button.btn-success');
+    await page1.click('#join input[type="submit"]');
 
     
     await page1.waitForSelector('#session', { visible: true });

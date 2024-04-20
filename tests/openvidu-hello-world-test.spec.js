@@ -24,7 +24,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     
 
     // Interact with page1, such as clicking a button and waiting for a specific element to become visible, then wait for a timeout..
-    await page1.click('button.btn-success');
+    await page1.click('#join input[type="submit"]');
     await page1.waitForSelector('#session', { visible: true });
     await page1.waitForTimeout(5000);
 
