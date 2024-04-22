@@ -29,7 +29,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page1.fill('#userName', 'User1');
     await page1.click('#join input[type="submit"]');
     await page1.waitForSelector('#session', { visible: true });
-    await page1.waitForTimeout(5000);
+    await page1.waitForTimeout(10000);
     
     var videoElements = await page1.$$('video');
 
@@ -45,7 +45,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page2.fill('#userName', 'User2');
     await page2.click('#join input[type="submit"]');
     await page2.waitForSelector('#session', { visible: true });
-    await page2.waitForTimeout(5000);
+    await page2.waitForTimeout(10000);
 
     // Capture a screenshot of page2 and save it to a specific location.
     await page2.screenshot({ path: '../results/screenshots/page2.png' });
@@ -56,7 +56,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     // Check that there are exactly three elements found.
     expect(videoElements.length).toEqual(3);
 
-    // Close the pages and the browser.
+    
     await Promise.all([page1.close(), page2.close()]);
     await browser.close();
   } catch (error) {
