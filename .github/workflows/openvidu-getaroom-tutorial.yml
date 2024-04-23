@@ -32,15 +32,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-       
-
       - name: Install Playwright Browsers
         run: npx playwright install
       
       - name: Install playwright-test
         run: npm install @playwright/test
 
-      - name: Runin Test
+      - name: Runing Test
         run: |
           cd tests
           npx playwright test openvidu-getaroom-test.spec.js

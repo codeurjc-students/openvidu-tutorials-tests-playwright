@@ -41,7 +41,7 @@ jobs:
     - name: Install playwright-test
       run: npm install @playwright/test 
       
-    - name: Runin Test
+    - name: Runing Test
       run: |
          cd tests      
          npx playwright test tests/openvidu-iframe-tutorial.spec.js

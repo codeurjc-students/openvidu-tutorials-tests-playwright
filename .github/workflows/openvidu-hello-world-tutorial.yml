@@ -39,7 +39,7 @@ jobs:
       - name: Install playwright-test
         run: npm install @playwright/test
 
-      - name: Runin Test
+      - name: Runing Test
         working-directory: tests
         run: |
           npx playwright test openvidu-hello-world-test.spec.js

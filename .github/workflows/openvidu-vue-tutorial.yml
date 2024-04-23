@@ -43,7 +43,7 @@ jobs:
     - name: Install playwright-test
       run: npm install @playwright/test 
       
-    - name: Runin Test
+    - name: Runing Test
       run: |
          cd tests
          npx playwright test openvidu-vue-tutorial.spec.js
