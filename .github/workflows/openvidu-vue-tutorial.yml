@@ -27,7 +27,7 @@ jobs:
     - name: set up Node.js
       uses: actions/setup-node@v4.0.0
       with:
-        node-version: 16
+        node-version: 14
 
     - name: Run the client application tutorial
       working-directory: openvidu-vue
