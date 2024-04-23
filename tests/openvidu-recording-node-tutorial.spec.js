@@ -25,7 +25,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
 
   try {
     // Navigate to a specific URL on the first page.
-    await page1.goto('http://localhost:5000');
+    await page1.goto('https://localhost:5000');
 
     // Perform actions on the first page.
     await page1.click('button.btn-success');

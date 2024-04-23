@@ -1,7 +1,6 @@
-name: openvidu-getaroom-tutorial-test
+name: nombre_del_tutorial
 
 on:
-
   push:
 
 
@@ -21,13 +20,13 @@ jobs:
         working-directory: openvidu-basic-node
         run: |
           npm install
-          node index.js > ../results/logs/nodeindex_log.txt 2>&1 &
+          node index.js > ../results/logs/server_aplication.log 2>&1 &
           sleep 5
 
       - name: Run the client application tutorial
         run: |
           sudo npm install --location=global http-server
-          http-server openvidu-getaroom/web > results/logs/http_server_log.txt 2>&1 &
+          http-server openvidu-getaroom/web > results/logs/client_aplication.log 2>&1 &
           sleep 5
 
       - name: Install dependencies

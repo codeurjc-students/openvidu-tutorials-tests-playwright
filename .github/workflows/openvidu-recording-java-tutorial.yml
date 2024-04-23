@@ -36,10 +36,10 @@ jobs:
         java-version: '11'
   
 
-    - name: Run server application sample
+    - name: Run server and client application sample
       working-directory: openvidu-recording-java
       run: |
-        mvn package exec:java > ../results/logs/server_aplication.log 2>&1 &
+        mvn package exec:java > ../results/logs/server_client_aplication.log 2>&1 &
         sleep 10
         
     - name: Install dependencies
