@@ -14,14 +14,14 @@ jobs:
 
       - name: Run OpenVidu deployment
         run: |
-          docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.29.0 > results/logs/docker.log 2>&1 &
+          docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.29.0 > results/logs/openvidu.log 2>&1 &
           sleep 10
 
       - name: Run server application sample
         working-directory: openvidu-basic-node
         run: |
           npm install
-          node index.js > ../results/logs/node_index.log 2>&1 &
+          node index.js > ../results/logs/server_aplication.log 2>&1 &
 
       - name: Setup Node.js
         uses: actions/setup-node@v4.0.0
@@ -35,12 +35,10 @@ jobs:
         working-directory: openvidu-angular
         run: |
           npm install
-          ng serve > ../results/logs/ng_server.log 2>&1 &
+          ng serve > ../results/logs/client_aplication.log 2>&1 &
 
       - name: Install dependencies
         run: npm ci
-
-       
 
       - name: Install Playwright Browsers
         run: npx playwright install

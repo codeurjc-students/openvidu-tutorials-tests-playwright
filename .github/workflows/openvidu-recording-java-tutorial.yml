@@ -26,7 +26,7 @@ jobs:
         -e OPENVIDU_RECORDING_PATH=/opt/openvidu/recordings \
         -v /var/run/docker.sock:/var/run/docker.sock \
         -v /opt/openvidu/recordings:/opt/openvidu/recordings \
-        openvidu/openvidu-dev:2.29.0 > results/logs/docker.log 2>&1 &
+        openvidu/openvidu-dev:2.29.0 > results/logs/openvidu.log 2>&1 &
         sleep 10
     
     - name: Set up Java
@@ -39,7 +39,7 @@ jobs:
     - name: Run server application sample
       working-directory: openvidu-recording-java
       run: |
-        mvn package exec:java > ../results/logs/mvnpackage_log.txt 2>&1 &
+        mvn package exec:java > ../results/logs/server_aplication.log 2>&1 &
         sleep 10
         
     - name: Install dependencies

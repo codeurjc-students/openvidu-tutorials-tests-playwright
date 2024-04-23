@@ -21,7 +21,7 @@ jobs:
       working-directory: openvidu-basic-node
       run: |
         npm install
-        node index.js > ../results/logs/node_index.log 2>&1 &
+        node index.js > ../results/logs/server_aplication.log 2>&1 &
     
     - name: Run the client application tutorial
       run: |
