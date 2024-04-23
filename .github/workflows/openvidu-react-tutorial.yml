@@ -26,6 +26,8 @@ jobs:
 
     - name: Configurar Node.js
       uses: actions/setup-node@v4.0.0
+      with:
+        node-version: 16
 
     - name: Run the client application tutorial
       working-directory: openvidu-react
