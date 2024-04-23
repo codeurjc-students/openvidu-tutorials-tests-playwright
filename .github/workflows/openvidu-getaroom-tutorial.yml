@@ -1,4 +1,4 @@
-name: nombre_del_tutorial
+name: openvidu-getaroom
 
 on:
   push:
