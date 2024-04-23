@@ -39,8 +39,8 @@ jobs:
         run: npm install @playwright/test
 
       - name: Runing Test
+        working-directory: tests
         run: |
-          cd tests
           npx playwright test openvidu-getaroom-test.spec.js
 
       - uses:  actions/upload-artifact@v4
