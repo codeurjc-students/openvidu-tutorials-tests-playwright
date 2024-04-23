@@ -1,7 +1,7 @@
 name: openvidu-Hello-World-tutorial-test
 
 on:
-  workflow_dispatch: {}
+
   push:
 
 

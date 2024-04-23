@@ -1,7 +1,7 @@
 name: openvidu-iframe-tutorial 
 
 on: 
-  workflow_dispatch: {}
+
   push:
 
 jobs:

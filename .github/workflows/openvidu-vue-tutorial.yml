@@ -1,7 +1,7 @@
 name: openvidu-vue-tutorial
 
 on:
-  workflow_dispatch: {}
+
   push:
    
 

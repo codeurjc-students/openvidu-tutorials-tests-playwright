@@ -1,7 +1,7 @@
 name: openvidu-js-screen-share-tutorial 
 
 on: 
-  workflow_dispatch: {}
+
   push:
    
 
