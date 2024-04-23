@@ -1,7 +1,6 @@
 name: openvidu-recording-java-tutorial 
 
 on: 
-
   push:
    
 

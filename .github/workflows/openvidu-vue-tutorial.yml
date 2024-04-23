@@ -1,7 +1,6 @@
 name: openvidu-vue-tutorial
 
 on:
-
   push:
    
 
