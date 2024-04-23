@@ -39,7 +39,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page1.screenshot({ path: '../results/screenshots/page1_screenshot.png' });
 
     // Navigate to a specific URL on the second page.
-    await page2.goto('http://localhost:5000');
+    await page2.goto('https://localhost:5000');
                       
     // Perform actions on the second page.
     await page2.click('#join-btn');

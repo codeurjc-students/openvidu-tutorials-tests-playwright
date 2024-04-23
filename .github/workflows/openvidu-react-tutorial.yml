@@ -24,7 +24,7 @@ jobs:
         npm install
         node index.js > ../results/logs/server_aplication.log 2>&1 &
 
-    - name: Configurar Node.js
+    - name: set up Node.js
       uses: actions/setup-node@v4.0.0
       with:
         node-version: 16
