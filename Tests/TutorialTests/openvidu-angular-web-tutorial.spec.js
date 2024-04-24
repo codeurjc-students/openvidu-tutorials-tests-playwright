@@ -22,7 +22,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
   try {
     
     // Navigate to the specified URL on page1.
-    await page1.goto('http://localhost:4200');
+    await page1.goto('http://localhost:4200/');
 
     // Fill in the username field, click the join button, and wait for the session to become visible.
     
@@ -46,7 +46,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page1.screenshot({ path: '../../results/screenshots/page1_screenshot.png' });
 
     // Navigate to the specified URL on page2.
-    await page2.goto('http://localhost:4200');
+    await page2.goto('http://localhost:4200/');
 
     // Fill in the username field, click the join button, and wait for the session to become visible.
     await page2.fill('#userName', 'User2');
