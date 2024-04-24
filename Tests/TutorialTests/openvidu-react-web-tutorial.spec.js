@@ -28,12 +28,12 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     // Fill in the '#userName' field with 'Page1', click the 'JOIN' button, and wait for the '#session' element to become visible.
     await page1.fill('#userName', 'User1');
     await page1.click('#join input[type="submit"]');
-    await page1.waitForSelector('video', { visible: true });
-    await page1.waitForTimeout(20000);
+    await page1.waitForSelector('#session', { visible: true });
+    await page1.waitForTimeout(1000);
     
     var videoElements = await page1.$$('video');
     
-    expect(videoElements.length).toEqual(1);
+    expect(videoElements.length).toEqual(2);
 
     for (const videoElement of videoElements) {
       
@@ -43,7 +43,6 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
      
     }
 
-    expect(videoElements.length).toEqual(2);
 
     // Capture a screenshot of page1 and save it to a specific location.
     await page1.screenshot({ path: '../../results/screenshots/page1.png' });
@@ -63,7 +62,8 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     // Find HTML elements within page2 that contain video streams.
         videoElements = await page2.$$('video');
     
-    expect(videoElements.length).toEqual(2);
+    // Check that there are exactly three elements found.
+    expect(videoElements.length).toEqual(3);
 
     for (const videoElement of videoElements) {
       
@@ -73,8 +73,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
 
     }
 
-    // Check that there are exactly three elements found.
-    expect(videoElements.length).toEqual(3);
+
 
     
     await Promise.all([page1.close(), page2.close()]);
