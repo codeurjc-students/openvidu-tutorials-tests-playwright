@@ -67,10 +67,10 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
 
     }
  
-    audioElement = await page2.$('audio');
+    var audioElement = await page2.$('audio');
     expect(audioElement).not.toBe(null);
 
-    isMuted = await audioElement.evaluate(audio => audio.muted);
+    var isMuted = await audioElement.evaluate(audio => audio.muted);
     expect(isMuted).not.toBe(true);
 
 
