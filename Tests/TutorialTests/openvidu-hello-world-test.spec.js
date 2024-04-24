@@ -3,7 +3,7 @@ const { test, expect, chromium } = require('@playwright/test');
 test('Checking for the presence of two active webcams in an OpenVidu session', async () => {
   // Launch a headless Chromium browser with specific settings.
   const browser = await chromium.launch({
-    headless: true,
+    headless: false,
     deviceScaleFactor: 1,
     userAgent: 'Chrome/88.0.4324.182', // Specify the user agent
     args: ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream"]
@@ -29,8 +29,17 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page1.waitForTimeout(5000);
 
     var videoElements = await page1.$$('video');
-
+    
     expect(videoElements.length).toEqual(1);
+
+    for (const videoElement of videoElements) {
+      
+      const isPaused = await videoElement.evaluate(video => video.paused);
+      
+      expect(isPaused).not.toBe(true);
+     
+    }
+
 
     // Capture a screenshot of page1 and save it to a file.
     await page1.screenshot({ path: '../results/screenshots/page1_screenshot.png' });
@@ -48,7 +57,27 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
 
     // Find HTML elements containing video streams on page2 and check if there are exactly two of them.
     videoElements = await page2.$$('video');
+    
     expect(videoElements.length).toEqual(2);
+
+    for (const videoElement of videoElements) {
+      
+      const isPaused = await videoElement.evaluate(video => video.paused);
+      
+      expect(isPaused).not.toBe(true);
+
+    }
+
+    var isMuted = await videoElements[1].evaluate(video => video.muted);
+      
+    expect(isMuted).not.toBe(true);
+
+    videoElements = await page1.$$('video');
+
+    isMuted = await videoElements[1].evaluate(video => video.muted);
+      
+    expect(isMuted).not.toBe(true);
+
 
     // Close the pages and the browser.
     await Promise.all([page1.close(), page2.close()]);

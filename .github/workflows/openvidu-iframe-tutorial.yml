@@ -42,7 +42,7 @@ jobs:
       run: npm install @playwright/test 
       
     - name: Runing Test
-      working-directory: tests
+      working-directory: tests/tutorialtests
       run: |      
          npx playwright test tests/openvidu-iframe-tutorial.spec.js
 

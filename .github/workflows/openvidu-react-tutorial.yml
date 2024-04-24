@@ -45,7 +45,7 @@ jobs:
       run: npm install @playwright/test 
       
     - name: Runing Test
-      working-directory: tests
+      working-directory: tests/tutorialtests
       run: |
          npx playwright test openvidu-react-web-tutorial.spec.js
 
