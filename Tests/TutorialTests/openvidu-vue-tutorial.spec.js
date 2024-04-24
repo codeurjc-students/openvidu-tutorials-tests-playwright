@@ -44,7 +44,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
    
 
     // Capture a screenshot of page 1 and save it to a file.
-    await page1.screenshot({ path: '../results/screenshots/page1_screenshot.png' });
+    await page1.screenshot({ path: '../../results/screenshots/page1_screenshot.png' });
     
     // Navigate to a specific URL on page 2 and perform similar actions to page 1.
     await page2.goto('http://localhost:8080');
@@ -67,7 +67,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     }
 
     // Capture a screenshot of page 2 and save it to a file.
-    await page2.screenshot({ path: '../results/screenshots/page2_screenshot.png' });
+    await page2.screenshot({ path: '../../results/screenshots/page2_screenshot.png' });
 
     // Close the pages and the browser.
     await Promise.all([page1.close(), page2.close()]);
@@ -75,8 +75,8 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
 
   } catch (error) {
     // In case of error, capture screenshots and log the error.
-    await page1.screenshot({ path: '../results/screenshots/error_page1_screenshot.png' });
-    await page2.screenshot({ path: '../results/screenshots/error_page2_screenshot.png' });
+    await page1.screenshot({ path: '../../results/screenshots/error_page1_screenshot.png' });
+    await page2.screenshot({ path: '../../results/screenshots/error_page2_screenshot.png' });
     throw error; // Rethrow the error to make the test fail.
   }
 });

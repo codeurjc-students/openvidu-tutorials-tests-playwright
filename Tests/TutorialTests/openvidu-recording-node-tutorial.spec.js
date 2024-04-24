@@ -46,7 +46,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     
 
     // Capture a screenshot of the first page and save it to a file.
-    await page1.screenshot({ path: '../results/screenshots/page1_screenshot.png' });
+    await page1.screenshot({ path: '../../results/screenshots/page1_screenshot.png' });
 
     // Navigate to a specific URL on the second page.
     await page2.goto('https://localhost:5000');
@@ -57,10 +57,10 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page2.click('#buttonStartRecording');
     await page2.click('#buttonGetRecording');
     await page2.waitForTimeout(5000); 
-    await page2.screenshot({ path: '../results/screenshots/page2_startrecording_screenshot.png' });
+    await page2.screenshot({ path: '../../results/screenshots/page2_startrecording_screenshot.png' });
     await page2.click('#buttonStopRecording');
     await page2.click('#buttonGetRecording');
-    await page2.screenshot({ path: '../results/screenshots/page2_stoprecording_screenshot.png' });
+    await page2.screenshot({ path: '../../results/screenshots/page2_stoprecording_screenshot.png' });
 
     // Find video elements on the second page and verify there are exactly two.
         videoElements = await page2.$$('video');
@@ -81,8 +81,8 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
   
   } catch (error) {
     // In case of error, capture screenshots and log the error.
-    await page1.screenshot({ path: '../results/screenshots/error_page1_screenshot.png' });
-    await page2.screenshot({ path: '../results/screenshots/error_page2_screenshot.png' });
+    await page1.screenshot({ path: '../../results/screenshots/error_page1_screenshot.png' });
+    await page2.screenshot({ path: '../../results/screenshots/error_page2_screenshot.png' });
     throw error; // Rethrow the error to make the test fail
   } 
 });

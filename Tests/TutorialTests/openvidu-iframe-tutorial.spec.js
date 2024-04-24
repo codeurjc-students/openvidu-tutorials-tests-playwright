@@ -44,7 +44,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
      
     }
 
-    await page1.screenshot({ path: '../results/screenshots/page1_screenshot.png' });
+    await page1.screenshot({ path: '../../results/screenshots/page1_screenshot.png' });
 
     // Navigate to the specified URL on page2.
     await page2.goto('http://localhost:8081/');
@@ -57,7 +57,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await frame.waitForTimeout(5000);
 
     // Capture a screenshot of page2 and save it to 'pr.png'.
-    await page2.screenshot({ path: '../results/screenshots/page2_screensho.png' });
+    await page2.screenshot({ path: '../../results/screenshots/page2_screensho.png' });
 
     // Find HTML elements within the frame that contain video streams.
     videoElements = await frame.$$('video');
@@ -79,8 +79,8 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     
   } catch (error) {
     // In case of an error or timeout, capture screenshots.
-    await page1.screenshot({ path: '../results/screenshots/error_page1_screenshot.png' });
-    await page2.screenshot({ path: '../results/screenshots/error_page2_screenshot.png' });
+    await page1.screenshot({ path: '../../results/screenshots/error_page1_screenshot.png' });
+    await page2.screenshot({ path: '../../results/screenshots/error_page2_screenshot.png' });
 
     // Rethrow the error to make the test fail.
     throw error;

@@ -45,7 +45,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     expect(videoElements.length).toEqual(2);
 
     // Capture a screenshot of page1 and save it to a file.
-    await page1.screenshot({ path: '../results/screenshots/page1_screenshot.png' });
+    await page1.screenshot({ path: '../../results/screenshots/page1_screenshot.png' });
 
     // Navigate to the specified URL on page2.
     await page2.goto('http://localhost:4200');
@@ -58,7 +58,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
 
     // Capture a screenshot of page2 and save it to a file.
 
-    await page2.screenshot({ path: '../results/screenshots/page2_screenshot.png' });
+    await page2.screenshot({ path: '../../results/screenshots/page2_screenshot.png' });
 
     // Find HTML elements that contain video streams on page2.
     videoElements = await page2.$$('video');
@@ -81,8 +81,8 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await browser.close();
   } catch (error) {
     // In case of an error, capture screenshots and log the error.
-    await page1.screenshot({ path: '../results/screenshots/error_page1_screenshot.png' });
-    await page2.screenshot({ path: '../results/screenshots/error_page2_screenshot.png' });
+    await page1.screenshot({ path: '../../results/screenshots/error_page1_screenshot.png' });
+    await page2.screenshot({ path: '../../results/screenshots/error_page2_screenshot.png' });
     throw error; // Rethrow the error to make the test fail.
   }
 });
