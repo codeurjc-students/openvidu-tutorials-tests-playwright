@@ -61,9 +61,17 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
 
     // Find HTML elements within the frame that contain video streams.
     videoElements = await frame.$$('video');
-
+    
     // Check that there are exactly two elements found.
     expect(videoElements.length).toEqual(2);
+
+    for (const videoElement of videoElements) {
+      
+      const isPaused = await videoElement.evaluate(video => video.paused);
+      
+      expect(isPaused).not.toBe(true);
+     
+    }
 
     // Close the pages and the browser.
     await Promise.all([page1.close(), page2.close()]);

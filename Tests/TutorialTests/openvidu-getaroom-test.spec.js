@@ -63,7 +63,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page2.screenshot({ path: '../results/screenshots/page2_screenshot.png' });
 
     // Find HTML elements that contain video streams on page2.
-        videoElements = await page2.$$('video');
+    videoElements = await page2.$$('video');
     
     expect(videoElements.length).toEqual(2);
 
@@ -74,9 +74,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
       expect(isPaused).not.toBe(true);
 
     }
-    
-    // Check that there are exactly two elements found.
-    expect(videoElements.length).toEqual(2);
+ 
     
     // Close page1 and the browser.
     await Promise.all([page1.close(), browser.close()]);

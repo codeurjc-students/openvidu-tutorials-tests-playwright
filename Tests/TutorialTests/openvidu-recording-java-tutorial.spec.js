@@ -74,7 +74,6 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
       expect(isPaused).not.toBe(true);
 
     }
-    expect(videoElements.length).toEqual(2);
     
     // Close the pages and the browser.
     await Promise.all([page1.close(), page2.close()]);

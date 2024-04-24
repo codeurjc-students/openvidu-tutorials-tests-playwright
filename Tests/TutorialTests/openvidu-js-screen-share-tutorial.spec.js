@@ -29,9 +29,10 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page1.waitForTimeout(5000);
 
     var videoElements = await page1.$$('video');
-    
+
     expect(videoElements.length).toEqual(2);
-    
+
+
     for (const videoElement of videoElements) {
       
       const isPaused = await videoElement.evaluate(video => video.paused);
@@ -39,9 +40,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
       expect(isPaused).not.toBe(true);
      
     }
-
     
-
     // Capture a screenshot of page1 and save it to 'results/screenshot/page1.png'.
     await page1.screenshot({ path: '../results/screenshots/page1.png' });
 
@@ -62,6 +61,15 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
 
     // Check that there are exactly four elements found.
     expect(videoElements.length).toEqual(4);
+
+
+    for (const videoElement of videoElements) {
+      
+      const isPaused = await videoElement.evaluate(video => video.paused);
+      
+      expect(isPaused).not.toBe(true);
+     
+    }
   
     // Capture a screenshot of page2 and save it to 'results/screenshot/page2.png'.
     await page2.screenshot({ path: '../results/screenshots/page2.png' });
