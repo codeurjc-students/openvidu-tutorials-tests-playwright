@@ -14,29 +14,26 @@ jobs:
 
       - name: Run OpenVidu deployment
         run: |
-          docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.29.0 > results/logs/openvidu_deployment.log 2>&1 &
+          docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0 > results/logs/docker.log 2>&1 &
           sleep 10
-
       - name: Run server application sample
         working-directory: openvidu-basic-node
         run: |
           npm install
-          node index.js > ../results/logs/server_application.log 2>&1 &
-
+          node index.js > ../results/logs/node_index.log 2>&1 &
       - name: Setup Node.js
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v2
         with:
-          node-version: 16
+          node-version: 14
 
       - name: Install Angular CLI
-        run:  npm install -g @angular/cli
+        run: npm install -g @angular/cli
 
-      - name: Run the client application tutorial
+      - name: Levantar la aplicación cliente
         working-directory: openvidu-angular
         run: |
-          sudo npm install
-          npx ng serve  > ../results/logs/client_application.log 2>&1 &
-          sleep 10
+          npm install
+          npx ng serve > ../results/logs/ng_server.log 2>&1 &
 
       - name: Install dependencies
         run: npm ci
