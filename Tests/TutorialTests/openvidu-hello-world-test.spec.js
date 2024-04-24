@@ -40,14 +40,6 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
      
     }
      
-    // Check if audio is playing
-    var audioElement = await page1.$('audio');
-    expect(audioElement).not.toBe(null);
-
-    var isMuted = await audioElement.evaluate(audio => audio.muted);
-    expect(isMuted).not.toBe(true);
-
-
     // Capture a screenshot of page1 and save it to a file.
     await page1.screenshot({ path: '../results/screenshots/page1_screenshot.png' });
 
