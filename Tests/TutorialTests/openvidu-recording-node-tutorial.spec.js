@@ -33,6 +33,16 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
    
     // Find video elements on the first page and verify there is exactly one.
     var videoElements = await page1.$$('video');
+    
+    expect(videoElements.length).toEqual(1);
+
+    for (const videoElement of videoElements) {
+      
+      const isPaused = await videoElement.evaluate(video => video.paused);
+      
+      expect(isPaused).not.toBe(true);
+     
+    }
     expect(videoElements.length).toEqual(1);
 
     // Capture a screenshot of the first page and save it to a file.
@@ -53,7 +63,17 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page2.screenshot({ path: '../results/screenshots/page2_stoprecording_screenshot.png' });
 
     // Find video elements on the second page and verify there are exactly two.
-    videoElements = await page2.$$('video');
+        videoElements = await page2.$$('video');
+    
+    expect(videoElements.length).toEqual(2);
+
+    for (const videoElement of videoElements) {
+      
+      const isPaused = await videoElement.evaluate(video => video.paused);
+      
+      expect(isPaused).not.toBe(true);
+
+    }
     expect(videoElements.length).toEqual(2);
     
     // Close the pages and the browser.

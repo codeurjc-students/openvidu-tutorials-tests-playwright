@@ -31,6 +31,16 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page1.waitForTimeout(5000);
 
     var videoElements = await page1.$$('video');
+    
+    expect(videoElements.length).toEqual(1);
+
+    for (const videoElement of videoElements) {
+      
+      const isPaused = await videoElement.evaluate(video => video.paused);
+      
+      expect(isPaused).not.toBe(true);
+     
+    }
 
     expect(videoElements.length).toEqual(2);
 
@@ -51,7 +61,17 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     await page2.screenshot({ path: '../results/screenshots/page2_screenshot.png' });
 
     // Find HTML elements that contain video streams on page2.
-    videoElements = await page2.$$('video');
+        videoElements = await page2.$$('video');
+    
+    expect(videoElements.length).toEqual(2);
+
+    for (const videoElement of videoElements) {
+      
+      const isPaused = await videoElement.evaluate(video => video.paused);
+      
+      expect(isPaused).not.toBe(true);
+
+    }
 
     // Check that there are exactly three elements found (should it be three or two?).
     expect(videoElements.length).toEqual(3);
