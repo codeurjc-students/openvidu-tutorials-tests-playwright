@@ -6,8 +6,8 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
   // Launch a headless Chromium browser with specific settings.
   const browser = await chromium.launch({
     headless: true,
-    deviceScaleFactor: 1, // Specify the page's scale factor
-    userAgent: 'Chrome/88.0.4324.182', // Specify the user agent
+    deviceScaleFactor: 1,
+    userAgent: 'Chrome/88.0.4324.182',
     args: ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream"]
   });
 
@@ -25,11 +25,11 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     // Navigate to a specific URL on page1.
     await page1.goto('http://localhost:3000');
     
-    // Fill in the '#userName' field with 'Page1', click the 'JOIN' button, and wait for the '#session' element to become visible.
+    // Fill in the username field, click the join button, and wait for the session to become visible.
     await page1.fill('#userName', 'User1');
     await page1.click('#join input[type="submit"]');
     await page1.waitForSelector('#session', { visible: true });
-    await page1.waitForTimeout(1000);
+    await page1.waitForTimeout(5000);
     
 /*     var videoElements = await page1.$$('video');
     
@@ -44,17 +44,17 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
     }
  */
 
-    // Capture a screenshot of page1 and save it to a specific location.
-    await page1.screenshot({ path: '../../results/screenshots/page1.png' });
+    // Capture a screenshot of page1 and save it to a file.
+    await page1.screenshot({ path: '../../results/screenshots/page1_screenshot.png' });
 
     // Navigate to a specific URL on page2.
     await page2.goto('http://localhost:3000');
     
-    // Fill in the '#userName' field with 'Page2', click the 'JOIN' button, wait for the '#session' element to become visible, and wait for 5 seconds.
+    // Fill in the username field, click the join button, and wait for the session to become visible.
     await page2.fill('#userName', 'User2');
     await page2.click('#join input[type="submit"]');
     await page2.waitForSelector('#session', { visible: true });
-    await page2.waitForTimeout(10000);
+    await page2.waitForTimeout(5000);
 
     // Capture a screenshot of page2 and save it to a specific location.
     await page2.screenshot({ path: '../../results/screenshots/page2.png' });
@@ -73,8 +73,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
 
     }
 
-
-
+    await page2.screenshot({ path: '../../results/screenshots/page2_screenshot.png' });
     
     await Promise.all([page1.close(), page2.close()]);
     await browser.close();
