@@ -1,5 +1,6 @@
 name: openvidu-react
 
+
 on:
 
   push:
@@ -8,31 +9,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout 
-      uses: actions/checkout@v4.1.1
-
-    - name: Run OpenVidu deployment
-      run: |
-        docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.27.0 > results/logs/docker.log 2>&1 &
-        sleep 10
-        
-    - name: Run server application sample
-      working-directory: openvidu-basic-node
-      run: |
-        npm install
-        node index.js > ../results/logs/node_index.log 2>&1 &
-    - name: Configurar Node.js
-      uses: actions/setup-node@v2
+    - uses: actions/checkout@v3
+    - name: Execute OpenVidu Dev container
+      run: docker run --detach=true -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.24.0
+  
+    - name: Set up Node 16
+      uses: actions/setup-node@v3
       with:
-        node-version: 14
+        node-version: '16' 
 
-    - name: Run the client application tutorial
-      working-directory: openvidu-react
+    - name: Execute OpenVidu Tutorial Java Backend
+      run:  node index.js > ../results/logs/server_application.log 2>&1 &
+      working-directory: ./openvidu-basic-node
+      
+    - name: Execute React app in dev mode
       run: |
         npm install
-        npm start > ../results/logs/npm.log 2>&1 &   
+        npm start &  
   
     - name: Install dependencies
       run: npm ci
