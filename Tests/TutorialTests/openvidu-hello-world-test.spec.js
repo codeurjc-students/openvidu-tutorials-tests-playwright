@@ -39,6 +39,13 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
       expect(isPaused).not.toBe(true);
      
     }
+     
+    // Check if audio is playing
+    var audioElement = await page1.$('audio');
+    expect(audioElement).not.toBe(null);
+
+    var isMuted = await audioElement.evaluate(audio => audio.muted);
+    expect(isMuted).not.toBe(true);
 
 
     // Capture a screenshot of page1 and save it to a file.
@@ -67,15 +74,11 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
       expect(isPaused).not.toBe(true);
 
     }
+ 
+    audioElement = await page2.$('audio');
+    expect(audioElement).not.toBe(null);
 
-    var isMuted = await videoElements[1].evaluate(video => video.muted);
-      
-    expect(isMuted).not.toBe(true);
-
-    videoElements = await page1.$$('video');
-
-    isMuted = await videoElements[1].evaluate(video => video.muted);
-      
+    isMuted = await audioElement.evaluate(audio => audio.muted);
     expect(isMuted).not.toBe(true);
 
 
