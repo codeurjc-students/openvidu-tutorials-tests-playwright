@@ -36,7 +36,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
   
     var videoElements = await page1.$$('video');
     
-    expect(videoElements.length).toEqual(1);
+    expect(videoElements.length).toEqual(2);
 
     for (const videoElement of videoElements) {
       
@@ -46,7 +46,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
      
     }
 
-    expect(videoElements.length).toEqual(2);
+    
 
     // Capture a screenshot of page1 and save it to a specific location.
     await page1.screenshot({ path: '../results/screenshots/page1.png' });

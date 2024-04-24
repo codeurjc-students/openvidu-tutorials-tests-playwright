@@ -36,6 +36,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
 
     expect(videoElements.length).toEqual(1);
 
+
     for (const videoElement of videoElements) {
       
       const isPaused = await videoElement.evaluate(video => video.paused);

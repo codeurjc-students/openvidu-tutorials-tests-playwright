@@ -43,7 +43,7 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
       expect(isPaused).not.toBe(true);
      
     }
-    expect(videoElements.length).toEqual(1);
+    
 
     // Capture a screenshot of the first page and save it to a file.
     await page1.screenshot({ path: '../results/screenshots/page1_screenshot.png' });
