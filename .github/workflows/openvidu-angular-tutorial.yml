@@ -29,12 +29,13 @@ jobs:
           node-version: 18.13
 
       - name: Install Angular CLI
-        run: sudo npm install -g @angular/cli
+        run:  npm install -g @angular/cli
 
       - name: Run the client application tutorial
         working-directory: openvidu-angular
         run: |
           sudo npm install
+          sudo npm ci
           sudo ng serve > ../results/logs/client_application.log 2>&1 &
 
       - name: Install dependencies
