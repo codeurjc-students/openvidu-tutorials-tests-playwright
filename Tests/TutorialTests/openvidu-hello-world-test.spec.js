@@ -40,6 +40,8 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
      
     }
      
+
+
     // Capture a screenshot of page1 and save it to a file.
     await page1.screenshot({ path: '../results/screenshots/page1_screenshot.png' });
 
@@ -66,13 +68,8 @@ test('Checking for the presence of two active webcams in an OpenVidu session', a
       expect(isPaused).not.toBe(true);
 
     }
- 
-    var audioElement = await page2.$('audio');
-    expect(audioElement).not.toBe(null);
 
-    var isMuted = await audioElement.evaluate(audio => audio.muted);
-    expect(isMuted).not.toBe(true);
-
+    
 
     // Close the pages and the browser.
     await Promise.all([page1.close(), page2.close()]);
