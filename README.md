@@ -8,7 +8,7 @@
 [![][OpenViduLogo]](http://openvidu.io)
 
 openvidu-tutorials
-===
+====
 
 Visit [openvidu.io/tutorials](http://openvidu.io/tutorials)
 
